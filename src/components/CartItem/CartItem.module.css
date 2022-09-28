@@ -1,0 +1,13 @@
+.cart__item {
+  width: 536px;
+  background-color: #1C1C21;
+  height: 80px;
+  display: flex;
+  align-items: center;
+  border-radius:40px ;
+  margin-bottom: 20px;
+}
+.cart__item_image {
+  width: 80px;
+  height: 40px;
+}

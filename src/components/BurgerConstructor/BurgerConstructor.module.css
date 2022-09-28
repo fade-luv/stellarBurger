@@ -1,0 +1,48 @@
+.ul {
+  margin-top: 100px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-end;
+}
+
+.button {
+  width: 215px;
+}
+.constructor__result {
+  display: flex;
+  align-items: center;
+}
+.constructor_sum {
+  font-size: 48px;
+  margin-right: 40px;
+}
+
+.center {
+  display: flex;
+  flex-direction: column;
+  height: 250px;
+  overflow-x: hidden;
+  overflow-y: scroll;
+  scrollbar-width: 5px;
+}
+
+.test:not(:last-child){
+  margin-bottom: 10px;
+}
+
+
+.center::-webkit-scrollbar {
+  background: #2F2F37;
+  width: 8px;
+  
+}
+.center::-webkit-scrollbar-thumb {
+  background: #8585AD;
+}
+.constructor-element__text {
+  min-width: 400px;
+}
+
+
+
