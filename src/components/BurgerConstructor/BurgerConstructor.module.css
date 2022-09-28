@@ -16,6 +16,8 @@
 .constructor_sum {
   font-size: 48px;
   margin-right: 40px;
+  display: flex;
+  align-items: center;
 }
 
 .center {
@@ -42,6 +44,9 @@
 }
 .constructor-element__text {
   min-width: 400px;
+}
+.test {
+  display: flex;
 }
 
 

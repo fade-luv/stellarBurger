@@ -62,7 +62,13 @@ const BurgerConstructor = function (params) {
               thumbnail={"https://code.s3.yandex.net/react/code/cheese.png"}
             />
           </li>
-         
+          <li className={BurgerConstructorStyle.test}>
+            <ConstructorElement
+              text="Сыр"
+              price={50}
+              thumbnail={"https://code.s3.yandex.net/react/code/cheese.png"}
+            />
+          </li>
         </ul>
 
         <ConstructorElement
