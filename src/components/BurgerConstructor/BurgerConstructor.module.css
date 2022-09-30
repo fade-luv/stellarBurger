@@ -4,6 +4,7 @@
   flex-direction: column;
   justify-content: space-between;
   align-items: flex-end;
+  width: 568px;
 }
 
 .button {
@@ -47,7 +48,15 @@
 }
 .test {
   display: flex;
+  justify-content: flex-end;
+  position: relative;
+  width: 1000px;
 }
 
-
+.test2 {
+  position: absolute;
+  left: 40px;
+  top: 25px;
+  z-index: 2;
+}
 

@@ -12,7 +12,7 @@ function App() {
       <main className={AppCss.main}>
         <div className={AppCss.main__container}>
           <BurgerIngredients />
-          <BurgerConstructor />
+          <BurgerConstructor/>
         </div>
       </main>
     </div>

@@ -1,6 +1,4 @@
 .header {
-  justify-content: center;
-  display: flex;
   background-color: #1C1C21;
   
 }
@@ -46,4 +44,11 @@
 
 .nav__link_text_active {
   color: #8585AD;
+}
+.header_wrapper {
+  justify-content: center;
+  display: flex;
+  width: 1280px;
+  margin: 0 auto;
+  
 }

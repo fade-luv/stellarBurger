@@ -9,9 +9,10 @@
 }
 .BurgerIngredients {
   max-width: 600px;
+  
 }
 .wrapper {
-    height: 640px;
+    max-height: 65vh;
     overflow-x: hidden;
     overflow-y: scroll;
     scrollbar-width: 5px;
@@ -25,3 +26,4 @@
 #wrapper::-webkit-scrollbar-thumb {
   background: #8585AD;
 }
+

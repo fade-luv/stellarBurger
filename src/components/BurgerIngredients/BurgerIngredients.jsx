@@ -18,33 +18,35 @@ const BurgerIngredients = function () {
         <h1 className="text text_type_main-large mt-10 mb-5">
           Соберите бургер
         </h1>
-        <div style={{ display: "flex" }}>
-          <a className={BurgerIngredientsStyle.tabLink}>
-            <Tab value="one" active={current === "one"} onClick={setCurrent}>
-              Булки
-            </Tab>
-          </a>
-          <a className={BurgerIngredientsStyle.tabLink}>
-            <Tab value="two" active={current === "two"} onClick={setCurrent}>
-              Соусы
-            </Tab>
-          </a>
-          <a className={BurgerIngredientsStyle.tabLink}>
-            <Tab
-              value="three"
-              active={current === "three"}
-              onClick={setCurrent}
-            >
-              Начинки
-            </Tab>
-          </a>
+        <div className="mb-10">
+          <div style={{ display: "flex" }}>
+            <a className={BurgerIngredientsStyle.tabLink}>
+              <Tab value="one" active={current === "one"} onClick={setCurrent}>
+                Булки
+              </Tab>
+            </a>
+            <a className={BurgerIngredientsStyle.tabLink}>
+              <Tab value="two" active={current === "two"} onClick={setCurrent}>
+                Соусы
+              </Tab>
+            </a>
+            <a className={BurgerIngredientsStyle.tabLink}>
+              <Tab
+                value="three"
+                active={current === "three"}
+                onClick={setCurrent}
+              >
+                Начинки
+              </Tab>
+            </a>
+          </div>
         </div>
 
         <div
           id={BurgerIngredientsStyle.wrapper}
           className={BurgerIngredientsStyle.wrapper}
         >
-          <h2 id="one" className="mb-6 mt-10 text text_type_main-medium">
+          <h2 id="one" className="mb-6  text text_type_main-medium">
             Булки
           </h2>
           <div className={BurgerIngredientsStyle.ingredients_container}>
