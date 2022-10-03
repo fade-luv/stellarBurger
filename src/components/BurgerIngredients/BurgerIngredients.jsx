@@ -2,15 +2,16 @@ import React from "react";
 import {useEffect} from "react";
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
 import BurgerIngredientsStyle from "./BurgerIngredients.module.css";
-import InitialIngredients from "../../utils/data";
 import Ingredient from "../Ingredient/Ingredient";
-const BurgerIngredients = function () {
+import { useState } from "react";
+const BurgerIngredients = function (props) {
   const [current, setCurrent] = React.useState("one");
-  
+
+
   useEffect(() => {
     document.getElementById(current).scrollIntoView();
   });
-
+  console.log(props.ingridients);
 
   return (
     <React.Fragment>
@@ -50,7 +51,7 @@ const BurgerIngredients = function () {
             Булки
           </h2>
           <div className={BurgerIngredientsStyle.ingredients_container}>
-            {InitialIngredients.map(
+            {props.ingridients.map(
               (ingredient) =>
                 ingredient.type === "bun" && (
                   <Ingredient ingredientInfo={ingredient} />
@@ -61,7 +62,7 @@ const BurgerIngredients = function () {
             Соусы
           </h2>
           <div className={BurgerIngredientsStyle.ingredients_container}>
-            {InitialIngredients.map(
+            {props.ingridients.map(
               (ingredient) =>
                 ingredient.type === "sauce" && (
                   <Ingredient ingredientInfo={ingredient} />
@@ -72,7 +73,7 @@ const BurgerIngredients = function () {
             Начинки
           </h2>
           <div className={BurgerIngredientsStyle.ingredients_container}>
-            {InitialIngredients.map(
+            {props.ingridients.map(
               (ingredient) =>
                 ingredient.type === "main" && (
                   <Ingredient ingredientInfo={ingredient} />
