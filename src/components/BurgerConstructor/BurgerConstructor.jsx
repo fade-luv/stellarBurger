@@ -10,7 +10,7 @@ import {
 import CartItem from "../CartItem/CartItem";
 const BurgerConstructor = function (params) {
   return (
-    <ul className={`${BurgerConstructorStyle.ul} ml-10`}>
+    <ul className={`${BurgerConstructorStyle.ul} pl-10`}>
       <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
         <li className={BurgerConstructorStyle.test}>
           <ConstructorElement
@@ -23,7 +23,7 @@ const BurgerConstructor = function (params) {
         </li>
 
         <ul id="center" className={BurgerConstructorStyle.center}>
-          <li className={BurgerConstructorStyle.test}>
+          <li className={`${BurgerConstructorStyle.test} `}>
             <div className={BurgerConstructorStyle.test2}>
               <DragIcon type="primary" />
             </div>
@@ -108,7 +108,7 @@ const BurgerConstructor = function (params) {
         </li>
       </div>
 
-      <div className={BurgerConstructorStyle.constructor__result}>
+      <div className={`${BurgerConstructorStyle.constructor__result} mt-10`}>
         <span className={BurgerConstructorStyle.constructor_sum}>
           <span className="text text_type_digits-medium">610</span>
           <span className={BurgerConstructorStyle.test3}>

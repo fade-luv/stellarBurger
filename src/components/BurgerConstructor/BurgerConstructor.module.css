@@ -1,10 +1,10 @@
 .ul {
   margin-top: 100px;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
+
+
+
   align-items: flex-end;
-  width: 568px;
+
 }
 
 .button {
@@ -12,7 +12,7 @@
 }
 .constructor__result {
   display: flex;
-  align-items: center;
+  justify-content: flex-end;
 }
 .constructor_sum {
   font-size: 48px;
@@ -22,9 +22,7 @@
 }
 
 .center {
-  display: flex;
-  flex-direction: column;
-  height: 250px;
+  height: 440px;
   overflow-x: hidden;
   overflow-y: scroll;
   scrollbar-width: 5px;
@@ -43,19 +41,18 @@
 .center::-webkit-scrollbar-thumb {
   background: #8585AD;
 }
-.constructor-element__text {
-  min-width: 400px;
-}
+
 .test {
   display: flex;
-  justify-content: flex-end;
   position: relative;
-  width: 1000px;
+  width: 593px;
+  justify-content: flex-end;
+ 
 }
 
 .test2 {
   position: absolute;
-  left: 40px;
+  left: 17px;
   top: 25px;
   z-index: 2;
 }
