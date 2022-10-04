@@ -7,9 +7,26 @@ import {
   Counter,
   DragIcon, 
 } from "@ya.praktikum/react-developer-burger-ui-components";
+import Modal from "../Modal/Modal";
+import OrderDetails from "../OrderDetails/OrderDetails";
 
 const BurgerConstructor = function (props) {
   console.log(props.ingridients);
+ const [isOrderDetailsOpened, setIsOrderDetailsOpened] = React.useState(false); 
+
+
+  const closeAllModals = () => {
+  setIsOrderDetailsOpened(false);
+
+  };
+
+
+  const handleEscKeydown = (event) => {
+  event.key === "Escape" && closeAllModals();
+  };
+
+
+
   return (
     <ul className={`${BurgerConstructorStyle.ul} pl-10`}>
       <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
@@ -37,6 +54,15 @@ const BurgerConstructor = function (props) {
             </li>
           ))}
         </ul>
+        {isOrderDetailsOpened && (
+          <Modal
+            title="Детали заказа"
+            onOverlayClick={closeAllModals}
+            onEscKeydown={handleEscKeydown}
+          >
+            <OrderDetails id={24334} title={"идентификатор заказа"}/>
+          </Modal>
+        )}
         <li className={BurgerConstructorStyle.test}>
           <ConstructorElement
             type="bottom"
@@ -58,7 +84,11 @@ const BurgerConstructor = function (props) {
           </span>
         </span>
         <span className={BurgerConstructorStyle.button}>
-          <Button type="primary" size="large">
+          <Button
+            type="primary"
+            size="large"
+            onClick={() => setIsOrderDetailsOpened(true)}
+          >
             Оформить заказ
           </Button>
         </span>
