@@ -11,7 +11,7 @@ import Modal from "../Modal/Modal";
 import OrderDetails from "../OrderDetails/OrderDetails";
 
 const BurgerConstructor = function (props) {
-  console.log(props.ingridients);
+
  const [isOrderDetailsOpened, setIsOrderDetailsOpened] = React.useState(false); 
 
 
