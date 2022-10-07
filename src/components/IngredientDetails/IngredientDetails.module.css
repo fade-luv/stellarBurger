@@ -1,0 +1,27 @@
+.title {
+  width: 640px;
+  margin: 0 auto;
+  margin-top: 40px;
+  display: flex;
+  font-family: "JetBrains Mono";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 36px;
+  line-height: 40px;
+  /* or 111% */
+
+  display: flex;
+  align-items: center;
+}
+.specifications {
+  display: flex;
+  list-style-type:none;
+  width: 520px;
+  margin: 0 auto;
+}
+
+.specificationItem {
+  width: 120px;
+}
+
+

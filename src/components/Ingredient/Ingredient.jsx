@@ -12,7 +12,7 @@ const Ingredient = function (props) {
 
     
     const closeAllModals = () => {
-      setIsIngredientDetailsOpened(false);
+      setIsIngredientDetailsOpened(false)
     };
 
     const handleEscKeydown = (event) => {
@@ -21,40 +21,45 @@ const Ingredient = function (props) {
 
 
   return (
-    <div
-      onClick={() => setIsIngredientDetailsOpened(true)}
-      className={`${IngredientStyle.Ingredient_item} ml-4`}
-    >
-      {isIngredientDetailsOpened && (
-        <Modal
-          title="Детали заказа"
-          onOverlayClick={closeAllModals}
-          onEscKeydown={handleEscKeydown}
+    <div>
+      <>
+        <div
+          onClick={() => setIsIngredientDetailsOpened(true)}
+          className={`${IngredientStyle.Ingredient_item} ml-4`}
         >
-          <IngredientDetails />
-        </Modal>
-      )}
+          <div className={IngredientStyle.counter}>1</div>
+          <img
+            className={`${IngredientStyle.Ingredient__image} ml-4`}
+            src={props.ingredientInfo.image}
+          ></img>
 
-      <div className={IngredientStyle.counter}>1</div>
-      <img
-        className={`${IngredientStyle.Ingredient__image} ml-4`}
-        src={props.ingredientInfo.image}
-      ></img>
+          <div className={IngredientStyle.Ingredient__price_info}>
+            <p className="text text_type_digits-default mt-1">
+              {props.ingredientInfo.price}
+            </p>
 
-      <div className={IngredientStyle.Ingredient__price_info}>
-        <p className="text text_type_digits-default mt-1">
-          {props.ingredientInfo.price}
-        </p>
-
-        <div className="ml-1">
-          <CurrencyIcon type="primary" />
+            <div className="ml-1">
+              <CurrencyIcon type="primary" />
+            </div>
+          </div>
+          <h3
+            className={`${IngredientStyle.Ingredient__title} text text_type_main-default  mt-2`}
+          >
+            {props.ingredientInfo.name}
+          </h3>
         </div>
-      </div>
-      <h3
-        className={`${IngredientStyle.Ingredient__title} text text_type_main-default  mt-2`}
-      >
-        {props.ingredientInfo.name}
-      </h3>
+      </>
+      <>
+        {isIngredientDetailsOpened && (
+          <Modal
+            title="Детали заказа"
+            onOverlayClick={closeAllModals}
+            onEscKeydown={handleEscKeydown}
+          >
+            <IngredientDetails info={props.ingredientInfo} />
+          </Modal>
+        )}
+      </>
     </div>
   );
 };
