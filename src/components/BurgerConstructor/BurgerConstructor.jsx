@@ -1,31 +1,30 @@
 import React from "react";
 import BurgerConstructorStyle from "./BurgerConstructor.module.css";
+import PropTypes from "prop-types";
 import {
   ConstructorElement,
   Button,
   CurrencyIcon,
-  Counter,
-  DragIcon, 
+  DragIcon,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import Modal from "../Modal/Modal";
 import OrderDetails from "../OrderDetails/OrderDetails";
 
 const BurgerConstructor = function (props) {
-
- const [isOrderDetailsOpened, setIsOrderDetailsOpened] = React.useState(false); 
-
+  const { ingridients } = props;
+  const [isOrderDetailsOpened, setIsOrderDetailsOpened] = React.useState({
+    state: false,
+    target: {},
+  });
+  const target = isOrderDetailsOpened.target;
 
   const closeAllModals = () => {
-  setIsOrderDetailsOpened(false);
-
+    setIsOrderDetailsOpened(false);
   };
-
 
   const handleEscKeydown = (event) => {
-  event.key === "Escape" && closeAllModals();
+    event.key === "Escape" && closeAllModals();
   };
-
-
 
   return (
     <ul className={`${BurgerConstructorStyle.ul} pl-10`}>
@@ -40,7 +39,7 @@ const BurgerConstructor = function (props) {
           />
         </li>
         <ul id="center" className={BurgerConstructorStyle.center}>
-          {props.ingridients.map((ingredient) => (
+          {ingridients.map((ingredient) => (
             <li className={`${BurgerConstructorStyle.test} `}>
               <div className={BurgerConstructorStyle.test2}>
                 <DragIcon type="primary" />
@@ -56,11 +55,13 @@ const BurgerConstructor = function (props) {
         </ul>
         {isOrderDetailsOpened && (
           <Modal
+            target={target}
             title="Детали заказа"
             onOverlayClick={closeAllModals}
             onEscKeydown={handleEscKeydown}
+            onCloseButtonClick={closeAllModals}
           >
-            <OrderDetails id={24334} title={"идентификатор заказа"}/>
+            <OrderDetails id={24334} title={"идентификатор заказа"} />
           </Modal>
         )}
         <li className={BurgerConstructorStyle.test}>
@@ -83,18 +84,34 @@ const BurgerConstructor = function (props) {
             />
           </span>
         </span>
-        <span className={BurgerConstructorStyle.button}>
-          <Button
-            type="primary"
-            size="large"
-            onClick={() => setIsOrderDetailsOpened(true)}
-          >
+        <span
+          data="order"
+          className={BurgerConstructorStyle.button}
+          onClick={(event) =>
+            setIsOrderDetailsOpened({
+              ...isOrderDetailsOpened,
+              state: true,
+              target: event.currentTarget.getAttribute("data"),
+            })
+          }
+        >
+          <Button data="order" type="primary" size="large">
             Оформить заказ
           </Button>
         </span>
       </div>
     </ul>
   );
+};
+
+BurgerConstructor.propTypes = {
+  ingridients: PropTypes.arrayOf(
+    PropTypes.shape({
+      name: PropTypes.string.isRequired,
+      price: PropTypes.number.isRequired,
+      image: PropTypes.string.isRequired,
+    })
+  ),
 };
 
 export default BurgerConstructor;

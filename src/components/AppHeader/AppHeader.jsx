@@ -1,9 +1,10 @@
 import React from "react";
 import { Logo } from "@ya.praktikum/react-developer-burger-ui-components";
-import { BurgerIcon } from '@ya.praktikum/react-developer-burger-ui-components'
-import { ListIcon  } from '@ya.praktikum/react-developer-burger-ui-components'
-import { ProfileIcon  } from '@ya.praktikum/react-developer-burger-ui-components'
+import { BurgerIcon } from "@ya.praktikum/react-developer-burger-ui-components";
+import { ListIcon } from "@ya.praktikum/react-developer-burger-ui-components";
+import { ProfileIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import header from "./AppHeader.module.css";
+import PropTypes from "prop-types";
 
 const AppHeader = function () {
   return (
@@ -31,12 +32,14 @@ const AppHeader = function () {
           <Logo />
         </a>
         <button type="button" className={header.profile_button}>
-          <ProfileIcon type="secondary" />
-          <p className="text text_type_main-default ml-2">Личный кабинет</p>
+          <p className={`${header.propfileLink} text text_type_main-default `}>
+            <ProfileIcon type="secondary" />
+            <p className="ml-2">Личный кабинет</p>
+          </p>
         </button>
       </div>
     </header>
   );
-}
+};
 
 export default AppHeader;

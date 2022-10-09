@@ -6,36 +6,46 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import Modal from "../Modal/Modal";
 import IngredientDetails from "../IngredientDetails/IngredientDetails";
+import PropTypes from "prop-types";
 
 const Ingredient = function (props) {
-  const [isIngredientDetailsOpened, setIsIngredientDetailsOpened] = React.useState(false);
+  const { ingredientInfo } = props;
 
-    
-    const closeAllModals = () => {
-      setIsIngredientDetailsOpened(false)
-    };
+  const [isIngredientDetailsOpened, setIsIngredientDetailsOpened] =
+    React.useState({ state: false, target: {} });
+  const target = isIngredientDetailsOpened.target;
 
-    const handleEscKeydown = (event) => {
-      event.key === "Escape" && closeAllModals();
-    };
+  const closeAllModals = () => {
+    setIsIngredientDetailsOpened(false);
+  };
 
+  const handleEscKeydown = (event) => {
+    event.key === "Escape" && closeAllModals();
+  };
 
   return (
     <div>
       <>
         <div
-          onClick={() => setIsIngredientDetailsOpened(true)}
+          data="ingredient"
+          onClick={(event) =>
+            setIsIngredientDetailsOpened({
+              ...isIngredientDetailsOpened,
+              state: true,
+              target: event.currentTarget.getAttribute("data"),
+            })
+          }
           className={`${IngredientStyle.Ingredient_item} ml-4`}
         >
           <div className={IngredientStyle.counter}>1</div>
           <img
             className={`${IngredientStyle.Ingredient__image} ml-4`}
-            src={props.ingredientInfo.image}
+            src={ingredientInfo.image}
           ></img>
 
           <div className={IngredientStyle.Ingredient__price_info}>
             <p className="text text_type_digits-default mt-1">
-              {props.ingredientInfo.price}
+              {ingredientInfo.price}
             </p>
 
             <div className="ml-1">
@@ -45,23 +55,34 @@ const Ingredient = function (props) {
           <h3
             className={`${IngredientStyle.Ingredient__title} text text_type_main-default  mt-2`}
           >
-            {props.ingredientInfo.name}
+            {ingredientInfo.name}
           </h3>
         </div>
       </>
       <>
-        {isIngredientDetailsOpened && (
+        {isIngredientDetailsOpened.state && (
           <Modal
+            target={target}
             title="Детали заказа"
             onOverlayClick={closeAllModals}
             onEscKeydown={handleEscKeydown}
+            onCloseButtonClick={closeAllModals}
           >
-            <IngredientDetails info={props.ingredientInfo} />
+            <IngredientDetails info={ingredientInfo} />
           </Modal>
         )}
       </>
     </div>
   );
 };
+
+Ingredient.propTypes = {
+  ingredientInfo: PropTypes.shape({
+    image: PropTypes.string.isRequired,
+    price: PropTypes.number.isRequired,
+    name: PropTypes.string.isRequired,
+  }).isRequired,
+};
+
 
 export default Ingredient;
