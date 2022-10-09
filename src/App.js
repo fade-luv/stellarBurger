@@ -10,11 +10,14 @@ function App() {
   const initialState = [];
   const [ingridients, setIngridients] = useState(initialState);
 
+  const checkReponse = (res) => {
+    return res.ok ? res.json() : res.json().then((err) => Promise.reject(err));
+  };
+
   useEffect(() => {
     const getIngridientsData = async () => {
-      const res = await fetch(`${ApiLink}/api/ingredients`);
-      const data = await res.json().catch((error) => console.log(error));
-      setIngridients(data.data);
+      const res = await fetch(`${ApiLink}/api/ingredients`).then(checkReponse);
+      setIngridients(res.data);
     };
     getIngridientsData();
   }, []);

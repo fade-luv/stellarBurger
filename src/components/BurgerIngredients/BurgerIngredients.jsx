@@ -55,7 +55,10 @@ const BurgerIngredients = function (props) {
             {ingridients.map(
               (ingredient) =>
                 ingredient.type === "bun" && (
-                  <Ingredient ingredientInfo={ingredient} />
+                  <Ingredient
+                    key={ingredient._id}
+                    ingredientInfo={ingredient}
+                  />
                 )
             )}
           </div>
@@ -66,7 +69,10 @@ const BurgerIngredients = function (props) {
             {ingridients.map(
               (ingredient) =>
                 ingredient.type === "sauce" && (
-                  <Ingredient ingredientInfo={ingredient} />
+                  <Ingredient
+                    key={ingredient._id}
+                    ingredientInfo={ingredient}
+                  />
                 )
             )}
           </div>
@@ -77,7 +83,10 @@ const BurgerIngredients = function (props) {
             {ingridients.map(
               (ingredient) =>
                 ingredient.type === "main" && (
-                  <Ingredient ingredientInfo={ingredient} />
+                  <Ingredient
+                    key={ingredient._id}
+                    ingredientInfo={ingredient}
+                  />
                 )
             )}
           </div>
@@ -88,7 +97,22 @@ const BurgerIngredients = function (props) {
 };
 
 BurgerIngredients.propTypes = {
-  ingridients: PropTypes.arrayOf(PropTypes.object),
+  ingridients: PropTypes.arrayOf(
+    PropTypes.shape({
+      calories: PropTypes.number.isRequired,
+      carbohydrates: PropTypes.number.isRequired,
+      fat: PropTypes.number.isRequired,
+      image: PropTypes.string.isRequired,
+      image_large: PropTypes.string.isRequired,
+      image_mobile: PropTypes.string.isRequired,
+      name: PropTypes.string.isRequired,
+      price: PropTypes.number.isRequired,
+      proteins: PropTypes.number.isRequired,
+      type: PropTypes.string.isRequired,
+      __v: PropTypes.number.isRequired,
+      _id: PropTypes.string.isRequired,
+    }).isRequired
+  ),
 };
 
 export default BurgerIngredients;

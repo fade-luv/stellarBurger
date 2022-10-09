@@ -12,7 +12,6 @@ const Modal = ({
   onOverlayClick,
   onEscKeydown,
   children,
-  target,
   onCloseButtonClick,
 }) => {
   useEffect(() => {
@@ -23,30 +22,16 @@ const Modal = ({
     };
   }, []);
 
+  
   return ReactDOM.createPortal(
     <>
-      {target === "ingredient" && (
-        <>
-          <div className={styles.modalIngredient}>
+          <div className={styles.modal}>
             <div className={styles.CloseIcon}>
               <CloseIcon onClick={onCloseButtonClick} type="primary" />
             </div>
             {children}
           </div>
           <ModalOverlay onClick={onOverlayClick} />{" "}
-        </>
-      )}
-      {target === "order" && (
-        <>
-          <div className={styles.modalOrder}>
-            <div className={styles.CloseIcon}>
-              <CloseIcon onClick={onCloseButtonClick} type="primary" />
-            </div>
-            {children}
-          </div>
-          <ModalOverlay onClick={onOverlayClick} />
-        </>
-      )}
     </>,
     modalsContainer
   );

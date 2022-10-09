@@ -12,11 +12,7 @@ import OrderDetails from "../OrderDetails/OrderDetails";
 
 const BurgerConstructor = function (props) {
   const { ingridients } = props;
-  const [isOrderDetailsOpened, setIsOrderDetailsOpened] = React.useState({
-    state: false,
-    target: {},
-  });
-  const target = isOrderDetailsOpened.target;
+  const [isOrderDetailsOpened, setIsOrderDetailsOpened] = React.useState(false);
 
   const closeAllModals = () => {
     setIsOrderDetailsOpened(false);
@@ -40,7 +36,10 @@ const BurgerConstructor = function (props) {
         </li>
         <ul id="center" className={BurgerConstructorStyle.center}>
           {ingridients.map((ingredient) => (
-            <li className={`${BurgerConstructorStyle.test} `}>
+            <li
+              key={ingredient._id}
+              className={`${BurgerConstructorStyle.test} `}
+            >
               <div className={BurgerConstructorStyle.test2}>
                 <DragIcon type="primary" />
               </div>
@@ -55,7 +54,6 @@ const BurgerConstructor = function (props) {
         </ul>
         {isOrderDetailsOpened && (
           <Modal
-            target={target}
             title="Детали заказа"
             onOverlayClick={closeAllModals}
             onEscKeydown={handleEscKeydown}
@@ -84,21 +82,19 @@ const BurgerConstructor = function (props) {
             />
           </span>
         </span>
-        <span
-          data="order"
-          className={BurgerConstructorStyle.button}
+    
+        <Button
+          type="primary"
+          size="large"
           onClick={(event) =>
             setIsOrderDetailsOpened({
               ...isOrderDetailsOpened,
               state: true,
-              target: event.currentTarget.getAttribute("data"),
             })
           }
         >
-          <Button data="order" type="primary" size="large">
-            Оформить заказ
-          </Button>
-        </span>
+          Оформить заказ
+        </Button>
       </div>
     </ul>
   );
