@@ -5,4 +5,8 @@ const ModalOverlay = ({ onClick }) => {
   return <div className={styles.overlay} onClick={onClick} />;
 };
 
+ModalOverlay.propTypes = {
+  onClick: PropTypes.func.isRequired,
+}.isRequired;
+
 export default ModalOverlay;

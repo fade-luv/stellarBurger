@@ -10,7 +10,7 @@ import PropTypes from "prop-types";
 
 const Ingredient = function (props) {
   const { ingredientInfo } = props;
-
+ 
   const [isIngredientDetailsOpened, setIsIngredientDetailsOpened] =
     React.useState({ state: false, target: {} });
   const target = isIngredientDetailsOpened.target;
@@ -78,9 +78,18 @@ const Ingredient = function (props) {
 
 Ingredient.propTypes = {
   ingredientInfo: PropTypes.shape({
+    calories: PropTypes.number.isRequired,
+    carbohydrates: PropTypes.number.isRequired,
+    fat: PropTypes.number.isRequired,
     image: PropTypes.string.isRequired,
-    price: PropTypes.number.isRequired,
+    image_large: PropTypes.string.isRequired,
+    image_mobile: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
+    price: PropTypes.number.isRequired,
+    proteins: PropTypes.number.isRequired,
+    type: PropTypes.string.isRequired,
+    __v: PropTypes.number.isRequired,
+    _id: PropTypes.string.isRequired,
   }).isRequired,
 };
 

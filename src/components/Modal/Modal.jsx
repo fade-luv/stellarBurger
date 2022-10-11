@@ -4,7 +4,7 @@ import ReactDOM from "react-dom";
 import styles from "./Modal.module.css";
 import ModalOverlay from "../ModalOverlay/ModalOverlay";
 import { CloseIcon } from "@ya.praktikum/react-developer-burger-ui-components";
-
+import PropTypes from "prop-types";
 
 const modalsContainer = document.querySelector("#modals");
 
@@ -36,5 +36,14 @@ const Modal = ({
     modalsContainer
   );
 };
+
+Modal.propTypes = {
+  onOverlayClick: PropTypes.func.isRequired,
+  onEscKeydown: PropTypes.func.isRequired,
+  onCloseButtonClick: PropTypes.func.isRequired,
+  children: PropTypes.object.isRequired,
+}.isRequired;
+
+
 
 export default Modal;
