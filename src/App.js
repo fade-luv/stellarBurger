@@ -3,37 +3,58 @@ import AppHeader from "./components/AppHeader/AppHeader";
 import BurgerIngredients from "./components/BurgerIngredients/BurgerIngredients";
 import BurgerConstructor from "./components/BurgerConstructor/BurgerConstructor";
 import AppCss from "./App.module.css";
-import Modal from "./components/Modal/Modal";
 import { useEffect, useState } from "react";
+import { IngredientsContext } from "./services/ingredientsContext";
+
+
 function App() {
   const ApiLink = "https://norma.nomoreparties.space";
-  const initialState = [];
-  const [ingridients, setIngridients] = useState(initialState);
 
-  const checkReponse = (res) => {
-    return res.ok ? res.json() : res.json().then((err) => Promise.reject(err));
-  };
+  const [ingredients, setIngredients] = useState([]);
+  const [isLoaded, setIsLoaded] = useState(false)
+  const [error, setError] = useState(null);
 
   useEffect(() => {
-    const getIngridientsData = async () => {
-      const res = await fetch(`${ApiLink}/api/ingredients`).then(checkReponse);
-      setIngridients(res.data);
+    const getIngredientsData = async () => {
+      try {
+        const res = await fetch(`${ApiLink}/api/ingredients`);
+        if (res.ok) {
+          const data = await res.json();
+          setIsLoaded(true);
+          setIngredients(data.data);
+        } else {
+          const error = await res.json();
+          throw new Error(error);
+        }
+      } catch (error) {
+        setIsLoaded(true);
+        setError(error);
+        console.log(`Ошибка: ${error}`);
+      }
     };
-    getIngridientsData();
+    getIngredientsData();
   }, []);
 
   return (
-    <div className={AppCss}>
-      <header className={AppCss.header}>
-        <AppHeader />
-      </header>
-      <main className={AppCss.main}>
-        <div className={AppCss.main__container}>
-          <BurgerIngredients ingridients={ingridients} />
-          <BurgerConstructor ingridients={ingridients} />
-        </div>
-      </main>
-    </div>
+    <>
+      {isLoaded && (
+        <IngredientsContext.Provider value={ingredients}>
+          <div className={AppCss}>
+            <header className={AppCss.header}>
+              <AppHeader />
+            </header>
+            <main className={AppCss.main}>
+              <div className={AppCss.main__container}>
+                <IngredientsContext.Provider value={ingredients}>
+                  <BurgerIngredients />
+                  <BurgerConstructor />
+                </IngredientsContext.Provider>
+              </div>
+            </main>
+          </div>
+        </IngredientsContext.Provider>
+      )}
+    </>
   );
 }
 

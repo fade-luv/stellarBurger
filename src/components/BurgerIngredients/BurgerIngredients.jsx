@@ -1,18 +1,21 @@
 import React from "react";
-import { useEffect } from "react";
+import { useEffect, useContext } from "react";
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
 import BurgerIngredientsStyle from "./BurgerIngredients.module.css";
 import Ingredient from "../Ingredient/Ingredient";
 import PropTypes from "prop-types";
+import { IngredientsContext } from "../../services/ingredientsContext";
 
-const BurgerIngredients = function (props) {
-  const { ingridients } = props;
 
+function BurgerIngredients() {
+  const  ingredients  = React.useContext(IngredientsContext);
+  console.log(ingredients);
   const [current, setCurrent] = React.useState("one");
 
-  useEffect(() => {
-    document.getElementById(current).scrollIntoView();
-  });
+useEffect(() => {
+  document.getElementById(current).scrollIntoView();
+});
+
 
   return (
     <React.Fragment>
@@ -52,7 +55,7 @@ const BurgerIngredients = function (props) {
             Булки
           </h2>
           <div className={BurgerIngredientsStyle.ingredients_container}>
-            {ingridients.map(
+            {ingredients.map(
               (ingredient) =>
                 ingredient.type === "bun" && (
                   <Ingredient
@@ -66,7 +69,7 @@ const BurgerIngredients = function (props) {
             Соусы
           </h2>
           <div className={BurgerIngredientsStyle.ingredients_container}>
-            {ingridients.map(
+            {ingredients.map(
               (ingredient) =>
                 ingredient.type === "sauce" && (
                   <Ingredient
@@ -80,7 +83,7 @@ const BurgerIngredients = function (props) {
             Начинки
           </h2>
           <div className={BurgerIngredientsStyle.ingredients_container}>
-            {ingridients.map(
+            {ingredients.map(
               (ingredient) =>
                 ingredient.type === "main" && (
                   <Ingredient
@@ -94,7 +97,7 @@ const BurgerIngredients = function (props) {
       </div>
     </React.Fragment>
   );
-};
+}
 
 BurgerIngredients.propTypes = {
   ingridients: PropTypes.arrayOf(

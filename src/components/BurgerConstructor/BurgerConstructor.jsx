@@ -9,9 +9,10 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import Modal from "../Modal/Modal";
 import OrderDetails from "../OrderDetails/OrderDetails";
+import { IngredientsContext } from "../../services/ingredientsContext";
 
-const BurgerConstructor = function (props) {
-  const { ingridients } = props;
+const BurgerConstructor = function () {
+  const ingredients = React.useContext(IngredientsContext);
   const [isOrderDetailsOpened, setIsOrderDetailsOpened] = React.useState(false);
 
   const closeAllModals = () => {
@@ -35,7 +36,7 @@ const BurgerConstructor = function (props) {
           />
         </li>
         <ul id="center" className={BurgerConstructorStyle.center}>
-          {ingridients.map((ingredient) => (
+          {ingredients.map((ingredient) => (
             <li
               key={ingredient._id}
               className={`${BurgerConstructorStyle.test} `}
@@ -82,7 +83,7 @@ const BurgerConstructor = function (props) {
             />
           </span>
         </span>
-    
+
         <Button
           type="primary"
           size="large"
