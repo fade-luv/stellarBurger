@@ -1,0 +1,29 @@
+
+.tabLink {
+  width: 200px;
+}
+.ingredients_container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+.BurgerIngredients {
+  max-width: 600px;
+  
+}
+.wrapper {
+    max-height: 65vh;
+    overflow-x: hidden;
+    overflow-y: scroll;
+    scrollbar-width: 5px;
+}
+
+#wrapper::-webkit-scrollbar {
+  background: #2F2F37;
+  width: 8px;
+  
+}
+#wrapper::-webkit-scrollbar-thumb {
+  background: #8585AD;
+}
+

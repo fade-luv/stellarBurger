@@ -1,0 +1,47 @@
+.title {
+  width: 640px;
+  margin: 0 auto;
+  margin-top: 40px;
+  display: flex;
+  font-family: "JetBrains Mono";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 36px;
+  line-height: 40px;
+  display: flex;
+  align-items: center;
+}
+.subtitle {
+  margin-top: 16px;
+  width: 520px;
+  margin: 0 auto;
+  margin-bottom: 32px;
+}
+.img_wrapper {
+  width: 520px;
+  margin: 0 auto;
+}
+.img {
+  width: 480px;
+  margin: 0 auto;
+}
+
+.specifications {
+  display: flex;
+  list-style-type: none;
+  width: 520px;
+  margin: 0 auto;
+  justify-content: space-between;
+  margin-bottom: 60px;
+}
+
+.specificationItem {
+  width: 120px;
+  font-family: "JetBrains Mono";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 24px;
+  text-align: center;
+  color: #8585ad;
+}
