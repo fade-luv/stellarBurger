@@ -9,7 +9,6 @@ import { IngredientsContext } from "../../services/ingredientsContext";
 
 function BurgerIngredients() {
   const  ingredients  = React.useContext(IngredientsContext);
-  console.log(ingredients);
   const [current, setCurrent] = React.useState("one");
 
 useEffect(() => {

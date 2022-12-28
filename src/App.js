@@ -45,10 +45,8 @@ function App() {
             </header>
             <main className={AppCss.main}>
               <div className={AppCss.main__container}>
-                <IngredientsContext.Provider value={ingredients}>
                   <BurgerIngredients />
                   <BurgerConstructor />
-                </IngredientsContext.Provider>
               </div>
             </main>
           </div>
