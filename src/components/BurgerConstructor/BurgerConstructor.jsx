@@ -11,28 +11,31 @@ import Modal from "../Modal/Modal";
 import OrderDetails from "../OrderDetails/OrderDetails";
 import { IngredientsContext } from "../../services/ingredientsContext";
 
-
-
-
-// let main = () => ingredients.filter((ingredient) => ingredient.type !== "bun");
 const BurgerConstructor = function () {
   const ingredients = React.useContext(IngredientsContext);
 
-
   const [isOrderDetailsOpened, setIsOrderDetailsOpened] = React.useState(false);
-
 
   function sortBun(params) {
     return ingredients.find((ingredient) => ingredient.type === "bun");
   }
-  let bun = sortBun();
+ 
 
   function sortSoucesAndFillings(params) {
-    return ingredients.filter((ingredient) => ingredient.type !== "bun");
+    return ingredients
+      .filter((ingredient) => ingredient.type !== "bun")
+      .slice(3, 9);
   }
   let SoucesAndFillings = sortSoucesAndFillings();
-  console.log(SoucesAndFillings);
 
+  function ingredientsPrice(params) {
+    const mainPrice = SoucesAndFillings.reduce((sum, el) => sum + el.price, 0);
+    const bun = sortBun()
+    const price = mainPrice + bun.price * 2;
+    return price;
+  }
+
+  let bun = sortBun();
 
 
   const closeAllModals = () => {
@@ -91,7 +94,7 @@ const BurgerConstructor = function () {
             className={`${BurgerConstructorStyle.constructor__result} mt-10`}
           >
             <span className={BurgerConstructorStyle.constructor_sum}>
-              <span className="text text_type_digits-medium">610</span>
+              <span className="text text_type_digits-medium">{ingredientsPrice()}</span>
               <span className={BurgerConstructorStyle.test3}>
                 <CurrencyIcon
                   type="primary"
