@@ -66,7 +66,7 @@ const BurgerConstructor = function () {
   function openModal(params) {
     setIsOrderDetailsOpened({
       ...isOrderDetailsOpened,
-      state: true,
+      state: true
     });
   }
   const closeAllModals = () => {
