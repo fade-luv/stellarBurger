@@ -10,9 +10,9 @@ import {
 import Modal from "../Modal/Modal";
 import OrderDetails from "../OrderDetails/OrderDetails";
 import { IngredientsContext } from "../../services/ingredientsContext";
-
+import { getOrderNumber } from "../../utils/burger-api";
 const BurgerConstructor = function () {
-  const orderRequestURL = "https://norma.nomoreparties.space/api/orders";
+
   const ingredients = React.useContext(IngredientsContext);
   const [orderId, setOrderId] = React.useState(0);
   const [isOrderDetailsOpened, setIsOrderDetailsOpened] = React.useState(false);
@@ -39,29 +39,15 @@ const BurgerConstructor = function () {
   function orderDetaildHandler(params) {
     const IDs = getIngerdientIDs();
     openModal();
-    getOrderNumber(IDs);
+    getOrderNumber(IDs)
+    .then((data) => setOrderId(data.order.number));
   }
 
   function getIngerdientIDs(params) {
     return [...sortSoucesAndFillings().map((el) => el._id), sortBun()._id];
   }
 
-  async function getOrderNumber(IDs) {
-    await fetch(orderRequestURL, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json;charset=utf-8",
-      },
-      body: JSON.stringify({ ingredients: IDs }),
-    })
-      .then((res) => {
-        if (res.ok) {
-          return res.json();
-        }
-        throw new Error(`Somthing wrong: ${res.status}`);
-      })
-      .then((data) => setOrderId(data.order.number));
-  }
+
   
   function openModal(params) {
     setIsOrderDetailsOpened({
