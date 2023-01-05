@@ -1,13 +1,13 @@
-function reducer(state, action) {
+import initialState from "../initialState";
 
+function ingredientsReducer(state = initialState, action) {
   switch (action.type) {
     case "LOAD_INGREDIENTS":
-      return { ...state, ingredients: action.value};
-      
+      return { ...state, ingredients: action.value };
+
     default:
       return state;
   }
-  
 }
 
-export default reducer;
+export default ingredientsReducer;

@@ -7,12 +7,11 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 
 function BurgerIngredients(props) {
-  const [current, setCurrent] = React.useState("one");
 
+  const [current, setCurrent] = React.useState("one");
   useEffect(() => {
     document.getElementById(current).scrollIntoView();
   });
-  console.log(props);
   return (
     <React.Fragment>
       <div className={BurgerIngredientsStyle.BurgerIngredients}>
@@ -51,7 +50,7 @@ function BurgerIngredients(props) {
             Булки
           </h2>
           <div className={BurgerIngredientsStyle.ingredients_container}>
-            {props.ingredients.ingredients.map(
+            {props.ingredients.ingredientsReducer.ingredients.map(
               (ingredient) =>
                 ingredient.type === "bun" && (
                   <Ingredient
@@ -65,7 +64,7 @@ function BurgerIngredients(props) {
             Соусы
           </h2>
           <div className={BurgerIngredientsStyle.ingredients_container}>
-            {props.ingredients.ingredients.map(
+            {props.ingredients.ingredientsReducer.ingredients.map(
               (ingredient) =>
                 ingredient.type === "sauce" && (
                   <Ingredient
@@ -79,7 +78,7 @@ function BurgerIngredients(props) {
             Начинки
           </h2>
           <div className={BurgerIngredientsStyle.ingredients_container}>
-            {props.ingredients.ingredients.map(
+            {props.ingredients.ingredientsReducer.ingredients.map(
               (ingredient) =>
                 ingredient.type === "main" && (
                   <Ingredient

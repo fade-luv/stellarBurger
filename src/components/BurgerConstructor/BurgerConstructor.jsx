@@ -1,6 +1,8 @@
 import React from "react";
+import { useEffect } from "react";
 import BurgerConstructorStyle from "./BurgerConstructor.module.css";
 import PropTypes from "prop-types";
+import { bindActionCreators } from "redux";
 import {
   ConstructorElement,
   Button,
@@ -11,22 +13,42 @@ import Modal from "../Modal/Modal";
 import OrderDetails from "../OrderDetails/OrderDetails";
 import { getOrderNumber } from "../../utils/burger-api";
 import { connect } from "react-redux";
+import burgerConstructorActionCreator from "../../store/actionCreators/burgerConstructor-actionCreator";
 
 const BurgerConstructor = function (props) {
+
   const [orderId, setOrderId] = React.useState(0);
   const [isOrderDetailsOpened, setIsOrderDetailsOpened] = React.useState(false);
 
+  let ingredientsFromState =
+    props.ingredients.burgerConstructorReducer.ingredientsReducer.filter(
+      (ingredient) => ingredient.type !== "bun"
+    );
+  let BunsFromState =
+    props.ingredients.burgerConstructorReducer.ingredientsReducer.find(
+      (ingredient) => ingredient.type === "bun"
+    );
+
   function sortBun(params) {
-    return props.ingredients.ingredients.find(
+    return props.ingredients.ingredientsReducer.ingredients.find(
       (ingredient) => ingredient.type === "bun"
     );
   }
 
   function sortSoucesAndFillings(params) {
-    return props.ingredients.ingredients
+    return props.ingredients.ingredientsReducer.ingredients
       .filter((ingredient) => ingredient.type !== "bun")
-      .slice(3, 9);
+      .slice(2, 9);
   }
+
+  useEffect(() => {
+    let SoucesAndFillings = sortSoucesAndFillings();
+    let bun = sortBun();
+    for (let i = 0; i <= 1; i++) {
+      SoucesAndFillings.push(bun);
+    }
+    props.burgerConstructorIngredients(SoucesAndFillings);
+  }, []);
 
   function ingredientsPrice(params) {
     const mainPrice = sortSoucesAndFillings().reduce(
@@ -40,20 +62,17 @@ const BurgerConstructor = function (props) {
   function orderDetaildHandler(params) {
     const IDs = getIngerdientIDs();
     openModal();
-    getOrderNumber(IDs)
-    .then((data) => setOrderId(data.order.number));
+    getOrderNumber(IDs).then((data) => setOrderId(data.order.number));
   }
 
   function getIngerdientIDs(params) {
     return [...sortSoucesAndFillings().map((el) => el._id), sortBun()._id];
   }
 
-
-  
   function openModal(params) {
     setIsOrderDetailsOpened({
       ...isOrderDetailsOpened,
-      state: true
+      state: true,
     });
   }
   const closeAllModals = () => {
@@ -75,13 +94,13 @@ const BurgerConstructor = function (props) {
               <ConstructorElement
                 type="top"
                 isLocked={true}
-                text={`${sortBun().name} (верх)`}
-                price={`${sortBun().price}`}
-                thumbnail={`${sortBun().image}`}
+                text={`${BunsFromState.name} (верх)`}
+                price={`${BunsFromState.price}`}
+                thumbnail={`${BunsFromState.image}`}
               />
             </li>
             <ul id="center" className={BurgerConstructorStyle.center}>
-              {sortSoucesAndFillings().map((ingredient) => (
+              {ingredientsFromState.map((ingredient) => (
                 <li
                   key={ingredient._id}
                   className={`${BurgerConstructorStyle.test} `}
@@ -102,9 +121,9 @@ const BurgerConstructor = function (props) {
               <ConstructorElement
                 type="bottom"
                 isLocked={true}
-                text={`${sortBun().name} (низ)`}
-                price={`${sortBun().price}`}
-                thumbnail={`${sortBun().image}`}
+                text={`${BunsFromState.name} (низ)`}
+                price={`${BunsFromState.price}`}
+                thumbnail={`${BunsFromState.image}`}
               />
             </li>
           </div>
@@ -169,4 +188,13 @@ function mapStateToProps(state) {
   };
 }
 
-export default connect(mapStateToProps)(BurgerConstructor);
+function mapDispatchToProps(dispatch) {
+  return {
+    burgerConstructorIngredients: bindActionCreators(
+      burgerConstructorActionCreator,
+      dispatch
+    ),
+  };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(BurgerConstructor);
