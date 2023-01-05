@@ -5,20 +5,19 @@ import BurgerConstructor from "./components/BurgerConstructor/BurgerConstructor"
 import AppCss from "./App.module.css";
 import { useEffect, useState } from "react";
 import { getIngredientsData } from "./utils/burger-api";
-import { Provider } from "react-redux";
-import store from "./store/store";
+import { connect } from "react-redux";
+import { bindActionCreators } from "redux";
+import ingredientsActionCreator  from "./store/actionCreators/ingredients-actionCreator";
 
-function App() {
-  
 
-  const [ingredients, setIngredients] = useState([]);
+function App(props) {
   const [isLoaded, setIsLoaded] = useState(false)
-
     useEffect(() => {
       getIngredientsData()
-        .then((data) => setIngredients(data.data))
-        .then(() => setIsLoaded(true))
+        .then((data) => props.changeIngredients(data.data))
+        .then(() => setIsLoaded(true));
     }, [])
+
   return (
     <>
       {isLoaded && (
@@ -28,10 +27,8 @@ function App() {
           </header>
           <main className={AppCss.main}>
             <div className={AppCss.main__container}>
-              <Provider store={store}>
                 <BurgerIngredients />
                 <BurgerConstructor />
-              </Provider>
             </div>
           </main>
         </div>
@@ -40,4 +37,11 @@ function App() {
   );
 }
 
-export default App;
+function mapDispatchToProps(dispatch) {
+  return {
+    changeIngredients: bindActionCreators(ingredientsActionCreator, dispatch),
+  };
+};
+
+export default connect(null, mapDispatchToProps)(App);
+

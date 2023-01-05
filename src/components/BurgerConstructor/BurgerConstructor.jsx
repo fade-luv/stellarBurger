@@ -17,11 +17,13 @@ const BurgerConstructor = function (props) {
   const [isOrderDetailsOpened, setIsOrderDetailsOpened] = React.useState(false);
 
   function sortBun(params) {
-    return props.ingredients.find((ingredient) => ingredient.type === "bun");
+    return props.ingredients.ingredients.find(
+      (ingredient) => ingredient.type === "bun"
+    );
   }
 
   function sortSoucesAndFillings(params) {
-    return props.ingredients
+    return props.ingredients.ingredients
       .filter((ingredient) => ingredient.type !== "bun")
       .slice(3, 9);
   }

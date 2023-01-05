@@ -1,8 +1,9 @@
-function ingredientsActionCreator(value) {
+function ingredientsActionCreator(data) {
   return {
-    type: LOAD_INGREDIENTS,
-    ingredients: value,
+    type: "LOAD_INGREDIENTS",
+    value: data,
   };
+  
 }
 
 export default ingredientsActionCreator;
