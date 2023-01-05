@@ -4,9 +4,9 @@ import BurgerIngredients from "./components/BurgerIngredients/BurgerIngredients"
 import BurgerConstructor from "./components/BurgerConstructor/BurgerConstructor";
 import AppCss from "./App.module.css";
 import { useEffect, useState } from "react";
-import { IngredientsContext } from "./services/ingredientsContext";
 import { getIngredientsData } from "./utils/burger-api";
-
+import { Provider } from "react-redux";
+import store from "./store/store";
 
 function App() {
   
@@ -28,10 +28,10 @@ function App() {
           </header>
           <main className={AppCss.main}>
             <div className={AppCss.main__container}>
-              <IngredientsContext.Provider value={ingredients}>
+              <Provider store={store}>
                 <BurgerIngredients />
                 <BurgerConstructor />
-              </IngredientsContext.Provider>
+              </Provider>
             </div>
           </main>
         </div>

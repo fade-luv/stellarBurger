@@ -4,19 +4,15 @@ import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
 import BurgerIngredientsStyle from "./BurgerIngredients.module.css";
 import Ingredient from "../Ingredient/Ingredient";
 import PropTypes from "prop-types";
-import { IngredientsContext } from "../../services/ingredientsContext";
+import { connect } from "react-redux";
 
-
-function BurgerIngredients() {
-  const  ingredients  = React.useContext(IngredientsContext);
-  console.log(ingredients);
+function BurgerIngredients(props) {
   const [current, setCurrent] = React.useState("one");
 
-useEffect(() => {
-  document.getElementById(current).scrollIntoView();
-});
-
-
+  useEffect(() => {
+    document.getElementById(current).scrollIntoView();
+  });
+  
   return (
     <React.Fragment>
       <div className={BurgerIngredientsStyle.BurgerIngredients}>
@@ -55,7 +51,7 @@ useEffect(() => {
             Булки
           </h2>
           <div className={BurgerIngredientsStyle.ingredients_container}>
-            {ingredients.map(
+            {props.ingredients.map(
               (ingredient) =>
                 ingredient.type === "bun" && (
                   <Ingredient
@@ -69,7 +65,7 @@ useEffect(() => {
             Соусы
           </h2>
           <div className={BurgerIngredientsStyle.ingredients_container}>
-            {ingredients.map(
+            {props.ingredients.map(
               (ingredient) =>
                 ingredient.type === "sauce" && (
                   <Ingredient
@@ -83,7 +79,7 @@ useEffect(() => {
             Начинки
           </h2>
           <div className={BurgerIngredientsStyle.ingredients_container}>
-            {ingredients.map(
+            {props.ingredients.map(
               (ingredient) =>
                 ingredient.type === "main" && (
                   <Ingredient
@@ -117,5 +113,9 @@ BurgerIngredients.propTypes = {
     }).isRequired
   ),
 };
-
-export default BurgerIngredients;
+function mapStateToProps(state) {
+  return {
+    ingredients: state,
+  };
+}
+export default connect(mapStateToProps)(BurgerIngredients);

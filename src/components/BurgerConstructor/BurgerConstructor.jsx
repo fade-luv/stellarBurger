@@ -9,20 +9,19 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import Modal from "../Modal/Modal";
 import OrderDetails from "../OrderDetails/OrderDetails";
-import { IngredientsContext } from "../../services/ingredientsContext";
 import { getOrderNumber } from "../../utils/burger-api";
-const BurgerConstructor = function () {
+import { connect } from "react-redux";
 
-  const ingredients = React.useContext(IngredientsContext);
+const BurgerConstructor = function (props) {
   const [orderId, setOrderId] = React.useState(0);
   const [isOrderDetailsOpened, setIsOrderDetailsOpened] = React.useState(false);
 
   function sortBun(params) {
-    return ingredients.find((ingredient) => ingredient.type === "bun");
+    return props.ingredients.find((ingredient) => ingredient.type === "bun");
   }
 
   function sortSoucesAndFillings(params) {
-    return ingredients
+    return props.ingredients
       .filter((ingredient) => ingredient.type !== "bun")
       .slice(3, 9);
   }
@@ -162,4 +161,10 @@ BurgerConstructor.propTypes = {
   ),
 };
 
-export default BurgerConstructor;
+function mapStateToProps(state) {
+  return {
+    ingredients: state,
+  };
+}
+
+export default connect(mapStateToProps)(BurgerConstructor);
