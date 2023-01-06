@@ -9,16 +9,17 @@ import IngredientDetails from "../IngredientDetails/IngredientDetails";
 import PropTypes from "prop-types";
 
 const Ingredient = function (props) {
+
   const { ingredientInfo } = props;
- 
-  const [isIngredientDetailsOpened, setIsIngredientDetailsOpened] =
-    React.useState({ state: false, target: {} });
+  const [isIngredientDetailsOpened, setIsIngredientDetailsOpened] =React.useState({ state: false, target: {} });
   const target = isIngredientDetailsOpened.target;
+
+
+  
 
   const closeAllModals = () => {
     setIsIngredientDetailsOpened(false);
   };
-
   const handleEscKeydown = (event) => {
     event.key === "Escape" && closeAllModals();
   };

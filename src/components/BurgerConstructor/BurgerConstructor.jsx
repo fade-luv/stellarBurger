@@ -16,57 +16,27 @@ import { connect } from "react-redux";
 import burgerConstructorActionCreator from "../../store/actionCreators/burgerConstructor-actionCreator";
 
 const BurgerConstructor = function (props) {
+
   const [orderId, setOrderId] = React.useState(0);
   const [isOrderDetailsOpened, setIsOrderDetailsOpened] = React.useState(false);
-console.log(props);
-  let ingredientsFromState =
-    props.ingredients.burgerConstructorReducer.burgerConstructorElements.filter(
-      (ingredient) => ingredient.type !== "bun"
-    );
-  let BunsFromState =
-    props.ingredients.burgerConstructorReducer.burgerConstructorElements.find(
-      (ingredient) => ingredient.type === "bun"
-    );
-
-  function sortBun(params) {
-    return props.ingredients.ingredientsReducer.ingredients.find(
-      (ingredient) => ingredient.type === "bun"
-    );
-  }
-
-  function sortSoucesAndFillings(params) {
-    return props.ingredients.ingredientsReducer.ingredients
-      .filter((ingredient) => ingredient.type !== "bun")
-      .slice(2, 9);
-  }
-
+  
+  let bun = props.ingredients.burgerConstructorReducer.constructorBun;
+  let SoucesAndFillings = props.ingredients.burgerConstructorReducer.constructorSoucesAndFillings;
+;
   useEffect(() => {
-    let SoucesAndFillings = sortSoucesAndFillings();
-    let bun = sortBun();
-    for (let i = 0; i <= 1; i++) {
-      SoucesAndFillings.push(bun);
-    }
-    props.burgerConstructorIngredients(SoucesAndFillings);
+    const Ingredients = props.ingredients.ingredientsReducer.ingredients;
+    props.burgerConstructorIngredients(Ingredients);
   }, []);
 
-  function ingredientsPrice(params) {
-    const mainPrice = sortSoucesAndFillings().reduce(
-      (sum, el) => sum + el.price,
-      0
-    );
-    const price = mainPrice + sortBun().price * 2;
-    return price;
-  }
+  // function orderDetaildHandler(params) {
+  //   const IDs = getIngerdientIDs();
+  //   openModal();
+  //   getOrderNumber(IDs).then((data) => setOrderId(data.order.number));
+  // }
 
-  function orderDetaildHandler(params) {
-    const IDs = getIngerdientIDs();
-    openModal();
-    getOrderNumber(IDs).then((data) => setOrderId(data.order.number));
-  }
-
-  function getIngerdientIDs(params) {
-    return [...sortSoucesAndFillings().map((el) => el._id), sortBun()._id];
-  }
+  // function getIngerdientIDs(params) {
+  //   return [...sortSoucesAndFillings().map((el) => el._id), sortBun()._id];
+  // }
 
   function openModal(params) {
     setIsOrderDetailsOpened({
@@ -84,7 +54,7 @@ console.log(props);
 
   return (
     <>
-      {sortBun() && (
+      {props.ingredients.burgerConstructorReducer.burgerConstructorElements && (
         <ul className={`${BurgerConstructorStyle.ul} pl-10`}>
           <div
             style={{ display: "flex", flexDirection: "column", gap: "10px" }}
@@ -93,13 +63,13 @@ console.log(props);
               <ConstructorElement
                 type="top"
                 isLocked={true}
-                text={`${BunsFromState.name} (верх)`}
-                price={`${BunsFromState.price}`}
-                thumbnail={`${BunsFromState.image}`}
+                text={`${bun.name} (верх)`}
+                price={`${bun.price}`}
+                thumbnail={`${bun.image}`}
               />
             </li>
             <ul id="center" className={BurgerConstructorStyle.center}>
-              {ingredientsFromState.map((ingredient) => (
+              {SoucesAndFillings.map((ingredient) => (
                 <li
                   key={ingredient._id}
                   className={`${BurgerConstructorStyle.test} `}
@@ -120,9 +90,9 @@ console.log(props);
               <ConstructorElement
                 type="bottom"
                 isLocked={true}
-                text={`${BunsFromState.name} (низ)`}
-                price={`${BunsFromState.price}`}
-                thumbnail={`${BunsFromState.image}`}
+                text={`${bun.name} (низ)`}
+                price={`${bun.price}`}
+                thumbnail={`${bun.image}`}
               />
             </li>
           </div>
@@ -131,7 +101,10 @@ console.log(props);
           >
             <span className={BurgerConstructorStyle.constructor_sum}>
               <span className="text text_type_digits-medium">
-                {ingredientsPrice()}
+                {
+                  props.ingredients.burgerConstructorReducer
+                    .burgerConstructorPrice
+                }
               </span>
               <span className={BurgerConstructorStyle.test3}>
                 <CurrencyIcon
@@ -141,7 +114,7 @@ console.log(props);
               </span>
             </span>
 
-            <Button type="primary" size="large" onClick={orderDetaildHandler}>
+            <Button type="primary" size="large" onClick={openModal}>
               Оформить заказ
             </Button>
           </div>
