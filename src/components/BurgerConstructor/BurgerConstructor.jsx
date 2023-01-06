@@ -16,16 +16,15 @@ import { connect } from "react-redux";
 import burgerConstructorActionCreator from "../../store/actionCreators/burgerConstructor-actionCreator";
 
 const BurgerConstructor = function (props) {
-
   const [orderId, setOrderId] = React.useState(0);
   const [isOrderDetailsOpened, setIsOrderDetailsOpened] = React.useState(false);
-
+console.log(props);
   let ingredientsFromState =
-    props.ingredients.burgerConstructorReducer.ingredientsReducer.filter(
+    props.ingredients.burgerConstructorReducer.burgerConstructorElements.filter(
       (ingredient) => ingredient.type !== "bun"
     );
   let BunsFromState =
-    props.ingredients.burgerConstructorReducer.ingredientsReducer.find(
+    props.ingredients.burgerConstructorReducer.burgerConstructorElements.find(
       (ingredient) => ingredient.type === "bun"
     );
 
