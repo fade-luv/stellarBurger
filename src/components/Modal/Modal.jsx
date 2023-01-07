@@ -9,9 +9,6 @@ import PropTypes from "prop-types";
 const modalsContainer = document.querySelector("#modals");
 
 
-
-
-
 const Modal = ({
   onOverlayClick,
   onEscKeydown,

@@ -74,6 +74,7 @@ function BurgerIngredients(props) {
                     <Ingredient
                       key={ingredient._id}
                       ingredientInfo={ingredient}
+
                     />
                   )
               )}
@@ -88,7 +89,6 @@ function BurgerIngredients(props) {
                     <Ingredient
                       key={ingredient._id}
                       ingredientInfo={ingredient}
-                      getFocusIngredient={props.getFocusIngredient}
                     />
                   )
               )}
@@ -103,6 +103,7 @@ function BurgerIngredients(props) {
                     <Ingredient
                       key={ingredient._id}
                       ingredientInfo={ingredient}
+                      
                     />
                   )
               )}
@@ -141,7 +142,6 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
   return {
     getIngredients: bindActionCreators(ingredientsActionCreator, dispatch),
-    getFocusIngredient: bindActionCreators(modalActionCreator, dispatch),
   };
 }
 export default connect(mapStateToProps, mapDispatchToProps)(BurgerIngredients);

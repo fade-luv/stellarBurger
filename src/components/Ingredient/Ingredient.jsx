@@ -1,41 +1,49 @@
 import React from "react";
 import IngredientStyle from "./Ingredient.module.css";
 import {
-  CurrencyIcon,
-  Counter,
+  CurrencyIcon
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import Modal from "../Modal/Modal";
 import IngredientDetails from "../IngredientDetails/IngredientDetails";
 import PropTypes from "prop-types";
+import {modalActionCreator} from "../../store/actionCreators/modal-actionCreator";
+import {closeModalActionCreator} from "../../store/actionCreators/modal-actionCreator";
+import { escCloseModalActionCreator } from "../../store/actionCreators/modal-actionCreator";
+import { overlayModalClickActionCreator } from "../../store/actionCreators/modal-actionCreator";
+import { bindActionCreators } from "redux";
+import { connect } from "react-redux";
 
 const Ingredient = function (props) {
 
+ let modalState = props.focusIngredient.focusIngredientReducer.state;
+ let modalInfo = props.focusIngredient.focusIngredientReducer.focusIngredient;
+ 
+
   const { ingredientInfo } = props;
-  const [isIngredientDetailsOpened, setIsIngredientDetailsOpened] =React.useState({ state: false, target: {} });
-  const target = isIngredientDetailsOpened.target;
 
+  function openModal(event) {
+    props.getFocusIngredient(ingredientInfo, true);
+  }
 
+  function closeModal(params) {
+    props.closeModal(false);
+  }
+
+  function escCloseModal(params) {
+    props.escClose(false);
+  }
+
+  function overlayCloseModal(params) {
+    props.overlayClose(false)
+  }
   
-
-  const closeAllModals = () => {
-    setIsIngredientDetailsOpened(false);
-  };
-  const handleEscKeydown = (event) => {
-    event.key === "Escape" && closeAllModals();
-  };
 
   return (
     <div>
       <>
         <div
           data="ingredient"
-          onClick={(event) =>
-            setIsIngredientDetailsOpened({
-              ...isIngredientDetailsOpened,
-              state: true,
-              target: event.currentTarget.getAttribute("data"),
-            })
-          }
+          onClick={openModal}
           className={`${IngredientStyle.Ingredient_item} ml-4`}
         >
           <div className={IngredientStyle.counter}>1</div>
@@ -61,15 +69,14 @@ const Ingredient = function (props) {
         </div>
       </>
       <>
-        {isIngredientDetailsOpened.state && (
+        {modalState && (
           <Modal
-            target={target}
             title="Детали заказа"
-            onOverlayClick={closeAllModals}
-            onEscKeydown={handleEscKeydown}
-            onCloseButtonClick={closeAllModals}
+            onOverlayClick={overlayCloseModal}
+            onEscKeydown={escCloseModal}
+            onCloseButtonClick={closeModal}
           >
-            <IngredientDetails info={ingredientInfo} />
+            <IngredientDetails info={modalInfo} />
           </Modal>
         )}
       </>
@@ -94,5 +101,19 @@ Ingredient.propTypes = {
   }).isRequired,
 };
 
+function mapStateToProps(state) {
+  return {
+    focusIngredient: state,
+  };
+}
 
-export default Ingredient;
+function mapDispatchToProps(dispatch) {
+  return {
+    getFocusIngredient: bindActionCreators(modalActionCreator, dispatch),
+    closeModal: bindActionCreators(closeModalActionCreator, dispatch),
+    escClose: bindActionCreators(escCloseModalActionCreator, dispatch),
+    overlayClose: bindActionCreators(overlayModalClickActionCreator, dispatch),
+  };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Ingredient);
