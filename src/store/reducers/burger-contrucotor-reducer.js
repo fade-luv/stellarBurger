@@ -15,6 +15,7 @@ const initialState = {
       __v: 0,
     },
   ],
+  burgerConstructorElementsID: [0],
   burgerConstructorPrice: 0,
   constructorBun: {
     _id: "60666c42cc7b410027a1a9b1",
@@ -46,6 +47,7 @@ const initialState = {
       __v: 0,
     },
   ],
+  orderNumber: {}
 };
 
 function burgerConstructorReducer(state = initialState, action) {
@@ -72,11 +74,13 @@ function burgerConstructorReducer(state = initialState, action) {
         return price;
       }
 
+    
+
       return {
         ...state,
         burgerConstructorPrice: getIngredientsPrice(),
         constructorBun: sortBun(),
-        constructorSoucesAndFillings: sortSoucesAndFillings()
+        constructorSoucesAndFillings: sortSoucesAndFillings(),
       };
 
     default:

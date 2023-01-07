@@ -11,15 +11,13 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import Modal from "../Modal/Modal";
 import OrderDetails from "../OrderDetails/OrderDetails";
-import { getOrderNumber } from "../../utils/burger-api";
-import { connect } from "react-redux";
+import { getOrderActionCreator } from "../../store/actionCreators/order-actionCreator";
+import { connect, useDispatch } from "react-redux";
 import burgerConstructorActionCreator from "../../store/actionCreators/burgerConstructor-actionCreator";
 
-const BurgerConstructor = function (props) {
 
-  const [orderId, setOrderId] = React.useState(0);
+const BurgerConstructor = function (props) {
   const [isOrderDetailsOpened, setIsOrderDetailsOpened] = React.useState(false);
-  
   let bun = props.ingredients.burgerConstructorReducer.constructorBun;
   let SoucesAndFillings = props.ingredients.burgerConstructorReducer.constructorSoucesAndFillings;
 ;
@@ -28,16 +26,23 @@ const BurgerConstructor = function (props) {
     props.burgerConstructorIngredients(Ingredients);
   }, []);
 
-  // function orderDetaildHandler(params) {
-  //   const IDs = getIngerdientIDs();
-  //   openModal();
-  //   getOrderNumber(IDs).then((data) => setOrderId(data.order.number));
-  // }
 
-  // function getIngerdientIDs(params) {
-  //   return [...sortSoucesAndFillings().map((el) => el._id), sortBun()._id];
-  // }
+  function getIngredientsIDs(params) {
+    let soucesAndFillingsID = SoucesAndFillings.map((el) => el._id);
+    let bunID = bun._id;
+    soucesAndFillingsID.push(bunID);
+    return soucesAndFillingsID;
+  }
+  
+  const dispatch = useDispatch ();
 
+
+  function handleClick(params) {
+    openModal();
+    let soucesAndFillingsID = getIngredientsIDs();
+    dispatch(getOrderActionCreator(soucesAndFillingsID));
+    
+  }
   function openModal(params) {
     setIsOrderDetailsOpened({
       ...isOrderDetailsOpened,
@@ -114,7 +119,7 @@ const BurgerConstructor = function (props) {
               </span>
             </span>
 
-            <Button type="primary" size="large" onClick={openModal}>
+            <Button type="primary" size="large" onClick={handleClick}>
               Оформить заказ
             </Button>
           </div>
@@ -128,7 +133,10 @@ const BurgerConstructor = function (props) {
           onEscKeydown={handleEscKeydown}
           onCloseButtonClick={closeAllModals}
         >
-          <OrderDetails id={orderId} title={"идентификатор заказа"} />
+          <OrderDetails
+            id={props.ingredients.orderReducer.order}
+            title={"идентификатор заказа"}
+          />
         </Modal>
       )}
     </>
@@ -166,6 +174,7 @@ function mapDispatchToProps(dispatch) {
       burgerConstructorActionCreator,
       dispatch
     ),
+    getOrder: bindActionCreators(getOrderActionCreator, dispatch),
   };
 }
 
