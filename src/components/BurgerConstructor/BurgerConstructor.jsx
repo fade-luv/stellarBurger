@@ -18,6 +18,7 @@ import burgerConstructorActionCreator from "../../store/actionCreators/burgerCon
 
 const BurgerConstructor = function (props) {
   const [isOrderDetailsOpened, setIsOrderDetailsOpened] = React.useState(false);
+
   let bun = props.ingredients.burgerConstructorReducer.constructorBun;
   let SoucesAndFillings = props.ingredients.burgerConstructorReducer.constructorSoucesAndFillings;
 ;
@@ -41,7 +42,6 @@ const BurgerConstructor = function (props) {
     openModal();
     let soucesAndFillingsID = getIngredientsIDs();
     dispatch(getOrderActionCreator(soucesAndFillingsID));
-    
   }
   function openModal(params) {
     setIsOrderDetailsOpened({
