@@ -14,19 +14,29 @@ import OrderDetails from "../OrderDetails/OrderDetails";
 import { getOrderActionCreator } from "../../store/actionCreators/order-actionCreator";
 import { connect, useDispatch } from "react-redux";
 import burgerConstructorActionCreator from "../../store/actionCreators/burgerConstructor-actionCreator";
-
+import deleteIngredientActionCreator from "../../store/actionCreators/deleteingredint-actionCreator.js";
+import { useDrop } from "react-dnd";
 
 const BurgerConstructor = function (props) {
+
+  const [, dropTarget] = useDrop({
+    accept: "ingredient",
+    drop(itemId) {
+      props.onDropHandler(itemId);
+    },
+  });
+
+  
   const [isOrderDetailsOpened, setIsOrderDetailsOpened] = React.useState(false);
 
   let bun = props.ingredients.burgerConstructorReducer.constructorBun;
-  let SoucesAndFillings = props.ingredients.burgerConstructorReducer.constructorSoucesAndFillings;
-;
+  let SoucesAndFillings =
+    props.ingredients.burgerConstructorReducer.constructorSoucesAndFillings;
+
   useEffect(() => {
     const Ingredients = props.ingredients.ingredientsReducer.ingredients;
     props.burgerConstructorIngredients(Ingredients);
   }, []);
-
 
   function getIngredientsIDs(params) {
     let soucesAndFillingsID = SoucesAndFillings.map((el) => el._id);
@@ -34,15 +44,17 @@ const BurgerConstructor = function (props) {
     soucesAndFillingsID.push(bunID);
     return soucesAndFillingsID;
   }
-  
-  const dispatch = useDispatch ();
 
+  const dispatch = useDispatch();
 
   function handleClick(params) {
     openModal();
     let soucesAndFillingsID = getIngredientsIDs();
     dispatch(getOrderActionCreator(soucesAndFillingsID));
   }
+
+
+
   function openModal(params) {
     setIsOrderDetailsOpened({
       ...isOrderDetailsOpened,
@@ -59,6 +71,7 @@ const BurgerConstructor = function (props) {
 
   return (
     <>
+      <div></div>
       {props.ingredients.burgerConstructorReducer.burgerConstructorElements && (
         <ul className={`${BurgerConstructorStyle.ul} pl-10`}>
           <div
@@ -73,7 +86,11 @@ const BurgerConstructor = function (props) {
                 thumbnail={`${bun.image}`}
               />
             </li>
-            <ul id="center" className={BurgerConstructorStyle.center}>
+            <ul
+              id="center"
+              className={BurgerConstructorStyle.center}
+              ref={dropTarget}
+            >
               {SoucesAndFillings.map((ingredient) => (
                 <li
                   key={ingredient._id}
@@ -86,7 +103,9 @@ const BurgerConstructor = function (props) {
                     text={ingredient.name}
                     price={ingredient.price}
                     className="pr-20"
+                    isLocked={false}
                     thumbnail={ingredient.image}
+                    handleClose={() => props.deleteIngredient(ingredient)}
                   />
                 </li>
               ))}
@@ -175,6 +194,10 @@ function mapDispatchToProps(dispatch) {
       dispatch
     ),
     getOrder: bindActionCreators(getOrderActionCreator, dispatch),
+    deleteIngredient: bindActionCreators(
+      deleteIngredientActionCreator,
+      dispatch
+    ),
   };
 }
 

@@ -11,15 +11,31 @@ import {closeModalActionCreator} from "../../store/actionCreators/modal-actionCr
 import { escCloseModalActionCreator } from "../../store/actionCreators/modal-actionCreator";
 import { overlayModalClickActionCreator } from "../../store/actionCreators/modal-actionCreator";
 import { bindActionCreators } from "redux";
-import { connect } from "react-redux";
+import { connect, useSelector } from "react-redux";
+import { useDrag } from "react-dnd";
 
 const Ingredient = function (props) {
+ const { ingredientInfo } = props;
+
+ const chosenIngredients = useSelector(
+   (store) => store.burgerConstructorReducer.chosenIngredients
+ );
+ const counter = chosenIngredients.filter(
+   (item) => item._id === ingredientInfo._id
+ )?.length;
+
+
 
  let modalState = props.focusIngredient.focusIngredientReducer.state;
  let modalInfo = props.focusIngredient.focusIngredientReducer.focusIngredient;
- 
+  const [{ isDrag }, dragRef] = useDrag({
+    type: "ingredient",
+    item:  ingredientInfo ,
+    collect: (monitor) => ({
+      isDrag: monitor.isDragging(),
+    }),
+  });
 
-  const { ingredientInfo } = props;
 
   function openModal(event) {
     props.getFocusIngredient(ingredientInfo, true);
@@ -39,49 +55,53 @@ const Ingredient = function (props) {
   
 
   return (
-    <div>
-      <>
-        <div
-          data="ingredient"
-          onClick={openModal}
-          className={`${IngredientStyle.Ingredient_item} ml-4`}
-        >
-          <div className={IngredientStyle.counter}>1</div>
-          <img
-            className={`${IngredientStyle.Ingredient__image} ml-4`}
-            src={ingredientInfo.image}
-          ></img>
+    !isDrag &&  (
+       <div>
+        <>
+          <div
+            ref={dragRef}
+            data="ingredient"
+            onClick={openModal}
+            className={`${IngredientStyle.Ingredient_item} ml-4`}
+          >
+            <div className={IngredientStyle.counter}>{counter}</div>
+            <img
+              className={`${IngredientStyle.Ingredient__image} ml-4`}
+              src={ingredientInfo.image}
+            ></img>
 
-          <div className={IngredientStyle.Ingredient__price_info}>
-            <p className="text text_type_digits-default mt-1">
-              {ingredientInfo.price}
-            </p>
+            <div className={IngredientStyle.Ingredient__price_info}>
+              <p className="text text_type_digits-default mt-1">
+                {ingredientInfo.price}
+              </p>
 
-            <div className="ml-1">
-              <CurrencyIcon type="primary" />
+              <div className="ml-1">
+                <CurrencyIcon type="primary" />
+              </div>
             </div>
+            <h3
+              className={`${IngredientStyle.Ingredient__title} text text_type_main-default  mt-2`}
+            >
+              {ingredientInfo.name}
+            </h3>
           </div>
-          <h3
-            className={`${IngredientStyle.Ingredient__title} text text_type_main-default  mt-2`}
-          >
-            {ingredientInfo.name}
-          </h3>
-        </div>
-      </>
-      <>
-        {modalState && (
-          <Modal
-            title="Детали заказа"
-            onOverlayClick={overlayCloseModal}
-            onEscKeydown={escCloseModal}
-            onCloseButtonClick={closeModal}
-          >
-            <IngredientDetails info={modalInfo} />
-          </Modal>
-        )}
-      </>
-    </div>
-  );
+        </>
+        <>
+          {modalState && (
+            <Modal
+              title="Детали заказа"
+              onOverlayClick={overlayCloseModal}
+              onEscKeydown={escCloseModal}
+              onCloseButtonClick={closeModal}
+            >
+              <IngredientDetails info={modalInfo} />
+            </Modal>
+          )}
+        </>
+      </div>
+    )
+     
+    )
 };
 
 Ingredient.propTypes = {
@@ -113,6 +133,7 @@ function mapDispatchToProps(dispatch) {
     closeModal: bindActionCreators(closeModalActionCreator, dispatch),
     escClose: bindActionCreators(escCloseModalActionCreator, dispatch),
     overlayClose: bindActionCreators(overlayModalClickActionCreator, dispatch),
+    
   };
 }
 

@@ -16,6 +16,7 @@ const initialState = {
     },
   ],
   burgerConstructorElementsID: [0],
+  chosenIngredients: [],
   burgerConstructorPrice: 0,
   constructorBun: {
     _id: "60666c42cc7b410027a1a9b1",
@@ -47,10 +48,11 @@ const initialState = {
       __v: 0,
     },
   ],
-  orderNumber: {}
+  orderNumber: {},
 };
 
 function burgerConstructorReducer(state = initialState, action) {
+  console.log(action);
   switch (action.type) {
     case "CONSTRUCTOR_INGREDIENTS":
       function sortSoucesAndFillings(value) {
@@ -58,7 +60,7 @@ function burgerConstructorReducer(state = initialState, action) {
           .filter((ingredient) => ingredient.type !== "bun")
           .slice(2, 9);
       }
-      
+
       function sortBun(params) {
         return action.constructorIngredients.find(
           (ingredient) => ingredient.type === "bun"
@@ -73,15 +75,39 @@ function burgerConstructorReducer(state = initialState, action) {
         const price = mainPrice + sortBun().price * 2;
         return price;
       }
-
-    
-
       return {
         ...state,
         burgerConstructorPrice: getIngredientsPrice(),
         constructorBun: sortBun(),
         constructorSoucesAndFillings: sortSoucesAndFillings(),
       };
+    case "ADD_INGREDIENT":
+      let constructorSoucesAndFillings = state.constructorSoucesAndFillings;
+      let chosenIngredients = state.chosenIngredients;
+      constructorSoucesAndFillings.push(action.ingredient);
+      chosenIngredients.push(action.ingredient);
+      return {
+        ...state,
+        constructorSoucesAndFillings: constructorSoucesAndFillings,
+        chosenIngredients: chosenIngredients,
+      };
+    case "DELETE_INGREDIENT":
+        const newStateIngredients = state.constructorSoucesAndFillings.filter(function(el) {
+          return el._id != action.ingredient._id
+        })
+
+        const newStateChosenIngredients = state.chosenIngredients.filter(
+          function (el) {
+            return el._id != action.ingredient._id;
+          }
+        );
+
+        return {
+          ...state,
+          constructorSoucesAndFillings: newStateIngredients,
+          chosenIngredients: newStateChosenIngredients,
+        };
+      
 
     default:
       return state;
