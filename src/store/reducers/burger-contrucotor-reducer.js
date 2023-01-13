@@ -58,7 +58,7 @@ function burgerConstructorReducer(state = initialState, action) {
       function sortSoucesAndFillings(value) {
         return action.constructorIngredients
           .filter((ingredient) => ingredient.type !== "bun")
-          .slice(2, 9);
+          .slice(0, 0);
       }
 
       function sortBun(params) {
