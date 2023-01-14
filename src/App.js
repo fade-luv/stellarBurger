@@ -7,16 +7,13 @@ import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import addIngredientActionCreator from "./store/actionCreators/addIngredient-actionCreator";
+
 
 function App(props) {
   const [elements, setElements] = React.useState([]);
   const [draggedElements, setDraggedElements] = React.useState([]);
 
-  const handleDrop = (itemId) => {
-  props.addIngredientToBurgerConstructor(itemId)
  
-  };
 
   return (
     <>
@@ -28,7 +25,7 @@ function App(props) {
           <div className={AppCss.main__container}>
             <DndProvider backend={HTML5Backend}>
               <BurgerIngredients />
-              <BurgerConstructor onDropHandler={handleDrop} />
+              <BurgerConstructor  />
             </DndProvider>
           </div>
         </main>
@@ -47,10 +44,7 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    addIngredientToBurgerConstructor: bindActionCreators(
-      addIngredientActionCreator,
-      dispatch
-    ),
+    
   };
 }
 

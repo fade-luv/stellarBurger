@@ -1,3 +1,5 @@
+
+
 const initialState = {
   burgerConstructorElements: [
     {
@@ -32,27 +34,11 @@ const initialState = {
     image_large: "https://code.s3.yandex.net/react/code/bun-02-large.png",
     __v: 0,
   },
-  constructorSoucesAndFillings: [
-    {
-      _id: "60666c42cc7b410027a1a9b1",
-      name: "Краторная булка N-200i",
-      type: "bun",
-      proteins: 80,
-      fat: 24,
-      carbohydrates: 53,
-      calories: 420,
-      price: 1255,
-      image: "https://code.s3.yandex.net/react/code/bun-02.png",
-      image_mobile: "https://code.s3.yandex.net/react/code/bun-02-mobile.png",
-      image_large: "https://code.s3.yandex.net/react/code/bun-02-large.png",
-      __v: 0,
-    },
-  ],
+  constructorSoucesAndFillings: [],
   orderNumber: {},
 };
 
 function burgerConstructorReducer(state = initialState, action) {
-  console.log(action);
   switch (action.type) {
     case "CONSTRUCTOR_INGREDIENTS":
       function sortSoucesAndFillings(value) {
@@ -82,32 +68,30 @@ function burgerConstructorReducer(state = initialState, action) {
         constructorSoucesAndFillings: sortSoucesAndFillings(),
       };
     case "ADD_INGREDIENT":
-      let constructorSoucesAndFillings = state.constructorSoucesAndFillings;
-      let chosenIngredients = state.chosenIngredients;
-      constructorSoucesAndFillings.push(action.ingredient);
-      chosenIngredients.push(action.ingredient);
+      const newArr = [...state.constructorSoucesAndFillings];
+      const newIngredient = {...action.ingredient}
+      newIngredient.uuid = action.uuid;
+      newArr.push(newIngredient)
       return {
         ...state,
-        constructorSoucesAndFillings: constructorSoucesAndFillings,
-        chosenIngredients: chosenIngredients,
+        constructorSoucesAndFillings: newArr,
+        chosenIngredients: newArr,
       };
+
+ 
     case "DELETE_INGREDIENT":
-        const newStateIngredients = state.constructorSoucesAndFillings.filter(function(el) {
-          return el._id != action.ingredient._id
-        })
+      const newStateIngredients = state.constructorSoucesAndFillings.filter(
+        function (el) {
+          return el.uuid != action.ingredient.uuid;
+        }
+      );
+       
 
-        const newStateChosenIngredients = state.chosenIngredients.filter(
-          function (el) {
-            return el._id != action.ingredient._id;
-          }
-        );
-
-        return {
-          ...state,
-          constructorSoucesAndFillings: newStateIngredients,
-          chosenIngredients: newStateChosenIngredients,
-        };
-      
+      return {
+        ...state,
+        constructorSoucesAndFillings: newStateIngredients,
+        chosenIngredients: newStateIngredients,
+      };
 
     default:
       return state;

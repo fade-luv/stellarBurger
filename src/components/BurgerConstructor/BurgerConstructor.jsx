@@ -13,30 +13,29 @@ import Modal from "../Modal/Modal";
 import OrderDetails from "../OrderDetails/OrderDetails";
 import { getOrderActionCreator } from "../../store/actionCreators/order-actionCreator";
 import { connect, useDispatch } from "react-redux";
-import burgerConstructorActionCreator from "../../store/actionCreators/burgerConstructor-actionCreator";
 import deleteIngredientActionCreator from "../../store/actionCreators/deleteingredint-actionCreator.js";
+import addIngredientActionCreator from "../../store/actionCreators/addIngredient-actionCreator";
 import { useDrop } from "react-dnd";
 
 const BurgerConstructor = function (props) {
-
   const [, dropTarget] = useDrop({
     accept: "ingredient",
-    drop(itemId) {
-      props.onDropHandler(itemId);
+    drop(ingredient) {
+      onDropHandler(ingredient);
     },
   });
 
-  
+  const onDropHandler = (ingredient) => {
+    if (ingredient.type === "sauce" || ingredient.type === "main") {
+      props.addIngredientToBurgerConstructor(ingredient);
+    }
+  };
+
   const [isOrderDetailsOpened, setIsOrderDetailsOpened] = React.useState(false);
 
   let bun = props.ingredients.burgerConstructorReducer.constructorBun;
   let SoucesAndFillings =
     props.ingredients.burgerConstructorReducer.constructorSoucesAndFillings;
-
-  useEffect(() => {
-    const Ingredients = props.ingredients.ingredientsReducer.ingredients;
-    props.burgerConstructorIngredients(Ingredients);
-  }, []);
 
   function getIngredientsIDs(params) {
     let soucesAndFillingsID = SoucesAndFillings.map((el) => el._id);
@@ -52,8 +51,6 @@ const BurgerConstructor = function (props) {
     let soucesAndFillingsID = getIngredientsIDs();
     dispatch(getOrderActionCreator(soucesAndFillingsID));
   }
-
-
 
   function openModal(params) {
     setIsOrderDetailsOpened({
@@ -189,13 +186,13 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    burgerConstructorIngredients: bindActionCreators(
-      burgerConstructorActionCreator,
-      dispatch
-    ),
     getOrder: bindActionCreators(getOrderActionCreator, dispatch),
     deleteIngredient: bindActionCreators(
       deleteIngredientActionCreator,
+      dispatch
+    ),
+    addIngredientToBurgerConstructor: bindActionCreators(
+      addIngredientActionCreator,
       dispatch
     ),
   };

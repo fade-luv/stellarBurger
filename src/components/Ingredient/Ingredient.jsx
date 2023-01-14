@@ -1,13 +1,11 @@
 import React from "react";
 import IngredientStyle from "./Ingredient.module.css";
-import {
-  CurrencyIcon
-} from "@ya.praktikum/react-developer-burger-ui-components";
+import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import Modal from "../Modal/Modal";
 import IngredientDetails from "../IngredientDetails/IngredientDetails";
 import PropTypes from "prop-types";
-import {modalActionCreator} from "../../store/actionCreators/modal-actionCreator";
-import {closeModalActionCreator} from "../../store/actionCreators/modal-actionCreator";
+import { modalActionCreator } from "../../store/actionCreators/modal-actionCreator";
+import { closeModalActionCreator } from "../../store/actionCreators/modal-actionCreator";
 import { escCloseModalActionCreator } from "../../store/actionCreators/modal-actionCreator";
 import { overlayModalClickActionCreator } from "../../store/actionCreators/modal-actionCreator";
 import { bindActionCreators } from "redux";
@@ -15,27 +13,23 @@ import { connect, useSelector } from "react-redux";
 import { useDrag } from "react-dnd";
 
 const Ingredient = function (props) {
- const { ingredientInfo } = props;
+  const { ingredientInfo } = props;
+  const chosenIngredients = useSelector(
+    (store) => store.burgerConstructorReducer.chosenIngredients
+  );
+  const counter = chosenIngredients.filter(
+    (item) => item._id === ingredientInfo._id
+  )?.length;
 
- const chosenIngredients = useSelector(
-   (store) => store.burgerConstructorReducer.chosenIngredients
- );
- const counter = chosenIngredients.filter(
-   (item) => item._id === ingredientInfo._id
- )?.length;
-
-
-
- let modalState = props.focusIngredient.focusIngredientReducer.state;
- let modalInfo = props.focusIngredient.focusIngredientReducer.focusIngredient;
+  let modalState = props.focusIngredient.focusIngredientReducer.state;
+  let modalInfo = props.focusIngredient.focusIngredientReducer.focusIngredient;
   const [{ isDrag }, dragRef] = useDrag({
     type: "ingredient",
-    item:  ingredientInfo ,
+    item: ingredientInfo,
     collect: (monitor) => ({
       isDrag: monitor.isDragging(),
     }),
   });
-
 
   function openModal(event) {
     props.getFocusIngredient(ingredientInfo, true);
@@ -50,13 +44,12 @@ const Ingredient = function (props) {
   }
 
   function overlayCloseModal(params) {
-    props.overlayClose(false)
+    props.overlayClose(false);
   }
-  
 
   return (
-    !isDrag &&  (
-       <div>
+    !isDrag && (
+      <div>
         <>
           <div
             ref={dragRef}
@@ -100,8 +93,7 @@ const Ingredient = function (props) {
         </>
       </div>
     )
-     
-    )
+  );
 };
 
 Ingredient.propTypes = {
@@ -133,7 +125,6 @@ function mapDispatchToProps(dispatch) {
     closeModal: bindActionCreators(closeModalActionCreator, dispatch),
     escClose: bindActionCreators(escCloseModalActionCreator, dispatch),
     overlayClose: bindActionCreators(overlayModalClickActionCreator, dispatch),
-    
   };
 }
 
