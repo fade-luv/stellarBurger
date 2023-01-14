@@ -77,6 +77,13 @@ function burgerConstructorReducer(state = initialState, action) {
         constructorSoucesAndFillings: newArr,
         chosenIngredients: newArr,
       };
+    case "ADD_BUN":
+      console.log(action);
+    return {
+      ...state,
+      constructorBun: action.ingredient
+    };
+    
 
  
     case "DELETE_INGREDIENT":

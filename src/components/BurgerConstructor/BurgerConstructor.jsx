@@ -15,6 +15,7 @@ import { getOrderActionCreator } from "../../store/actionCreators/order-actionCr
 import { connect, useDispatch } from "react-redux";
 import deleteIngredientActionCreator from "../../store/actionCreators/deleteingredint-actionCreator.js";
 import addIngredientActionCreator from "../../store/actionCreators/addIngredient-actionCreator";
+import addBunActionCreator from "../../store/actionCreators/addBun-actionCreator.js";
 import { useDrop } from "react-dnd";
 
 const BurgerConstructor = function (props) {
@@ -28,6 +29,8 @@ const BurgerConstructor = function (props) {
   const onDropHandler = (ingredient) => {
     if (ingredient.type === "sauce" || ingredient.type === "main") {
       props.addIngredientToBurgerConstructor(ingredient);
+    }else {
+      props.addBunToBurgerConstructor(ingredient)
     }
   };
 
@@ -72,6 +75,7 @@ const BurgerConstructor = function (props) {
       {props.ingredients.burgerConstructorReducer.burgerConstructorElements && (
         <ul className={`${BurgerConstructorStyle.ul} pl-10`}>
           <div
+            ref={dropTarget}
             style={{ display: "flex", flexDirection: "column", gap: "10px" }}
           >
             <li className={BurgerConstructorStyle.test}>
@@ -83,11 +87,7 @@ const BurgerConstructor = function (props) {
                 thumbnail={`${bun.image}`}
               />
             </li>
-            <ul
-              id="center"
-              className={BurgerConstructorStyle.center}
-              ref={dropTarget}
-            >
+            <ul id="center" className={BurgerConstructorStyle.center}>
               {SoucesAndFillings.map((ingredient) => (
                 <li
                   key={ingredient._id}
@@ -193,6 +193,10 @@ function mapDispatchToProps(dispatch) {
     ),
     addIngredientToBurgerConstructor: bindActionCreators(
       addIngredientActionCreator,
+      dispatch
+    ),
+    addBunToBurgerConstructor: bindActionCreators(
+      addBunActionCreator,
       dispatch
     ),
   };
