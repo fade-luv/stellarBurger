@@ -1,5 +1,4 @@
 import React from "react";
-import { useEffect } from "react";
 import BurgerConstructorStyle from "./BurgerConstructor.module.css";
 import PropTypes from "prop-types";
 import { bindActionCreators } from "redux";
@@ -16,29 +15,46 @@ import { connect, useDispatch } from "react-redux";
 import deleteIngredientActionCreator from "../../store/actionCreators/deleteingredint-actionCreator.js";
 import addIngredientActionCreator from "../../store/actionCreators/addIngredient-actionCreator";
 import addBunActionCreator from "../../store/actionCreators/addBun-actionCreator.js";
+import incrementActionCreator from "../../store/actionCreators/increment-actionCreator";
+import decrementActionCreator from "../../store/actionCreators/decrement-actionCreator";
 import { useDrop } from "react-dnd";
 
 const BurgerConstructor = function (props) {
+
   const [, dropTarget] = useDrop({
     accept: "ingredient",
     drop(ingredient) {
       onDropHandler(ingredient);
+      priceIncrement(ingredient)
     },
   });
-
-  const onDropHandler = (ingredient) => {
-    if (ingredient.type === "sauce" || ingredient.type === "main") {
-      props.addIngredientToBurgerConstructor(ingredient);
-    }else {
-      props.addBunToBurgerConstructor(ingredient)
-    }
-  };
 
   const [isOrderDetailsOpened, setIsOrderDetailsOpened] = React.useState(false);
 
   let bun = props.ingredients.burgerConstructorReducer.constructorBun;
   let SoucesAndFillings =
     props.ingredients.burgerConstructorReducer.constructorSoucesAndFillings;
+
+ 
+
+  const priceIncrement = (item) => {
+    if (item.type === "sauce" || item.type === "main"){
+      props.increment(item.price)
+    }else{
+      props.increment(item.price * 2);
+    }
+  }
+
+
+  const onDropHandler = (ingredient) => {
+    if (ingredient.type === "sauce" || ingredient.type === "main") {
+      props.addIngredientToBurgerConstructor(ingredient);
+      props.increment(ingredient.price);
+    } else {
+      props.addBunToBurgerConstructor(ingredient);
+
+    }
+  };
 
   function getIngredientsIDs(params) {
     let soucesAndFillingsID = SoucesAndFillings.map((el) => el._id);
@@ -55,6 +71,8 @@ const BurgerConstructor = function (props) {
     dispatch(getOrderActionCreator(soucesAndFillingsID));
   }
 
+
+
   function openModal(params) {
     setIsOrderDetailsOpened({
       ...isOrderDetailsOpened,
@@ -69,6 +87,12 @@ const BurgerConstructor = function (props) {
     event.key === "Escape" && closeAllModals();
   };
 
+
+    function handleDelete(ingredient) {
+       props.deleteIngredient(ingredient)
+       props.decrement(ingredient.price)
+
+    }
   return (
     <>
       <div></div>
@@ -102,7 +126,7 @@ const BurgerConstructor = function (props) {
                     className="pr-20"
                     isLocked={false}
                     thumbnail={ingredient.image}
-                    handleClose={() => props.deleteIngredient(ingredient)}
+                    handleClose={() => handleDelete(ingredient)}
                   />
                 </li>
               ))}
@@ -124,7 +148,7 @@ const BurgerConstructor = function (props) {
               <span className="text text_type_digits-medium">
                 {
                   props.ingredients.burgerConstructorReducer
-                    .burgerConstructorPrice
+                    .burgerConstructorTotalPrice
                 }
               </span>
               <span className={BurgerConstructorStyle.test3}>
@@ -199,6 +223,8 @@ function mapDispatchToProps(dispatch) {
       addBunActionCreator,
       dispatch
     ),
+    increment: bindActionCreators(incrementActionCreator, dispatch),
+    decrement: bindActionCreators(decrementActionCreator, dispatch),
   };
 }
 

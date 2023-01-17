@@ -13,11 +13,19 @@ import { connect, useSelector } from "react-redux";
 import { useDrag } from "react-dnd";
 
 const Ingredient = function (props) {
+
   const { ingredientInfo } = props;
   const chosenIngredients = useSelector(
     (store) => store.burgerConstructorReducer.chosenIngredients
   );
-  const counter = chosenIngredients.filter(
+
+  const chosenBun = useSelector(
+    (store) => store.burgerConstructorReducer.constructorBun
+  );
+
+const addIngredients = [chosenBun, ...chosenIngredients];
+
+  const counter = addIngredients.filter(
     (item) => item._id === ingredientInfo._id
   )?.length;
 

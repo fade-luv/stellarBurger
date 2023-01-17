@@ -13,7 +13,7 @@ import  {useInView}  from "react-intersection-observer";
 function BurgerIngredients(props) {
   const [current, setCurrent] = React.useState("one");
   const [isLoaded, setIsLoaded] = useState(false);
-  
+
   
   const bunRef = useRef(null);
   const sauceRef = useRef(null);
