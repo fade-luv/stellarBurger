@@ -10,51 +10,22 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import Modal from "../Modal/Modal";
 import OrderDetails from "../OrderDetails/OrderDetails";
+import BurgerConstructorItem from "./BurgerConstructorItem/BurgerConstructorItem";
 import { getOrderActionCreator } from "../../store/actionCreators/order-actionCreator";
 import { connect, useDispatch } from "react-redux";
 import deleteIngredientActionCreator from "../../store/actionCreators/deleteingredint-actionCreator.js";
 import addIngredientActionCreator from "../../store/actionCreators/addIngredient-actionCreator";
 import addBunActionCreator from "../../store/actionCreators/addBun-actionCreator.js";
 import incrementActionCreator from "../../store/actionCreators/increment-actionCreator";
-import decrementActionCreator from "../../store/actionCreators/decrement-actionCreator";
+
 import { useDrop } from "react-dnd";
 
 const BurgerConstructor = function (props) {
-
-  const [, dropTarget] = useDrop({
-    accept: "ingredient",
-    drop(ingredient) {
-      onDropHandler(ingredient);
-      priceIncrement(ingredient)
-    },
-  });
-
   const [isOrderDetailsOpened, setIsOrderDetailsOpened] = React.useState(false);
 
   let bun = props.ingredients.burgerConstructorReducer.constructorBun;
   let SoucesAndFillings =
     props.ingredients.burgerConstructorReducer.constructorSoucesAndFillings;
-
- 
-
-  const priceIncrement = (item) => {
-    if (item.type === "sauce" || item.type === "main"){
-      props.increment(item.price)
-    }else{
-      props.increment(item.price * 2);
-    }
-  }
-
-
-  const onDropHandler = (ingredient) => {
-    if (ingredient.type === "sauce" || ingredient.type === "main") {
-      props.addIngredientToBurgerConstructor(ingredient);
-      props.increment(ingredient.price);
-    } else {
-      props.addBunToBurgerConstructor(ingredient);
-
-    }
-  };
 
   function getIngredientsIDs(params) {
     let soucesAndFillingsID = SoucesAndFillings.map((el) => el._id);
@@ -71,8 +42,6 @@ const BurgerConstructor = function (props) {
     dispatch(getOrderActionCreator(soucesAndFillingsID));
   }
 
-
-
   function openModal(params) {
     setIsOrderDetailsOpened({
       ...isOrderDetailsOpened,
@@ -87,12 +56,31 @@ const BurgerConstructor = function (props) {
     event.key === "Escape" && closeAllModals();
   };
 
+  const [, dropTarget] = useDrop({
+    accept: "ingredient",
+    drop(ingredient) {
+      onDropHandler(ingredient);
+      priceIncrement(ingredient);
+    },
+  });
 
-    function handleDelete(ingredient) {
-       props.deleteIngredient(ingredient)
-       props.decrement(ingredient.price)
-
+  const onDropHandler = (ingredient) => {
+    if (ingredient.type === "sauce" || ingredient.type === "main") {
+      props.addIngredientToBurgerConstructor(ingredient);
+      props.increment(ingredient.price);
+    } else {
+      props.addBunToBurgerConstructor(ingredient);
     }
+  };
+
+  const priceIncrement = (item) => {
+    if (item.type === "sauce" || item.type === "main") {
+      props.increment(item.price);
+    } else {
+      props.increment(item.price * 2);
+    }
+  };
+
   return (
     <>
       <div></div>
@@ -113,22 +101,7 @@ const BurgerConstructor = function (props) {
             </li>
             <ul id="center" className={BurgerConstructorStyle.center}>
               {SoucesAndFillings.map((ingredient) => (
-                <li
-                  key={ingredient._id}
-                  className={`${BurgerConstructorStyle.test} `}
-                >
-                  <div className={BurgerConstructorStyle.test2}>
-                    <DragIcon type="primary" />
-                  </div>
-                  <ConstructorElement
-                    text={ingredient.name}
-                    price={ingredient.price}
-                    className="pr-20"
-                    isLocked={false}
-                    thumbnail={ingredient.image}
-                    handleClose={() => handleDelete(ingredient)}
-                  />
-                </li>
+                <BurgerConstructorItem ingredient={ingredient} />
               ))}
             </ul>
             <li className={BurgerConstructorStyle.test}>
@@ -224,7 +197,6 @@ function mapDispatchToProps(dispatch) {
       dispatch
     ),
     increment: bindActionCreators(incrementActionCreator, dispatch),
-    decrement: bindActionCreators(decrementActionCreator, dispatch),
   };
 }
 
