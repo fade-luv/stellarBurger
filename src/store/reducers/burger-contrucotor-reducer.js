@@ -30,7 +30,6 @@ const initialState = {
 };
 
 function burgerConstructorReducer(state = initialState, action) {
-
   function getSum(params) {
     return state.chosenIngredients
       .map((item) => item.price)
@@ -84,6 +83,12 @@ function burgerConstructorReducer(state = initialState, action) {
         ...state,
         burgerConstructorTotalPrice: state.burgerConstructorTotalPrice - action.price,
       };
+    case "SORT_INGREDIENTS": 
+
+    return {
+      ...state,
+      chosenIngredients: action.newSoucesAndFilling
+    };
 
     default:
       return state;

@@ -17,15 +17,17 @@ import deleteIngredientActionCreator from "../../store/actionCreators/deleteingr
 import addIngredientActionCreator from "../../store/actionCreators/addIngredient-actionCreator";
 import addBunActionCreator from "../../store/actionCreators/addBun-actionCreator.js";
 import incrementActionCreator from "../../store/actionCreators/increment-actionCreator";
+import sortIngredientsActionCreator from "../../store/actionCreators/sortIngredients-actionCreator";
 
 import { useDrop } from "react-dnd";
 
 const BurgerConstructor = function (props) {
+console.log(props);
   const [isOrderDetailsOpened, setIsOrderDetailsOpened] = React.useState(false);
 
   let bun = props.ingredients.burgerConstructorReducer.constructorBun;
   let SoucesAndFillings =
-    props.ingredients.burgerConstructorReducer.constructorSoucesAndFillings;
+    props.ingredients.burgerConstructorReducer.chosenIngredients;
 
   function getIngredientsIDs(params) {
     let soucesAndFillingsID = SoucesAndFillings.map((el) => el._id);
@@ -81,6 +83,18 @@ const BurgerConstructor = function (props) {
     }
   };
 
+
+  const moveCard = (dragIndex, hoverIndex) => {
+    const dragSoucesAndFillingsItem = SoucesAndFillings[dragIndex];
+    if (dragSoucesAndFillingsItem) {
+      const newSoucesAndFillings = [...SoucesAndFillings];
+      newSoucesAndFillings.splice(dragIndex, 1);
+      newSoucesAndFillings.splice(hoverIndex, 0, dragSoucesAndFillingsItem);
+      props.sortIngredients(newSoucesAndFillings);
+    }
+  };
+
+
   return (
     <>
       <div></div>
@@ -100,8 +114,8 @@ const BurgerConstructor = function (props) {
               />
             </li>
             <ul id="center" className={BurgerConstructorStyle.center}>
-              {SoucesAndFillings.map((ingredient) => (
-                <BurgerConstructorItem ingredient={ingredient} />
+              {SoucesAndFillings.map((ingredient, index) => (
+                <BurgerConstructorItem ingredient={ingredient} index={index} moveCard={moveCard}/>
               ))}
             </ul>
             <li className={BurgerConstructorStyle.test}>
@@ -197,6 +211,7 @@ function mapDispatchToProps(dispatch) {
       dispatch
     ),
     increment: bindActionCreators(incrementActionCreator, dispatch),
+    sortIngredients: bindActionCreators(sortIngredientsActionCreator, dispatch),
   };
 }
 
