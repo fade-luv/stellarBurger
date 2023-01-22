@@ -1,10 +1,26 @@
-function ingredientsActionCreator(data) {
+import {getIngredientsData} from "../../utils/burger-api";
 
-  return {
-    type: "LOAD_INGREDIENTS",
-    value: data,
-  };
-  
-}
+function getIngredientsActionCreator() {
+      return function (dispatch) {
+        dispatch({
+          type: "GET_INGREDIENTS",
+        });
+        getIngredientsData()
+        .then (res => {
+          if (res){
+            dispatch({
+              type: "GET_INGREDIENTS_SUCCESS",
+              ingredients: res.data,
+            });
+          }else {
+            dispatch({
+              type:"GET_INGREDIENTS_FAILED"
+            })
+          }
+        })
 
-export default ingredientsActionCreator;
+      }
+    }
+
+
+export default getIngredientsActionCreator;

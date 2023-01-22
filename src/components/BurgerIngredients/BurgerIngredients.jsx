@@ -1,20 +1,19 @@
 import React from "react";
-import { useEffect, useState, useRef, useMemo } from "react";
+import { useEffect, useState, useRef } from "react";
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
 import BurgerIngredientsStyle from "./BurgerIngredients.module.css";
 import Ingredient from "../Ingredient/Ingredient";
 import PropTypes from "prop-types";
-import { connect } from "react-redux";
-import { getIngredientsData } from "../../utils/burger-api";
-import { bindActionCreators } from "redux";
-import ingredientsActionCreator from "../../store/actionCreators/ingredients-actionCreator";
+import { useSelector, useDispatch } from "react-redux";
 import  {useInView}  from "react-intersection-observer";
+import getIngredientsActionCreator from "../../store/actionCreators/ingredients-actionCreator";
 
 function BurgerIngredients(props) {
+  const dispatch = useDispatch();
   const [current, setCurrent] = React.useState("one");
   const [isLoaded, setIsLoaded] = useState(false);
 
-  
+        
   const bunRef = useRef(null);
   const sauceRef = useRef(null);
   const ingRef = useRef(null);
@@ -24,8 +23,12 @@ function BurgerIngredients(props) {
  const { ref: saucesRefVisible, inView: saucesVisible } = useInView();
  const { ref: ingredientsRefVisible, inView: ingredientsVisible } = useInView();
 
+ useEffect(() => {
+   dispatch(getIngredientsActionCreator());
+   setIsLoaded(true);
+ }, []);
 
-
+const ingredients = useSelector((state) => state.ingredientsReducer.ingredients)
   const handleScroll = () => {
     if (bunsVisible) {
       setCurrent("one");
@@ -47,11 +50,7 @@ function BurgerIngredients(props) {
   };
 
   
-  useEffect(() => {
-    getIngredientsData()
-      .then((data) => props.getIngredients(data.data))
-      .then(() => setIsLoaded(true));
-  }, []);
+ 
 
   return (
     <React.Fragment>
@@ -107,7 +106,7 @@ function BurgerIngredients(props) {
                 className={BurgerIngredientsStyle.ingredients_container}
                 ref={bunsRefVisible}
               >
-                {props.ingredients.ingredientsReducer.ingredients.map(
+                {ingredients.map(
                   (ingredient) =>
                     ingredient.type === "bun" && (
                       <Ingredient
@@ -128,7 +127,7 @@ function BurgerIngredients(props) {
                 className={BurgerIngredientsStyle.ingredients_container}
                 ref={saucesRefVisible}
               >
-                {props.ingredients.ingredientsReducer.ingredients.map(
+                {ingredients.map(
                   (ingredient) =>
                     ingredient.type === "sauce" && (
                       <Ingredient
@@ -149,7 +148,7 @@ function BurgerIngredients(props) {
                 className={BurgerIngredientsStyle.ingredients_container}
                 ref={ingredientsRefVisible}
               >
-                {props.ingredients.ingredientsReducer.ingredients.map(
+                {ingredients.map(
                   (ingredient) =>
                     ingredient.type === "main" && (
                       <Ingredient
@@ -185,15 +184,5 @@ BurgerIngredients.propTypes = {
     }).isRequired
   ),
 };
-function mapStateToProps(state) {
-  return {
-    ingredients: state,
-  };
-}
 
-function mapDispatchToProps(dispatch) {
-  return {
-    getIngredients: bindActionCreators(ingredientsActionCreator, dispatch),
-  };
-}
-export default connect(mapStateToProps, mapDispatchToProps)(BurgerIngredients);
+export default BurgerIngredients;

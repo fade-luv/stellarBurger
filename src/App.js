@@ -5,13 +5,12 @@ import BurgerConstructor from "./components/BurgerConstructor/BurgerConstructor"
 import AppCss from "./App.module.css";
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
-import { connect } from "react-redux";
-import { bindActionCreators } from "redux";
+
+
 
 
 function App(props) {
-  const [elements, setElements] = React.useState([]);
-  const [draggedElements, setDraggedElements] = React.useState([]);
+
 
  
 
@@ -36,17 +35,7 @@ function App(props) {
 
 
 
-function mapStateToProps(state) {
-  return {
-    ingredients: state,
-  };
-}
-
-function mapDispatchToProps(dispatch) {
-  return {
-    
-  };
-}
 
 
-export default connect(mapStateToProps, mapDispatchToProps)(App);
+
+export default App;

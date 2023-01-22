@@ -19,7 +19,8 @@ export const orderReducer = (state = initialState, action) => {
       return {
         ...state,
         orderFailed: true,
-        orderRequest: false
+        orderRequest: false,
+        order: 0
       }
     }
       

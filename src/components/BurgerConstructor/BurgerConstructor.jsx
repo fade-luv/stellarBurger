@@ -1,19 +1,16 @@
 import React from "react";
 import BurgerConstructorStyle from "./BurgerConstructor.module.css";
 import PropTypes from "prop-types";
-import { bindActionCreators } from "redux";
 import {
   ConstructorElement,
   Button,
   CurrencyIcon,
-  DragIcon,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import Modal from "../Modal/Modal";
 import OrderDetails from "../OrderDetails/OrderDetails";
 import BurgerConstructorItem from "./BurgerConstructorItem/BurgerConstructorItem";
 import { getOrderActionCreator } from "../../store/actionCreators/order-actionCreator";
-import { connect, useDispatch } from "react-redux";
-import deleteIngredientActionCreator from "../../store/actionCreators/deleteingredint-actionCreator.js";
+import { useDispatch, useSelector } from "react-redux";
 import addIngredientActionCreator from "../../store/actionCreators/addIngredient-actionCreator";
 import addBunActionCreator from "../../store/actionCreators/addBun-actionCreator.js";
 import incrementActionCreator from "../../store/actionCreators/increment-actionCreator";
@@ -22,12 +19,29 @@ import sortIngredientsActionCreator from "../../store/actionCreators/sortIngredi
 import { useDrop } from "react-dnd";
 
 const BurgerConstructor = function (props) {
-console.log(props);
-  const [isOrderDetailsOpened, setIsOrderDetailsOpened] = React.useState(false);
+  const dispatch = useDispatch();
 
-  let bun = props.ingredients.burgerConstructorReducer.constructorBun;
-  let SoucesAndFillings =
-    props.ingredients.burgerConstructorReducer.chosenIngredients;
+  const [isOrderDetailsOpened, setIsOrderDetailsOpened] = React.useState(false);
+  let test = useSelector((state) => state)
+
+  let order = useSelector((state) => state.orderReducer.order)
+
+  let bun = useSelector(
+    (state) => state.burgerConstructorReducer.constructorBun
+  );
+
+  let SoucesAndFillings = useSelector(
+    (state) => state.burgerConstructorReducer.chosenIngredients
+  );
+
+  let BurgerElem = useSelector(
+    (state) => state.burgerConstructorReducer.burgerConstructorElements
+  );
+
+  let totalPrice = useSelector(
+    (state) => state.burgerConstructorReducer.burgerConstructorTotalPrice
+  );
+
 
   function getIngredientsIDs(params) {
     let soucesAndFillingsID = SoucesAndFillings.map((el) => el._id);
@@ -35,8 +49,6 @@ console.log(props);
     soucesAndFillingsID.push(bunID);
     return soucesAndFillingsID;
   }
-
-  const dispatch = useDispatch();
 
   function handleClick(params) {
     openModal();
@@ -68,21 +80,21 @@ console.log(props);
 
   const onDropHandler = (ingredient) => {
     if (ingredient.type === "sauce" || ingredient.type === "main") {
-      props.addIngredientToBurgerConstructor(ingredient);
-      props.increment(ingredient.price);
+      dispatch(addIngredientActionCreator(ingredient));
+      dispatch(incrementActionCreator(ingredient.price));
     } else {
-      props.addBunToBurgerConstructor(ingredient);
+      dispatch(addBunActionCreator(ingredient));
     }
   };
 
   const priceIncrement = (item) => {
     if (item.type === "sauce" || item.type === "main") {
-      props.increment(item.price);
+      dispatch(incrementActionCreator(item.price));
+
     } else {
-      props.increment(item.price * 2);
+      dispatch(incrementActionCreator(item.price * 2));
     }
   };
-
 
   const moveCard = (dragIndex, hoverIndex) => {
     const dragSoucesAndFillingsItem = SoucesAndFillings[dragIndex];
@@ -90,15 +102,15 @@ console.log(props);
       const newSoucesAndFillings = [...SoucesAndFillings];
       newSoucesAndFillings.splice(dragIndex, 1);
       newSoucesAndFillings.splice(hoverIndex, 0, dragSoucesAndFillingsItem);
-      props.sortIngredients(newSoucesAndFillings);
+      dispatch(sortIngredientsActionCreator(newSoucesAndFillings));
+
     }
   };
-
 
   return (
     <>
       <div></div>
-      {props.ingredients.burgerConstructorReducer.burgerConstructorElements && (
+      {BurgerElem && (
         <ul className={`${BurgerConstructorStyle.ul} pl-10`}>
           <div
             ref={dropTarget}
@@ -115,7 +127,11 @@ console.log(props);
             </li>
             <ul id="center" className={BurgerConstructorStyle.center}>
               {SoucesAndFillings.map((ingredient, index) => (
-                <BurgerConstructorItem ingredient={ingredient} index={index} moveCard={moveCard}/>
+                <BurgerConstructorItem
+                  ingredient={ingredient}
+                  index={index}
+                  moveCard={moveCard}
+                />
               ))}
             </ul>
             <li className={BurgerConstructorStyle.test}>
@@ -132,12 +148,7 @@ console.log(props);
             className={`${BurgerConstructorStyle.constructor__result} mt-10`}
           >
             <span className={BurgerConstructorStyle.constructor_sum}>
-              <span className="text text_type_digits-medium">
-                {
-                  props.ingredients.burgerConstructorReducer
-                    .burgerConstructorTotalPrice
-                }
-              </span>
+              <span className="text text_type_digits-medium">{totalPrice}</span>
               <span className={BurgerConstructorStyle.test3}>
                 <CurrencyIcon
                   type="primary"
@@ -160,10 +171,7 @@ console.log(props);
           onEscKeydown={handleEscKeydown}
           onCloseButtonClick={closeAllModals}
         >
-          <OrderDetails
-            id={props.ingredients.orderReducer.order}
-            title={"идентификатор заказа"}
-          />
+          <OrderDetails id={order} title={"идентификатор заказа"} />
         </Modal>
       )}
     </>
@@ -189,30 +197,4 @@ BurgerConstructor.propTypes = {
   ),
 };
 
-function mapStateToProps(state) {
-  return {
-    ingredients: state,
-  };
-}
-
-function mapDispatchToProps(dispatch) {
-  return {
-    getOrder: bindActionCreators(getOrderActionCreator, dispatch),
-    deleteIngredient: bindActionCreators(
-      deleteIngredientActionCreator,
-      dispatch
-    ),
-    addIngredientToBurgerConstructor: bindActionCreators(
-      addIngredientActionCreator,
-      dispatch
-    ),
-    addBunToBurgerConstructor: bindActionCreators(
-      addBunActionCreator,
-      dispatch
-    ),
-    increment: bindActionCreators(incrementActionCreator, dispatch),
-    sortIngredients: bindActionCreators(sortIngredientsActionCreator, dispatch),
-  };
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(BurgerConstructor);
+export default BurgerConstructor;

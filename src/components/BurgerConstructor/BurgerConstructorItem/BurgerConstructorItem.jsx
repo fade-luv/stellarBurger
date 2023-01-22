@@ -3,20 +3,20 @@ import React from "react";
 import BurgerConstructorStyle from "./../BurgerConstructor.module.css";
 import { useDrop } from "react-dnd";
 import { useDrag } from "react-dnd";
-import { bindActionCreators } from "redux";
 import {
   ConstructorElement,
   DragIcon,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import { connect, useDispatch } from "react-redux";
 import deleteIngredientActionCreator from "../../../store/actionCreators/deleteingredint-actionCreator.js";
 import decrementActionCreator from "../../../store/actionCreators/decrement-actionCreator";
+import { useDispatch} from "react-redux";
 
 const BurgerConstructorItem = function (props) {
   const ref = useRef(null);
+  const dispatch = useDispatch();
 
   const [{ handlerId }, drop] = useDrop({
-    accept: "ingredientSort",
+    accept: "SoucesAndFillingsSort",
     collect(monitor) {
       return {
         handlerId: monitor.getHandlerId(),
@@ -43,7 +43,6 @@ const BurgerConstructorItem = function (props) {
         return;
       }
       props.moveCard(dragIndex, hoverIndex);
-      console.log(item.index, hoverIndex);
       item.index = hoverIndex;
     },
   });
@@ -51,20 +50,17 @@ const BurgerConstructorItem = function (props) {
   let ingredient = props.ingredient;
 
   function handleDelete(ingredient) {
-    props.deleteIngredient(ingredient);
-    props.decrement(ingredient.price);
+    dispatch(deleteIngredientActionCreator(ingredient));
+    dispatch(decrementActionCreator(ingredient.price))
   }
 
-  const [{ isDragging }, drag] = useDrag({
-    type: "ingredientSort",
+  const [, drag] = useDrag({
+    type: "SoucesAndFillingsSort",
     item: () => {
       return { id: props.ingredient.uuid, index: props.index };
     },
-    collect: (monitor) => ({
-      isDrag: monitor.isDragging(),
-    }),
   });
-  const opacity = isDragging ? 0 : 1;
+
 
   drag(drop(ref));
 
@@ -73,7 +69,6 @@ const BurgerConstructorItem = function (props) {
       key={props.uuid}
       className={`${BurgerConstructorStyle.test} `}
       ref={ref}
-      style={{ opacity }}
       data-handler-id={handlerId}
     >
       <div className={BurgerConstructorStyle.test2}>
@@ -91,23 +86,6 @@ const BurgerConstructorItem = function (props) {
   );
 };
 
-function mapStateToProps(state) {
-  return {
-    ingredients: state,
-  };
-}
 
-function mapDispatchToProps(dispatch) {
-  return {
-    deleteIngredient: bindActionCreators(
-      deleteIngredientActionCreator,
-      dispatch
-    ),
-    decrement: bindActionCreators(decrementActionCreator, dispatch),
-  };
-}
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(BurgerConstructorItem);
+export default BurgerConstructorItem;

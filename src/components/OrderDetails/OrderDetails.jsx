@@ -2,7 +2,6 @@ import React from "react";
 import styles from "./OrderDetails.module.css";
 import img from "../../images/graphics.svg";
 import PropTypes from "prop-types";
-import { connect } from "react-redux";
 
 
 const OrderDetails = (props) => {

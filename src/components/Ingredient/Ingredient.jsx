@@ -8,11 +8,11 @@ import { modalActionCreator } from "../../store/actionCreators/modal-actionCreat
 import { closeModalActionCreator } from "../../store/actionCreators/modal-actionCreator";
 import { escCloseModalActionCreator } from "../../store/actionCreators/modal-actionCreator";
 import { overlayModalClickActionCreator } from "../../store/actionCreators/modal-actionCreator";
-import { bindActionCreators } from "redux";
-import { connect, useSelector } from "react-redux";
 import { useDrag } from "react-dnd";
+import { useDispatch, useSelector } from "react-redux";
 
 const Ingredient = function (props) {
+ const dispatch = useDispatch();
 
   const { ingredientInfo } = props;
   const chosenIngredients = useSelector(
@@ -23,14 +23,15 @@ const Ingredient = function (props) {
     (store) => store.burgerConstructorReducer.constructorBun
   );
 
+  
+
 const addIngredients = [chosenBun, ...chosenIngredients];
 
   const counter = addIngredients.filter(
     (item) => item._id === ingredientInfo._id
   )?.length;
-
-  let modalState = props.focusIngredient.focusIngredientReducer.state;
-  let modalInfo = props.focusIngredient.focusIngredientReducer.focusIngredient;
+  const modalState = useSelector((store) => store.focusIngredientReducer.state);
+  const modalInfo = useSelector((store) => store.focusIngredientReducer.focusIngredient)
   const [{ isDrag }, dragRef] = useDrag({
     type: "ingredient",
     item: ingredientInfo,
@@ -40,19 +41,19 @@ const addIngredients = [chosenBun, ...chosenIngredients];
   });
 
   function openModal(event) {
-    props.getFocusIngredient(ingredientInfo, true);
+    dispatch(modalActionCreator(ingredientInfo, true));
   }
 
   function closeModal(params) {
-    props.closeModal(false);
+    dispatch(closeModalActionCreator(false));
   }
 
   function escCloseModal(params) {
-    props.escClose(false);
+    dispatch(escCloseModalActionCreator(false));
   }
 
   function overlayCloseModal(params) {
-    props.overlayClose(false);
+    dispatch(overlayModalClickActionCreator(false));
   }
 
   return (
@@ -121,19 +122,8 @@ Ingredient.propTypes = {
   }).isRequired,
 };
 
-function mapStateToProps(state) {
-  return {
-    focusIngredient: state,
-  };
-}
 
-function mapDispatchToProps(dispatch) {
-  return {
-    getFocusIngredient: bindActionCreators(modalActionCreator, dispatch),
-    closeModal: bindActionCreators(closeModalActionCreator, dispatch),
-    escClose: bindActionCreators(escCloseModalActionCreator, dispatch),
-    overlayClose: bindActionCreators(overlayModalClickActionCreator, dispatch),
-  };
-}
 
-export default connect(mapStateToProps, mapDispatchToProps)(Ingredient);
+
+
+export default Ingredient;
