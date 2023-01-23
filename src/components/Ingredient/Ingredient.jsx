@@ -1,78 +1,107 @@
 import React from "react";
 import IngredientStyle from "./Ingredient.module.css";
-import {
-  CurrencyIcon,
-  Counter,
-} from "@ya.praktikum/react-developer-burger-ui-components";
+import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import Modal from "../Modal/Modal";
 import IngredientDetails from "../IngredientDetails/IngredientDetails";
 import PropTypes from "prop-types";
+import { modalActionCreator } from "../../store/actionCreators/modal-actionCreator";
+import { closeModalActionCreator } from "../../store/actionCreators/modal-actionCreator";
+import { escCloseModalActionCreator } from "../../store/actionCreators/modal-actionCreator";
+import { overlayModalClickActionCreator } from "../../store/actionCreators/modal-actionCreator";
+import { useDrag } from "react-dnd";
+import { useDispatch, useSelector } from "react-redux";
 
 const Ingredient = function (props) {
+ const dispatch = useDispatch();
+
   const { ingredientInfo } = props;
- 
-  const [isIngredientDetailsOpened, setIsIngredientDetailsOpened] =
-    React.useState({ state: false, target: {} });
-  const target = isIngredientDetailsOpened.target;
+  const chosenIngredients = useSelector(
+    (store) => store.burgerConstructorReducer.chosenIngredients
+  );
 
-  const closeAllModals = () => {
-    setIsIngredientDetailsOpened(false);
-  };
+  const chosenBun = useSelector(
+    (store) => store.burgerConstructorReducer.constructorBun
+  );
 
-  const handleEscKeydown = (event) => {
-    event.key === "Escape" && closeAllModals();
-  };
+  
+
+const addIngredients = [chosenBun, ...chosenIngredients];
+
+  const counter = addIngredients.filter(
+    (item) => item._id === ingredientInfo._id
+  )?.length;
+  const modalState = useSelector((store) => store.focusIngredientReducer.state);
+  const modalInfo = useSelector((store) => store.focusIngredientReducer.focusIngredient)
+  const [{ isDrag }, dragRef] = useDrag({
+    type: "ingredient",
+    item: ingredientInfo,
+    collect: (monitor) => ({
+      isDrag: monitor.isDragging(),
+    }),
+  });
+
+  function openModal(event) {
+    dispatch(modalActionCreator(ingredientInfo, true));
+  }
+
+  function closeModal(params) {
+    dispatch(closeModalActionCreator(false));
+  }
+
+  function escCloseModal(params) {
+    dispatch(escCloseModalActionCreator(false));
+  }
+
+  function overlayCloseModal(params) {
+    dispatch(overlayModalClickActionCreator(false));
+  }
 
   return (
-    <div>
-      <>
-        <div
-          data="ingredient"
-          onClick={(event) =>
-            setIsIngredientDetailsOpened({
-              ...isIngredientDetailsOpened,
-              state: true,
-              target: event.currentTarget.getAttribute("data"),
-            })
-          }
-          className={`${IngredientStyle.Ingredient_item} ml-4`}
-        >
-          <div className={IngredientStyle.counter}>1</div>
-          <img
-            className={`${IngredientStyle.Ingredient__image} ml-4`}
-            src={ingredientInfo.image}
-          ></img>
+    !isDrag && (
+      <div>
+        <>
+          <div
+            ref={dragRef}
+            data="ingredient"
+            onClick={openModal}
+            className={`${IngredientStyle.Ingredient_item} ml-4`}
+          >
+            <div className={IngredientStyle.counter}>{counter}</div>
+            <img
+              className={`${IngredientStyle.Ingredient__image} ml-4`}
+              src={ingredientInfo.image}
+            ></img>
 
-          <div className={IngredientStyle.Ingredient__price_info}>
-            <p className="text text_type_digits-default mt-1">
-              {ingredientInfo.price}
-            </p>
+            <div className={IngredientStyle.Ingredient__price_info}>
+              <p className="text text_type_digits-default mt-1">
+                {ingredientInfo.price}
+              </p>
 
-            <div className="ml-1">
-              <CurrencyIcon type="primary" />
+              <div className="ml-1">
+                <CurrencyIcon type="primary" />
+              </div>
             </div>
+            <h3
+              className={`${IngredientStyle.Ingredient__title} text text_type_main-default  mt-2`}
+            >
+              {ingredientInfo.name}
+            </h3>
           </div>
-          <h3
-            className={`${IngredientStyle.Ingredient__title} text text_type_main-default  mt-2`}
-          >
-            {ingredientInfo.name}
-          </h3>
-        </div>
-      </>
-      <>
-        {isIngredientDetailsOpened.state && (
-          <Modal
-            target={target}
-            title="Детали заказа"
-            onOverlayClick={closeAllModals}
-            onEscKeydown={handleEscKeydown}
-            onCloseButtonClick={closeAllModals}
-          >
-            <IngredientDetails info={ingredientInfo} />
-          </Modal>
-        )}
-      </>
-    </div>
+        </>
+        <>
+          {modalState && (
+            <Modal
+              title="Детали заказа"
+              onOverlayClick={overlayCloseModal}
+              onEscKeydown={escCloseModal}
+              onCloseButtonClick={closeModal}
+            >
+              <IngredientDetails info={modalInfo} />
+            </Modal>
+          )}
+        </>
+      </div>
+    )
   );
 };
 
@@ -92,6 +121,9 @@ Ingredient.propTypes = {
     _id: PropTypes.string.isRequired,
   }).isRequired,
 };
+
+
+
 
 
 export default Ingredient;
