@@ -5,6 +5,7 @@ import { ListIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import { ProfileIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import header from "./AppHeader.module.css";
 import PropTypes from "prop-types";
+import { Link } from "react-router-dom";
 
 const AppHeader = function () {
   return (
@@ -31,12 +32,16 @@ const AppHeader = function () {
         <a href="#">
           <Logo />
         </a>
-        <button type="button" className={header.profile_button}>
-          <p className={`${header.propfileLink} text text_type_main-default `}>
-            <ProfileIcon type="secondary" />
-            <p className="ml-2">Личный кабинет</p>
-          </p>
-        </button>
+        <Link to="/login">
+          <button type="button" className={header.profile_button}>
+            <p
+              className={`${header.propfileLink} text text_type_main-default `}
+            >
+              <ProfileIcon type="secondary" />
+              <p className="ml-2">Личный кабинет</p>
+            </p>
+          </button>
+        </Link>
       </div>
     </header>
   );
