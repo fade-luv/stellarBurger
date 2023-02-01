@@ -1,0 +1,32 @@
+.container {
+  
+  max-width: 480px;
+  margin: 0 auto;
+  margin-top: 180px;
+  min-height: 430px;
+  vertical-align: middle;
+  
+}
+.header {
+  text-align: center;
+  font-size: 24px;
+}
+
+.sumbmit_login{
+  width: 128px;
+  height: 64px;
+  margin: 0 auto;
+}
+
+.sumbmit_register{
+  width: 252px;
+  height: 64px;
+  margin: 0 auto;
+}
+.newUser {
+  text-align: center;
+}
+.forgotPassword {
+  text-align: center;
+}
+
