@@ -19,19 +19,21 @@ export function RegisterPage(params) {
         <EmailInput extraClass="mb-6" />
         <PasswordInput extraClass="mb-6" />
         <div className={pages.sumbmit_register}>
-          <Button
-            htmlType="button"
-            type="primary"
-            size="large"
-            extraClass="mb-20"
-          >
-            Зарегестрироваться
-          </Button>
+          
+            <Button
+              htmlType="button"
+              type="primary"
+              size="large"
+              extraClass="mb-20"
+            >
+              Зарегестрироваться
+            </Button>
+     
         </div>
 
         <p className={`${pages.newUser} mt-20`}>
           Уже зарегистрированы?
-          <Link to="/register">
+          <Link to="/login">
             <Button
               htmlType="button"
               type="secondary"

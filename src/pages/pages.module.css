@@ -17,11 +17,23 @@
   height: 64px;
   margin: 0 auto;
 }
+.sumbmit_forgot{
+  width: 195px;
+  height: 64px;
+  margin: 0 auto;
+  margin-bottom: 80px;
+}
 
 .sumbmit_register{
   width: 252px;
   height: 64px;
   margin: 0 auto;
+}
+.sumbmit_save{
+  width: 166px;
+  height: 64px;
+  margin: 0 auto;
+  margin-bottom: 80px;
 }
 .newUser {
   text-align: center;

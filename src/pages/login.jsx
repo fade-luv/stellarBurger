@@ -1,13 +1,20 @@
 import React from "react";
 import pages from "./pages.module.css";
-import  AppHeader  from "../components/AppHeader/AppHeader";
+import AppHeader from "../components/AppHeader/AppHeader";
 import { EmailInput } from "@ya.praktikum/react-developer-burger-ui-components";
 import { PasswordInput } from "@ya.praktikum/react-developer-burger-ui-components";
 import { Button } from "@ya.praktikum/react-developer-burger-ui-components";
 import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+
 
 
 export function LoginPage(params) {
+  const navigate = useNavigate();
+  function goToForgotPassword(params) {
+    navigate("/forgot-password"); 
+  }
+
   return (
     <>
       <AppHeader />
@@ -43,18 +50,21 @@ export function LoginPage(params) {
         </p>
         <p className={pages.forgotPassword}>
           Забыли пароль?
-          <Button
-            htmlType="button"
-            type="secondary"
-            size="small"
-            extraClass="pl-2 pr-2"
-          >
-            Восстановить пароль
-          </Button>
+         
+            <Button
+              onClick={goToForgotPassword}
+              htmlType="button"
+              type="secondary"
+              size="small"
+              extraClass="pl-2 pr-2"
+            >
+              Восстановить пароль
+            </Button>
+ 
         </p>
       </form>
     </>
   );
 }
 
-  //  <p className={`${header.nav__link_title} ml-2`}>Конструктор</p>;
+//  <p className={`${header.nav__link_title} ml-2`}>Конструктор</p>;
