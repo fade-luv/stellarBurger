@@ -6,8 +6,21 @@ import { Button } from "@ya.praktikum/react-developer-burger-ui-components";
 import { Input } from "@ya.praktikum/react-developer-burger-ui-components";
 import { Link } from "react-router-dom";
 import pages from "./pages.module.css";
+import {resetPasswordRequest} from "../utils/burger-api"
 
 export function ResetPasswordPage(params) {
+
+    function onButtnonClickResetPassword() {
+
+      const resetPassObj = {
+        newPassword: document.getElementById("newPasswordInput").value,
+        code: document.getElementById("checkCodeInput").value
+      };
+      resetPasswordRequest(resetPassObj);
+    }
+
+
+
   return (
     <>
       <AppHeader />
@@ -15,14 +28,23 @@ export function ResetPasswordPage(params) {
         <h1 className={` ${pages.header} text text_type_main-medium mb-6`}>
           Восстановление пароля
         </h1>
-        <PasswordInput extraClass="mb-6" placeholder="Введите новый пароль" />
-        <Input placeholder="Введите код из письма" extraClass="mb-6" />
+        <PasswordInput
+          extraClass="mb-6"
+          placeholder="Введите новый пароль"
+          id="newPasswordInput"
+        />
+        <Input
+          placeholder="Введите код из письма"
+          extraClass="mb-6"
+          id="checkCodeInput"
+        />
         <div className={pages.sumbmit_save}>
           <Button
             htmlType="button"
             type="primary"
             size="large"
             extraClass="mb-20"
+            onClick={onButtnonClickResetPassword}
           >
             Сохранить
           </Button>

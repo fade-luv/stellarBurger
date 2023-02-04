@@ -6,8 +6,18 @@ import { Button } from "@ya.praktikum/react-developer-burger-ui-components";
 import { Input } from "@ya.praktikum/react-developer-burger-ui-components";
 import { Link } from "react-router-dom";
 import pages from "./pages.module.css";
+import {forgotPasswordRequest} from "../utils/burger-api";
 
 export function ForgotPasswordPage(params) {
+
+
+  function onButtnonClickForgotPassword() {
+    let emailInput = document.querySelector(".input__textfield");
+    let emailInputValue = emailInput.value;
+    forgotPasswordRequest(emailInputValue);
+  }
+
+
   return (
     <>
       <AppHeader />
@@ -22,6 +32,7 @@ export function ForgotPasswordPage(params) {
             type="primary"
             size="large"
             extraClass="mb-20"
+            onClick={onButtnonClickForgotPassword}
           >
             Восстановить
           </Button>
