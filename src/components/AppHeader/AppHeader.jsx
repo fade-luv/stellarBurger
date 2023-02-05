@@ -7,6 +7,7 @@ import header from "./AppHeader.module.css";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 
+
 const AppHeader = function () {
   return (
     <header className={`${header.header} pt-4 pb-4`}>
@@ -32,7 +33,7 @@ const AppHeader = function () {
         <a href="#">
           <Logo />
         </a>
-        <Link to="/login">
+        <Link to="/profile">
           <button type="button" className={header.profile_button}>
             <p
               className={`${header.propfileLink} text text_type_main-default `}

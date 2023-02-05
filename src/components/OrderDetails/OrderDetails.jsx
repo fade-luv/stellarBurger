@@ -6,10 +6,6 @@ import PropTypes from "prop-types";
 
 const OrderDetails = (props) => {
 
-
-
-
-
   return (
     <>
       <p className={`${styles.id} text text_type_digits-large`}>{props.id}</p>
