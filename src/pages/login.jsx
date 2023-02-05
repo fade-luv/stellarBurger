@@ -6,7 +6,7 @@ import { PasswordInput } from "@ya.praktikum/react-developer-burger-ui-component
 import { Button } from "@ya.praktikum/react-developer-burger-ui-components";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
-
+import {authorezationRequest} from "../utils/burger-api"
 
 
 export function LoginPage(params) {
@@ -15,6 +15,16 @@ export function LoginPage(params) {
     navigate("/forgot-password"); 
   }
 
+function sendAuthData() {
+  const authEmailValue = document.getElementById("authEmail").value;
+  const authPasswordValue = document.getElementById("authPassword").value;
+
+
+  authorezationRequest(authEmailValue, authPasswordValue);
+}
+
+
+
   return (
     <>
       <AppHeader />
@@ -22,14 +32,15 @@ export function LoginPage(params) {
         <h1 className={` ${pages.header} text text_type_main-medium mb-6`}>
           Вход
         </h1>
-        <EmailInput extraClass="mb-6" />
-        <PasswordInput extraClass="mb-6" />
+        <EmailInput extraClass="mb-6" id="authEmail" />
+        <PasswordInput extraClass="mb-6" id="authPassword" />
         <div className={pages.sumbmit_login}>
           <Button
             htmlType="button"
             type="primary"
             size="large"
             extraClass="mb-20"
+            onClick={sendAuthData}
           >
             Войти
           </Button>
@@ -50,17 +61,15 @@ export function LoginPage(params) {
         </p>
         <p className={pages.forgotPassword}>
           Забыли пароль?
-         
-            <Button
-              onClick={goToForgotPassword}
-              htmlType="button"
-              type="secondary"
-              size="small"
-              extraClass="pl-2 pr-2"
-            >
-              Восстановить пароль
-            </Button>
- 
+          <Button
+            onClick={goToForgotPassword}
+            htmlType="button"
+            type="secondary"
+            size="small"
+            extraClass="pl-2 pr-2"
+          >
+            Восстановить пароль
+          </Button>
         </p>
       </form>
     </>

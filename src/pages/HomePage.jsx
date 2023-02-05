@@ -9,11 +9,6 @@ import {createUser} from "../utils/burger-api"
 
 function HomePage(params) {
 
-  useEffect(() => {
-    createUser();
-  },[])
-
-
   return (
     <div className={AppCss}>
       <header className={AppCss.header}>
