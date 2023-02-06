@@ -13,7 +13,8 @@ export function LoginPage(params) {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   
-  if (isAuth) {
+  const isAuth = useSelector((state) => state.authReducer.isAuth);
+  if (isAuth === true) {
     navigate("/");
   }
 
@@ -21,8 +22,8 @@ export function LoginPage(params) {
     navigate("/forgot-password");
   }
 
-  const isAuth = useSelector((state) => state.authReducer.isAuth);
-  console.log(isAuth);
+
+
   function sendAuthData() {
     const loginUserData = {
       authEmailValue: document.getElementById("authEmail").value,
