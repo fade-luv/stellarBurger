@@ -6,7 +6,6 @@ import { Button } from "@ya.praktikum/react-developer-burger-ui-components";
 import { Input } from "@ya.praktikum/react-developer-burger-ui-components";
 import { Link } from "react-router-dom";
 import pages from "./pages.module.css";
-import {registrationRequest} from "../utils/burger-api"
 import {registrationActionCreator} from "../store/actionCreators/registration-actionCreator"
 import { useSelector, useDispatch } from "react-redux";
 
@@ -20,7 +19,6 @@ function sendRegistrationData(){
     registerPasswordValue : document.getElementById("registerPassword").value,
   }
  
-
   dispatch(
     registrationActionCreator(
       newUserData

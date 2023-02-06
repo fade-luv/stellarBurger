@@ -6,7 +6,7 @@ const initialState = {
 };
 
 export const registrationReducer = (state = initialState, action) => {
-  console.log(action);
+
   switch (action.type) {
     case "REGISTRATION_SUCCES": {
       return {

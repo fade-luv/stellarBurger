@@ -6,21 +6,23 @@ import { PasswordInput } from "@ya.praktikum/react-developer-burger-ui-component
 import { Button } from "@ya.praktikum/react-developer-burger-ui-components";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
-import {authorezationRequest} from "../utils/burger-api"
-
+import { useSelector, useDispatch } from "react-redux";
+import {loginActionCreator} from "../store/actionCreators/login-actionCreator"
 
 export function LoginPage(params) {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   function goToForgotPassword(params) {
     navigate("/forgot-password"); 
   }
 
 function sendAuthData() {
-  const authEmailValue = document.getElementById("authEmail").value;
-  const authPasswordValue = document.getElementById("authPassword").value;
+  const loginUserData ={
+    authEmailValue: document.getElementById("authEmail").value,
+    authPasswordValue: document.getElementById("authPassword").value,
+  }
+  dispatch(loginActionCreator(loginUserData))
 
-
-  authorezationRequest(authEmailValue, authPasswordValue);
 }
 
 

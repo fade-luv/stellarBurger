@@ -47,7 +47,6 @@ export async function forgotPasswordRequest(email) {
 
 
 export async function authorezationRequest(email, password) {
-  console.log(email,  password);
   return await fetch(authorizationLink, {
     method: "POST",
     headers: {
@@ -60,8 +59,9 @@ export async function authorezationRequest(email, password) {
     }),
   }).then((res) => {
     if (res.ok) {
-      console.log(res);
+      return res.json();
     }
+    throw new Error(`Somthing wrong: ${res.status}`);
   });
 }
 
