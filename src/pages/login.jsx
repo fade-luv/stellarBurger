@@ -7,25 +7,29 @@ import { Button } from "@ya.praktikum/react-developer-burger-ui-components";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import {loginActionCreator} from "../store/actionCreators/login-actionCreator"
+import { loginActionCreator } from "../store/actionCreators/login-actionCreator";
 
 export function LoginPage(params) {
-  const dispatch = useDispatch();
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  
+  if (isAuth) {
+    navigate("/");
+  }
+
   function goToForgotPassword(params) {
-    navigate("/forgot-password"); 
+    navigate("/forgot-password");
   }
 
-function sendAuthData() {
-  const loginUserData ={
-    authEmailValue: document.getElementById("authEmail").value,
-    authPasswordValue: document.getElementById("authPassword").value,
+  const isAuth = useSelector((state) => state.authReducer.isAuth);
+  console.log(isAuth);
+  function sendAuthData() {
+    const loginUserData = {
+      authEmailValue: document.getElementById("authEmail").value,
+      authPasswordValue: document.getElementById("authPassword").value,
+    };
+    dispatch(loginActionCreator(loginUserData));
   }
-  dispatch(loginActionCreator(loginUserData))
-
-}
-
-
 
   return (
     <>

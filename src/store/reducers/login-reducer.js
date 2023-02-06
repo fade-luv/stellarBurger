@@ -1,5 +1,5 @@
 const initialState = {
-  success: false,
+  isAuth: false,
   accessToken: "Bearer ...",
   refreshToken: "",
   userEmail: "",
@@ -13,7 +13,7 @@ console.log(action);
     case "AUTH_SUCCES": {
       return {
         ...state,
-        success: action.authInfo.success,
+        isAuth: action.authInfo.success,
         accessToken: action.authInfo.accessToken,
         refreshToken: action.authInfo.refreshToken,
         userName:action.authInfo.user.name,
