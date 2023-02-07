@@ -1,5 +1,3 @@
-import { setCookie } from "./cookie";
-
 const orderRequestURL = "https://norma.nomoreparties.space/api/orders";
 const ApiLink = "https://norma.nomoreparties.space";
 const forgotPasswordLink =
@@ -9,6 +7,7 @@ const passwordResetLink =
 const registrationLink = "https://norma.nomoreparties.space/api/auth/register";
 
 const authorizationLink = "https://norma.nomoreparties.space/api/auth/login";
+const LogOutLink = "https://norma.nomoreparties.space/api/auth/logout";
 
 export async function getOrderNumber(IDs) {
   return await fetch(orderRequestURL, {
@@ -102,6 +101,27 @@ export async function resetPasswordRequest(obj) {
     }
   });
 }
+
+
+
+export async function exiteRequest(refreshToken) {
+  return await fetch(LogOutLink, {
+    method: "POST",
+    headers: {
+      authorization: "5743d2b2-8d60-4e50-9a9c-7a3ab60b2c12",
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      token: refreshToken,
+    }),
+  }).then((res) => {
+    if (res.ok) {
+      console.log(res);
+    }
+  });
+}
+
+
 
 export async function getIngredientsData(params) {
   return await fetch(`${ApiLink}/api/ingredients`).then((res) => {

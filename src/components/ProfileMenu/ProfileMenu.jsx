@@ -1,8 +1,12 @@
 import React from "react";
 import styles from "./ProfileMenu.module.css";
 import { Link, NavLink } from "react-router-dom";
-
+import {exiteRequest} from "../../utils/burger-api"
 export function ProfileMenu () {
+
+function logOut(){
+  exiteRequest(localStorage.getItem("refreshToken"));
+}
 
   return (
     <div className={styles.profile_nav}>
@@ -36,6 +40,7 @@ export function ProfileMenu () {
               isActive ? styles.active : styles.unactive
             }
             exact
+            onClick={logOut}
           >
             Выход
           </NavLink>
