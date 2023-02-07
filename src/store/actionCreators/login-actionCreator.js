@@ -6,8 +6,15 @@ export function loginActionCreator(action) {
     dispatch({
       type: "START_AUTH",
     });
-    authorezationRequest(authEmailValue, authPasswordValue).then((res) =>
-      dispatch({ type: "AUTH_SUCCES", authInfo: res })
-    );
+    authorezationRequest(authEmailValue, authPasswordValue)
+    .then((res) =>{
+      dispatch({ type: "AUTH_SUCCES", authInfo: res });
+      localStorage.setItem("accessToken", res.accessToken);
+      localStorage.setItem("refreshToken", res.refreshToken);
+    }
+     
+    )
+
   };
 }
+

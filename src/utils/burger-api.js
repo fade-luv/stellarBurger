@@ -1,6 +1,9 @@
+import { setCookie } from "./cookie";
+
 const orderRequestURL = "https://norma.nomoreparties.space/api/orders";
 const ApiLink = "https://norma.nomoreparties.space";
-const forgotPasswordLink = "https://norma.nomoreparties.space/api/password-reset";
+const forgotPasswordLink =
+  "https://norma.nomoreparties.space/api/password-reset";
 const passwordResetLink =
   "https://norma.nomoreparties.space/api/password-reset/reset";
 const registrationLink = "https://norma.nomoreparties.space/api/auth/register";
@@ -11,24 +14,21 @@ export async function getOrderNumber(IDs) {
   return await fetch(orderRequestURL, {
     method: "POST",
     headers: {
-      authorization: '5743d2b2-8d60-4e50-9a9c-7a3ab60b2c12',
-      'Content-Type': 'application/json'
+      authorization: "5743d2b2-8d60-4e50-9a9c-7a3ab60b2c12",
+      "Content-Type": "application/json",
     },
     body: JSON.stringify({
-      "ingredients": IDs 
-    })
-  })
-    .then((res) => {
-      if (res.ok) {
-        return res.json();
-      }
-      throw new Error(`Somthing wrong: ${res.status}`);
-    })
+      ingredients: IDs,
+    }),
+  }).then((res) => {
+    if (res.ok) {
+      return res.json();
+    }
+    throw new Error(`Somthing wrong: ${res.status}`);
+  });
 }
 
-
 export async function forgotPasswordRequest(email) {
-
   return await fetch(forgotPasswordLink, {
     method: "POST",
     headers: {
@@ -45,7 +45,6 @@ export async function forgotPasswordRequest(email) {
   });
 }
 
-
 export async function authorezationRequest(email, password) {
   return await fetch(authorizationLink, {
     method: "POST",
@@ -57,16 +56,11 @@ export async function authorezationRequest(email, password) {
       email: email,
       password: password,
     }),
-  }).then((res) => {
-    if (res.ok) {
+  })
+    .then((res) => {
       return res.json();
-    }
-    throw new Error(`Somthing wrong: ${res.status}`);
-  });
-}
-
-
-
+    })
+  }
 export async function registrationRequest(newUserInfo) {
   let { registerEmailValue, registerNameValue, registerPasswordValue } =
     newUserInfo;
@@ -90,7 +84,7 @@ export async function registrationRequest(newUserInfo) {
 }
 
 export async function resetPasswordRequest(obj) {
-  const {newPassword, code} = obj;
+  const { newPassword, code } = obj;
 
   return await fetch(passwordResetLink, {
     method: "POST",
@@ -109,13 +103,11 @@ export async function resetPasswordRequest(obj) {
   });
 }
 
-
 export async function getIngredientsData(params) {
-  return await fetch(`${ApiLink}/api/ingredients`)
-  .then ((res) => {
-    if (res.ok)  {
+  return await fetch(`${ApiLink}/api/ingredients`).then((res) => {
+    if (res.ok) {
       return res.json();
     }
     throw new Error(`Somthing wrong: ${res.status}`);
-  })
+  });
 }
