@@ -21,6 +21,18 @@ export function ProfilePage(params) {
             <Input placeholder="Имя" extraClass="mb-6" />
             <EmailInput extraClass="mb-6" />
             <PasswordInput extraClass="mb-6" />
+
+            <Button
+              htmlType="button"
+              type="secondary"
+              size="medium"
+              extraClass="ml-15 mr-15"
+            >
+              Отмена
+            </Button>
+            <Button htmlType="button" type="primary" size="medium">
+              Сохранить
+            </Button>
           </form>
         </div>
       </div>
