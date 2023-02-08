@@ -8,7 +8,7 @@ const registrationLink = "https://norma.nomoreparties.space/api/auth/register";
 
 const authorizationLink = "https://norma.nomoreparties.space/api/auth/login";
 const LogOutLink = "https://norma.nomoreparties.space/api/auth/logout";
-
+const updateUserDataLink = "https://norma.nomoreparties.space/api/auth/user";
 export async function getOrderNumber(IDs) {
   return await fetch(orderRequestURL, {
     method: "POST",
@@ -28,6 +28,7 @@ export async function getOrderNumber(IDs) {
 }
 
 export async function forgotPasswordRequest(email) {
+  console.log(email);
   return await fetch(forgotPasswordLink, {
     method: "POST",
     headers: {
@@ -45,6 +46,7 @@ export async function forgotPasswordRequest(email) {
 }
 
 export async function authorezationRequest(email, password) {
+  
   return await fetch(authorizationLink, {
     method: "POST",
     headers: {
@@ -102,7 +104,25 @@ export async function resetPasswordRequest(obj) {
   });
 }
 
-
+export async function updateUserData(name, email, password) {
+ 
+  return await fetch(updateUserDataLink, {
+    method: "PATH",
+    headers: {
+      authorization: window.localStorage.getItem("accessToken"),
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      email: email,
+      name: name,
+      password: password,
+    }),
+  }).then((res) => {
+    if (res.ok) {
+      console.log(res);
+    }
+  });
+}
 
 export async function exiteRequest(refreshToken) {
   return await fetch(LogOutLink, {
