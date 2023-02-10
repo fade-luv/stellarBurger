@@ -104,13 +104,13 @@ export async function resetPasswordRequest(obj) {
   });
 }
 
+
 export async function updateUserData(name, email, password) {
- 
   return await fetch(updateUserDataLink, {
-    method: "PATH",
+    method: "PATCH",
     headers: {
-      authorization: window.localStorage.getItem("accessToken"),
       "Content-Type": "application/json",
+      Authorization: window.localStorage.getItem("accessToken"),
     },
     body: JSON.stringify({
       email: email,
@@ -123,6 +123,30 @@ export async function updateUserData(name, email, password) {
     }
   });
 }
+
+
+
+
+// export async function updateUserData(name, email, password) {
+ 
+//   return await fetch(updateUserDataLink, {
+//     method: "PATH",
+//     headers: {
+//       Authorization:
+//         "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzZTBiZTcyOTM2YjE3MDAxYmU1OWI5NiIsImlhdCI6MTY3NjA2OTk5OCwiZXhwIjoxNjc2MDcxMTk4fQ.BowGHSPLZfS4N2BXvpVsMFN_v7TLAcGGtDU9eN_TKlk",
+//       "Content-Type": "application/json",
+//     },
+//     body: JSON.stringify({
+//       email: email,
+//       name: name,
+//       password: password,
+//     }),
+//   }).then((res) => {
+//     if (res.ok) {
+//       console.log(res);
+//     }
+//   });
+// }
 
 export async function exiteRequest(refreshToken) {
   return await fetch(LogOutLink, {
