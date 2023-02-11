@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import AppHeader from "../components/AppHeader/AppHeader";
 import { EmailInput } from "@ya.praktikum/react-developer-burger-ui-components";
 import { PasswordInput } from "@ya.praktikum/react-developer-burger-ui-components";
@@ -12,6 +12,7 @@ import { updateUserEmailActionCreator } from "../store/actionCreators/userInfo-a
 import { updateUserPasswordActionCreator } from "../store/actionCreators/userInfo-actionCreator";
 import { useSelector, useDispatch } from "react-redux";
 import {updateUserData} from "../utils/burger-api"
+import { getUserInfo } from "../utils/burger-api";
 export function ProfilePage(params) {
   const dispatch = useDispatch();
 
@@ -19,7 +20,7 @@ export function ProfilePage(params) {
   const [userEmail,setUserEmail] = useState(null);
   const [userPassword, setUserPassword] = useState(null);
 
-  
+
   const handleUserNameChange = (e) => {
     setUserName(e.target.value);
     dispatch(updateUserNameActionCreator(userName));
@@ -37,7 +38,12 @@ export function ProfilePage(params) {
 function updateUser(){
   updateUserData(userName, userEmail, userPassword);
 }
+useEffect(() => {
+  getUserInfo().then(res => console.log(res))
+}, []);
 
+
+  
   return (
     <>
       <AppHeader />

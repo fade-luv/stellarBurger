@@ -9,6 +9,7 @@ const registrationLink = "https://norma.nomoreparties.space/api/auth/register";
 const authorizationLink = "https://norma.nomoreparties.space/api/auth/login";
 const LogOutLink = "https://norma.nomoreparties.space/api/auth/logout";
 const updateUserDataLink = "https://norma.nomoreparties.space/api/auth/user";
+const getUserDataLink = "https://norma.nomoreparties.space/api/auth/user";
 export async function getOrderNumber(IDs) {
   return await fetch(orderRequestURL, {
     method: "POST",
@@ -105,6 +106,21 @@ export async function resetPasswordRequest(obj) {
 }
 
 
+export async function getUserInfo() {
+  return await fetch(getUserDataLink, {
+    method: "GET",
+    headers: {
+      Authorization: window.localStorage.getItem("accessToken"),
+    },
+  }).then((res) => {
+    if (res.ok) {
+      return res.json();
+    }
+  })
+}
+
+
+
 export async function updateUserData(name, email, password) {
   return await fetch(updateUserDataLink, {
     method: "PATCH",
@@ -126,27 +142,6 @@ export async function updateUserData(name, email, password) {
 
 
 
-
-// export async function updateUserData(name, email, password) {
- 
-//   return await fetch(updateUserDataLink, {
-//     method: "PATH",
-//     headers: {
-//       Authorization:
-//         "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzZTBiZTcyOTM2YjE3MDAxYmU1OWI5NiIsImlhdCI6MTY3NjA2OTk5OCwiZXhwIjoxNjc2MDcxMTk4fQ.BowGHSPLZfS4N2BXvpVsMFN_v7TLAcGGtDU9eN_TKlk",
-//       "Content-Type": "application/json",
-//     },
-//     body: JSON.stringify({
-//       email: email,
-//       name: name,
-//       password: password,
-//     }),
-//   }).then((res) => {
-//     if (res.ok) {
-//       console.log(res);
-//     }
-//   });
-// }
 
 export async function exiteRequest(refreshToken) {
   return await fetch(LogOutLink, {
