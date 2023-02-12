@@ -29,6 +29,14 @@ console.log(action);
         formChanged: true,
       };
     }
+
+    case "CHANGE_LOGGINED_USER_PASSWORD": {
+      return {
+        ...state,
+        userPassword: action.payload,
+        formChanged: true,
+      };
+    }
     default:
       return state;
   }

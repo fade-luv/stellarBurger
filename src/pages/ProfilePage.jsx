@@ -20,6 +20,7 @@ export function ProfilePage(params) {
   const userLogginedEmail = useSelector(
     (state) => state.userLogginedInfoReducer.userEmail
   );
+
   const userLogginedName = useSelector(
     (state) => state.userLogginedInfoReducer.userName
   );
@@ -35,6 +36,7 @@ export function ProfilePage(params) {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [isInputChanged, setChanged] = useState(false);
 
   useEffect(() => {
     getUserInfo().then((res) => dispatch(userLogginedInfoActionCreator(res)));
@@ -44,25 +46,32 @@ export function ProfilePage(params) {
     setName(userLogginedName);
     setEmail(userLogginedEmail);
     setPassword("******");
-  }, [userLogginedName, userLogginedEmail]);
+  }, [userLogginedName, userLogginedEmail, userLogginedPassword]);
 
   const handleUserNameChange = (e) => {
     setName(e.target.value);
-    dispatch(changeUserLogginedNameActionCreator());
+    setChanged(true);
   };
 
   const handleUserEmailChange = (e) => {
     setEmail(e.target.value);
-    dispatch(changeUserLogginedEmailActionCreator());
+    setChanged(true)
   };
 
-  function updateUser() {
-    updateUserData(name, email);
+  const handleUserPasswordChange = (e) => {
+    setPassword(e.target.value)
+    setChanged(true);
   }
 
-  function resetForm(params) {
+  function updateUser() {
+    updateUserData(name, email, password);
+   
+  }
+
+  function resetForm() {
     setName(userLogginedName);
     setEmail(userLogginedEmail);
+    setChanged(false);
   }
 
   return (
@@ -83,8 +92,12 @@ export function ProfilePage(params) {
               extraClass="mb-6"
               value={email}
             />
-            <PasswordInput extraClass="mb-6" value={userLogginedPassword} />
-            {formChanged && (
+            <PasswordInput
+              extraClass="mb-6"
+              value={password}
+              onChange={handleUserPasswordChange}
+            />
+            {isInputChanged && (
               <Button
                 htmlType="button"
                 type="secondary"
@@ -95,7 +108,7 @@ export function ProfilePage(params) {
                 Отмена
               </Button>
             )}
-            {formChanged && (
+            {isInputChanged && (
               <Button
                 htmlType="button"
                 type="primary"

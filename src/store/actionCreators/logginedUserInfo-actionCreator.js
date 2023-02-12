@@ -21,3 +21,11 @@ export function changeUserLogginedEmailActionCreator(text) {
   };
 }
 
+
+export function changeUserLogginedPasswordActionCreator(text) {
+  return {
+    type: "CHANGE_LOGGINED_USER_PASSWORD",
+    payload: text,
+  };
+}
+
