@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import pages from "./pages.module.css";
 import AppHeader from "../components/AppHeader/AppHeader";
 import { EmailInput } from "@ya.praktikum/react-developer-burger-ui-components";
@@ -10,12 +10,17 @@ import { useSelector, useDispatch } from "react-redux";
 import { loginActionCreator } from "../store/actionCreators/login-actionCreator";
 
 
-
 export function LoginPage(params) {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  
+
   const isAuth = useSelector((state) => state.authReducer.isAuth);
+
+
+
+
+
+
   if (isAuth === true) {
     navigate("/");
   }
@@ -23,8 +28,6 @@ export function LoginPage(params) {
   function goToForgotPassword(params) {
     navigate("/forgot-password");
   }
-
-
 
   function sendAuthData() {
     const loginUserData = {

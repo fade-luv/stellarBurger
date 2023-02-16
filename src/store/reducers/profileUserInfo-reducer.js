@@ -3,6 +3,7 @@ const initialState = {
   userName: " ",
   userPassword: "*******",
   formChanged: false,
+  isLoggined: false,
 };
 
 export const userLogginedInfoReducer = (state = initialState, action) => {
@@ -13,6 +14,13 @@ console.log(action);
         ...state,
         userName: action.payload.user.name,
         userEmail: action.payload.user.email,
+        isLoggined: true,
+      };
+    }
+    case "SET_LOGGINED": {
+      return {
+        ...state,
+        isLoggined: action.payload,
       };
     }
     case "CHANGE_LOGGINED_USER_NAME": {

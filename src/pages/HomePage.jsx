@@ -5,9 +5,13 @@ import BurgerConstructor from "../components/BurgerConstructor/BurgerConstructor
 import AppCss from "../App.module.css";
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
-import {createUser} from "../utils/burger-api"
+import { userLogginedInfoActionCreator } from "../store/actionCreators/logginedUserInfo-actionCreator";
+import { useSelector, useDispatch } from "react-redux";
+import { getUserInfo } from "../utils/burger-api";
 
 function HomePage(params) {
+
+
 
   return (
     <div className={AppCss}>

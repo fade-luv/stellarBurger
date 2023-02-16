@@ -2,10 +2,14 @@ import React from "react";
 import styles from "./ProfileMenu.module.css";
 import { Link, NavLink } from "react-router-dom";
 import {exiteRequest} from "../../utils/burger-api"
+import { useNavigate } from "react-router-dom";
 export function ProfileMenu () {
-
+ const navigate = useNavigate();
+ 
 function logOut(){
   exiteRequest(localStorage.getItem("refreshToken"));
+  localStorage.removeItem("refreshToken");
+  localStorage.removeItem("accessToken");
 }
 
   return (
@@ -35,7 +39,7 @@ function logOut(){
         </li>
         <li className={styles.profile_nav_list_item}>
           <NavLink
-            to="/exit"
+            to="/"
             className={({ isActive }) =>
               isActive ? styles.active : styles.unactive
             }
