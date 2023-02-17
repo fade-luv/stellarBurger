@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import AppHeader from "../components/AppHeader/AppHeader";
 import { EmailInput } from "@ya.praktikum/react-developer-burger-ui-components";
 import { PasswordInput } from "@ya.praktikum/react-developer-burger-ui-components";
@@ -6,10 +6,12 @@ import { Button } from "@ya.praktikum/react-developer-burger-ui-components";
 import { Input } from "@ya.praktikum/react-developer-burger-ui-components";
 import { Link } from "react-router-dom";
 import pages from "./pages.module.css";
-import {forgotPasswordRequest} from "../utils/burger-api";
+import { forgotPasswordRequest } from "../utils/burger-api";
+import { getUserInfo } from "../utils/burger-api";
+import { Navigate } from "react-router-dom";
 
 export function ForgotPasswordPage(params) {
-
+  const [isLogined, setIsLogined] = useState(false);
 
   function onButtnonClickForgotPassword() {
     let emailInput = document.querySelector(".input__textfield");
@@ -17,6 +19,18 @@ export function ForgotPasswordPage(params) {
     forgotPasswordRequest(emailInputValue);
   }
 
+  useEffect(() => {
+    const getInfoAuth = async () => {
+      const response = await getUserInfo();
+      setIsLogined(response.success);
+    };
+
+    getInfoAuth();
+  }, []);
+
+  if (isLogined === true) {
+    return <Navigate to="/" replace />;
+  }
 
   return (
     <>

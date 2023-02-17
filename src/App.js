@@ -12,19 +12,16 @@ import { ProtectedRouteElement } from "./components/ProtectedRouteElement/Protec
 import { userLogginedInfoActionCreator } from "./store/actionCreators/logginedUserInfo-actionCreator";
 import { useSelector, useDispatch } from "react-redux";
 import { getUserInfo } from "./utils/burger-api";
-
 function App(props) {
   const [data, setData] = useState(null);
-    const dispatch = useDispatch();
-    useEffect(() => {
-      getUserInfo().then((res) => dispatch(userLogginedInfoActionCreator(res)));
-    }, []);
+  const dispatch = useDispatch();
+  useEffect(() => {
+    getUserInfo().then((res) => dispatch(userLogginedInfoActionCreator(res)));
+  }, []);
 
-    useEffect(() => {
-      getUserInfo().then((res) => setData(res));
-    }, []);
-
-    
+  useEffect(() => {
+    getUserInfo().then((res) => setData(res));
+  }, []);
 
   return (
     <Routes>

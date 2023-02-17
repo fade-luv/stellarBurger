@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import AppHeader from "../components/AppHeader/AppHeader";
 import { EmailInput } from "@ya.praktikum/react-developer-burger-ui-components";
 import { PasswordInput } from "@ya.praktikum/react-developer-burger-ui-components";
@@ -6,20 +6,32 @@ import { Button } from "@ya.praktikum/react-developer-burger-ui-components";
 import { Input } from "@ya.praktikum/react-developer-burger-ui-components";
 import { Link } from "react-router-dom";
 import pages from "./pages.module.css";
-import {resetPasswordRequest} from "../utils/burger-api"
+import { resetPasswordRequest } from "../utils/burger-api";
+import { getUserInfo } from "../utils/burger-api";
+import { Navigate } from "react-router-dom";
 
 export function ResetPasswordPage(params) {
+  const [isLogined, setIsLogined] = useState(false);
 
-    function onButtnonClickResetPassword() {
+  function onButtnonClickResetPassword() {
+    const resetPassObj = {
+      newPassword: document.getElementById("newPasswordInput").value,
+      code: document.getElementById("checkCodeInput").value,
+    };
+    resetPasswordRequest(resetPassObj);
+  }
+  useEffect(() => {
+    const getInfoAuth = async () => {
+      const response = await getUserInfo();
+      setIsLogined(response.success);
+    };
 
-      const resetPassObj = {
-        newPassword: document.getElementById("newPasswordInput").value,
-        code: document.getElementById("checkCodeInput").value
-      };
-      resetPasswordRequest(resetPassObj);
-    }
+    getInfoAuth();
+  }, []);
 
-
+  if (isLogined === true) {
+    return <Navigate to="/" replace />;
+  }
 
   return (
     <>

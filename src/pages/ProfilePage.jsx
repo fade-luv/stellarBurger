@@ -55,17 +55,16 @@ export function ProfilePage(params) {
 
   const handleUserEmailChange = (e) => {
     setEmail(e.target.value);
-    setChanged(true)
+    setChanged(true);
   };
 
   const handleUserPasswordChange = (e) => {
-    setPassword(e.target.value)
+    setPassword(e.target.value);
     setChanged(true);
-  }
+  };
 
   function updateUser() {
     updateUserData(name, email, password);
-   
   }
 
   function resetForm() {

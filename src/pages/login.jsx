@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import pages from "./pages.module.css";
 import AppHeader from "../components/AppHeader/AppHeader";
 import { EmailInput } from "@ya.praktikum/react-developer-burger-ui-components";
@@ -8,14 +8,15 @@ import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { loginActionCreator } from "../store/actionCreators/login-actionCreator";
-
+import { getUserInfo } from "../utils/burger-api";
+import { Navigate } from "react-router-dom";
 
 export function LoginPage(params) {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const [isLogined, setIsLogined] = useState(false);
 
   const isAuth = useSelector((state) => state.authReducer.isAuth);
-
 
   if (isAuth === true) {
     window.history.back();
@@ -24,6 +25,20 @@ export function LoginPage(params) {
   function goToForgotPassword(params) {
     navigate("/forgot-password");
   }
+
+
+  useEffect(() => {
+    const getInfoAuth = async () => {
+      const response = await getUserInfo();
+      setIsLogined(response.success);
+    };
+
+    getInfoAuth();
+  }, []);
+
+    if (isLogined === true) {
+      return <Navigate to="/" replace />;
+    }
 
   function sendAuthData() {
     const loginUserData = {

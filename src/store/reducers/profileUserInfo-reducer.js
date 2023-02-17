@@ -7,7 +7,7 @@ const initialState = {
 };
 
 export const userLogginedInfoReducer = (state = initialState, action) => {
-console.log(action);
+
   switch (action.type) {
     case "GET_LOGGINED_USER_INFO": {
       return {
