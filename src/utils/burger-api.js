@@ -131,7 +131,6 @@ export async function updateUserData(name, email, password) {
     body: JSON.stringify({
       email: email,
       name: name,
-      password: password,
     }),
   }).then((res) => {
     if (res.ok) {

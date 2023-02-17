@@ -17,12 +17,8 @@ export function LoginPage(params) {
   const isAuth = useSelector((state) => state.authReducer.isAuth);
 
 
-
-
-
-
   if (isAuth === true) {
-    navigate("/");
+    window.history.back();
   }
 
   function goToForgotPassword(params) {
