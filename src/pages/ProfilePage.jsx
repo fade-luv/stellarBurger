@@ -17,21 +17,11 @@ import { getUserInfo } from "../utils/burger-api";
 export function ProfilePage(params) {
   const dispatch = useDispatch();
 
-  const userLogginedEmail = useSelector(
-    (state) => state.userLogginedInfoReducer.userEmail
-  );
 
-  const userLogginedName = useSelector(
-    (state) => state.userLogginedInfoReducer.userName
-  );
+const { userEmail, userName, userPassword } = useSelector(
+  (state) => state.userLogginedInfoReducer
+);
 
-  const formChanged = useSelector(
-    (state) => state.userLogginedInfoReducer.formChanged
-  );
-
-  const userLogginedPassword = useSelector(
-    (state) => state.userLogginedInfoReducer.userPassword
-  );
 
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -43,10 +33,10 @@ export function ProfilePage(params) {
   }, []);
 
   useEffect(() => {
-    setName(userLogginedName);
-    setEmail(userLogginedEmail);
+    setName(userName);
+    setEmail(userEmail);
     setPassword("******");
-  }, [userLogginedName, userLogginedEmail, userLogginedPassword]);
+  }, [userName, userEmail, userPassword]);
 
   const handleUserNameChange = (e) => {
     setName(e.target.value);
@@ -68,8 +58,8 @@ export function ProfilePage(params) {
   }
 
   function resetForm() {
-    setName(userLogginedName);
-    setEmail(userLogginedEmail);
+    setName(userName);
+    setEmail(userEmail);
     setChanged(false);
   }
 

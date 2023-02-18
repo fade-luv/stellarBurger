@@ -2,7 +2,6 @@ const initialState = {
   userEmail: " ",
   userName: " ",
   userPassword: "*******",
-  formChanged: false,
   isLoggined: false,
 };
 
