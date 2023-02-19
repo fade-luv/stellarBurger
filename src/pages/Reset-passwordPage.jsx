@@ -9,9 +9,13 @@ import pages from "./pages.module.css";
 import { resetPasswordRequest } from "../utils/burger-api";
 import { getUserInfo } from "../utils/burger-api";
 import { Navigate } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
 
-export function ResetPasswordPage(params) {
+export function ResetPasswordPage(props) {
   const [isLogined, setIsLogined] = useState(false);
+const resetPasswordEmailSend = useSelector(
+  (state) => state.userLogginedInfoReducer.isResetPasswordEmailSended
+);
 
   function onButtnonClickResetPassword() {
     const resetPassObj = {
@@ -29,9 +33,15 @@ export function ResetPasswordPage(params) {
     getInfoAuth();
   }, []);
 
-  if (isLogined === true) {
+  if (isLogined === true || resetPasswordEmailSend == false) {
     return <Navigate to="/" replace />;
   }
+
+
+
+
+
+
 
   return (
     <>

@@ -9,16 +9,28 @@ import pages from "./pages.module.css";
 import { forgotPasswordRequest } from "../utils/burger-api";
 import { getUserInfo } from "../utils/burger-api";
 import { Navigate } from "react-router-dom";
+import  forgotPasswordActionCreator  from "../store/actionCreators/forgotPassword-actionCreator";
+import { useSelector, useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 export function ForgotPasswordPage(params) {
-  const [isLogined, setIsLogined] = useState(false);
+  const navigate = useNavigate();
 
+  const [isLogined, setIsLogined] = useState(false);
+  const dispatch = useDispatch();
   function onButtnonClickForgotPassword() {
     let emailInput = document.querySelector(".input__textfield");
     let emailInputValue = emailInput.value;
-    forgotPasswordRequest(emailInputValue);
+     dispatch(forgotPasswordActionCreator(emailInputValue));
   }
+ const isResetPasswordEmailSended = useSelector(
+   (state) => state.userLogginedInfoReducer.isResetPasswordEmailSended
+ );
 
+
+ if (isResetPasswordEmailSended === true) {
+   navigate("/reset-password");
+ }
   useEffect(() => {
     const getInfoAuth = async () => {
       const response = await getUserInfo();

@@ -29,7 +29,6 @@ export async function getOrderNumber(IDs) {
 }
 
 export async function forgotPasswordRequest(email) {
-  console.log(email);
   return await fetch(forgotPasswordLink, {
     method: "POST",
     headers: {
@@ -40,9 +39,7 @@ export async function forgotPasswordRequest(email) {
       email: email,
     }),
   }).then((res) => {
-    if (res.ok) {
-      console.log(res);
-    }
+    return res.json();
   });
 }
 

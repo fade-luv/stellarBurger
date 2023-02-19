@@ -3,6 +3,7 @@ const initialState = {
   userName: " ",
   userPassword: "*******",
   isLoggined: false,
+  isResetPasswordEmailSended: false
 };
 
 export const userLogginedInfoReducer = (state = initialState, action) => {
@@ -42,6 +43,12 @@ export const userLogginedInfoReducer = (state = initialState, action) => {
         ...state,
         userPassword: action.payload,
         formChanged: true,
+      };
+    }
+    case "EMAIL_RESET_SENDED_SUCCES": {
+      return {
+        ...state,
+        isResetPasswordEmailSended: action.sendResetPasswordEmail,
       };
     }
     default:
