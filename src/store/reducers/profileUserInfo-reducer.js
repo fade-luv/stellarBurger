@@ -51,6 +51,15 @@ export const userLogginedInfoReducer = (state = initialState, action) => {
         isResetPasswordEmailSended: action.sendResetPasswordEmail,
       };
     }
+    case "LOGOUT_SUCCES": {
+      return {
+        ...state,
+        userEmail: " ",
+        userName: " ",
+        userPassword: " ",
+        isLoggined: false,
+      };
+    }
     default:
       return state;
   }

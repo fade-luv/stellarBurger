@@ -9,6 +9,7 @@ export const ProtectedRouteElement = ({ element }) => {
 const [isLogined, setIsLogined] = useState(false);
 const [isLoading, setIsLoading] = useState(true);
 
+console.log(element);
 useEffect(() => {
   const getInfoAuth = async () => {
     const response = await getUserInfo();

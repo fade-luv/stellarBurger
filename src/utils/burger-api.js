@@ -140,6 +140,7 @@ export async function updateUserData(name, email, password) {
 
 
 export async function exiteRequest(refreshToken) {
+
   return await fetch(LogOutLink, {
     method: "POST",
     headers: {

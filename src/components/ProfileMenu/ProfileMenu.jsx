@@ -1,16 +1,20 @@
 import React from "react";
 import styles from "./ProfileMenu.module.css";
-import { Link, NavLink } from "react-router-dom";
-import {exiteRequest} from "../../utils/burger-api"
-import { useNavigate } from "react-router-dom";
+import { NavLink } from "react-router-dom";
+import { logoutActionCreator } from "../../store/actionCreators/logout-actionCreator";
+import {  useDispatch } from "react-redux";
+
 export function ProfileMenu () {
- const navigate = useNavigate();
- 
+
+ const dispatch = useDispatch();
+
+let RefreshToken = (localStorage.getItem("refreshToken"));
 function logOut(){
-  exiteRequest(localStorage.getItem("refreshToken"));
-  localStorage.removeItem("refreshToken");
-  localStorage.removeItem("accessToken");
+  dispatch(logoutActionCreator(RefreshToken));
+   localStorage.removeItem("refreshToken");
+   localStorage.removeItem("accessToken");
 }
+
 
   return (
     <div className={styles.profile_nav}>

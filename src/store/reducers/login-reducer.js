@@ -16,8 +16,16 @@ export const authReducer = (state = initialState, action) => {
         isAuth: action.authInfo.success,
         accessToken: action.authInfo.accessToken,
         refreshToken: action.authInfo.refreshToken,
-        userName:action.authInfo.user.name,
-        userEmail:action.authInfo.user.email
+        userEmail: action.authInfo.user.email,
+      };
+    }
+    case "LOGOUT_SUCCES": {
+      return {
+        ...state,
+        isAuth:  false,
+        accessToken: " ",
+        refreshToken: " ",
+        userEmail: " ",
       };
     }
 
