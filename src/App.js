@@ -1,5 +1,5 @@
 import React from "react";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route, useLocation } from "react-router-dom";
 import { LoginPage } from "./pages/login";
 import HomePage from "./pages/HomePage";
 import { RegisterPage } from "./pages/register";
@@ -12,7 +12,9 @@ import { ProtectedRouteElement } from "./components/ProtectedRouteElement/Protec
 import { userLogginedInfoActionCreator } from "./store/actionCreators/logginedUserInfo-actionCreator";
 import { useSelector, useDispatch } from "react-redux";
 import { getUserInfo } from "./utils/burger-api";
-import  AppHeader from "./components/AppHeader/AppHeader";
+import  AppHeader  from "./components/AppHeader/AppHeader";
+import  IngredientDetails  from "./components/IngredientDetails/IngredientDetails";
+
 function App(props) {
   const [data, setData] = useState(null);
   const dispatch = useDispatch();
@@ -24,21 +26,33 @@ function App(props) {
     getUserInfo().then((res) => setData(res));
   }, []);
 
+
+    const location = useLocation();
+    const background = location.state && location.state.background;
+
+
   return (
-    <Routes>
-      <Route path="/" element={<AppHeader />}>
-        <Route index element={<HomePage />} />
-        <Route path="/login" element={<LoginPage />} />
-        <Route path="/register" element={<RegisterPage />} />
-        <Route path="forgot-password" element={<ForgotPasswordPage />} />
-        <Route path="/reset-password" element={<ResetPasswordPage />} />
-        <Route
-          path="/profile"
-          element={<ProtectedRouteElement element={<ProfilePage />} />}
-        />
-        <Route path="/profilе/orders" element={<OrdersPage />} />
-      </Route>
-    </Routes>
+    <>
+      <Routes location={background || location}>
+        <Route path="/" element={<AppHeader />}>
+          <Route index element={<HomePage />} />
+          <Route path="/login" element={<LoginPage />} />
+          <Route path="/register" element={<RegisterPage />} />
+          <Route path="forgot-password" element={<ForgotPasswordPage />} />
+          <Route path="/reset-password" element={<ResetPasswordPage />} />
+          <Route
+            path="/profile"
+            element={<ProtectedRouteElement element={<ProfilePage />} />}
+          />
+          <Route path="/profilе/orders" element={<OrdersPage />} />
+        </Route>
+      </Routes>
+      {background && (
+        <Routes>
+          <Route path="/ingredients/:id" element={<IngredientDetails />} />
+        </Routes>
+      )}
+    </>
   );
 }
 

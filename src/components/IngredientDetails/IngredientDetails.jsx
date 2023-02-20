@@ -1,10 +1,15 @@
 import React from "react";
 import styles from "./IngredientDetails.module.css";
 import PropTypes from "prop-types";
+import { useParams } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 
-const IngredientDetails = function (props) {
-  const { info } = props;
+const IngredientDetails = function () {
 
+  const info = useSelector(
+    (store) => store.focusIngredientReducer.focusIngredient
+  );
+    console.log(info);
   return (
     <>
       <h1 className={`${styles.title}`}>Детали ингредента</h1>
