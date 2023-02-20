@@ -1,15 +1,11 @@
 import React, { useState, useEffect } from "react";
-import AppHeader from "../components/AppHeader/AppHeader";
 import { EmailInput } from "@ya.praktikum/react-developer-burger-ui-components";
 import { PasswordInput } from "@ya.praktikum/react-developer-burger-ui-components";
 import { Button } from "@ya.praktikum/react-developer-burger-ui-components";
 import { Input } from "@ya.praktikum/react-developer-burger-ui-components";
-import { Link, NavLink } from "react-router-dom";
 import pages from "./pages.module.css";
 import { ProfileMenu } from "../components/ProfileMenu/ProfileMenu";
 import { userLogginedInfoActionCreator } from "../store/actionCreators/logginedUserInfo-actionCreator";
-import { changeUserLogginedNameActionCreator } from "../store/actionCreators/logginedUserInfo-actionCreator";
-import { changeUserLogginedEmailActionCreator } from "../store/actionCreators/logginedUserInfo-actionCreator";
 import { useSelector, useDispatch } from "react-redux";
 import { updateUserData } from "../utils/burger-api";
 import { getUserInfo } from "../utils/burger-api";
@@ -17,11 +13,9 @@ import { getUserInfo } from "../utils/burger-api";
 export function ProfilePage(params) {
   const dispatch = useDispatch();
 
-
-const { userEmail, userName, userPassword } = useSelector(
-  (state) => state.userLogginedInfoReducer
-);
-
+  const { userEmail, userName, userPassword } = useSelector(
+    (state) => state.userLogginedInfoReducer
+  );
 
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -65,7 +59,6 @@ const { userEmail, userName, userPassword } = useSelector(
 
   return (
     <>
-      <AppHeader />
       <div className={pages.profile_wrapper}>
         <ProfileMenu />
         <div className={pages.link_content}>

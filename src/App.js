@@ -12,6 +12,7 @@ import { ProtectedRouteElement } from "./components/ProtectedRouteElement/Protec
 import { userLogginedInfoActionCreator } from "./store/actionCreators/logginedUserInfo-actionCreator";
 import { useSelector, useDispatch } from "react-redux";
 import { getUserInfo } from "./utils/burger-api";
+import  AppHeader from "./components/AppHeader/AppHeader";
 function App(props) {
   const [data, setData] = useState(null);
   const dispatch = useDispatch();
@@ -25,18 +26,18 @@ function App(props) {
 
   return (
     <Routes>
-      <Route path="/" element={<HomePage />} />
-      <Route path="/login" element={<LoginPage />} />
-      <Route path="/register" element={<RegisterPage />} />
-      <Route path="forgot-password"  element={<ForgotPasswordPage />} />
-      <Route path="/reset-password"  element={<ResetPasswordPage />} />
-      <Route
-        path="/profile"
-        element={
-          <ProtectedRouteElement element={<ProfilePage />} />
-        }
-      />
-      <Route path="/profilе/orders" element={<OrdersPage />} />
+      <Route path="/" element={<AppHeader />}>
+        <Route index element={<HomePage />} />
+        <Route path="/login" element={<LoginPage />} />
+        <Route path="/register" element={<RegisterPage />} />
+        <Route path="forgot-password" element={<ForgotPasswordPage />} />
+        <Route path="/reset-password" element={<ResetPasswordPage />} />
+        <Route
+          path="/profile"
+          element={<ProtectedRouteElement element={<ProfilePage />} />}
+        />
+        <Route path="/profilе/orders" element={<OrdersPage />} />
+      </Route>
     </Routes>
   );
 }

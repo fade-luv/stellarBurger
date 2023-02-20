@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import pages from "./pages.module.css";
-import AppHeader from "../components/AppHeader/AppHeader";
 import { EmailInput } from "@ya.praktikum/react-developer-burger-ui-components";
 import { PasswordInput } from "@ya.praktikum/react-developer-burger-ui-components";
 import { Button } from "@ya.praktikum/react-developer-burger-ui-components";
@@ -26,7 +25,6 @@ export function LoginPage(params) {
     navigate("/forgot-password");
   }
 
-
   useEffect(() => {
     const getInfoAuth = async () => {
       const response = await getUserInfo();
@@ -36,9 +34,9 @@ export function LoginPage(params) {
     getInfoAuth();
   }, []);
 
-    if (isLogined === true) {
-      return <Navigate to="/" replace />;
-    }
+  if (isLogined === true) {
+    return <Navigate to="/" replace />;
+  }
 
   function sendAuthData() {
     const loginUserData = {
@@ -50,7 +48,6 @@ export function LoginPage(params) {
 
   return (
     <>
-      <AppHeader />
       <form className={pages.container}>
         <h1 className={` ${pages.header} text text_type_main-medium mb-6`}>
           Вход

@@ -7,6 +7,8 @@ import PropTypes from "prop-types";
 import { useSelector, useDispatch } from "react-redux";
 import  {useInView}  from "react-intersection-observer";
 import getIngredientsActionCreator from "../../store/actionCreators/ingredients-actionCreator";
+import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
+
 
 function BurgerIngredients(props) {
   const dispatch = useDispatch();
@@ -109,10 +111,12 @@ const ingredients = useSelector((state) => state.ingredientsReducer.ingredients)
                 {ingredients.map(
                   (ingredient) =>
                     ingredient.type === "bun" && (
-                      <Ingredient
-                        key={ingredient._id}
-                        ingredientInfo={ingredient}
-                      />
+                      <Link to={{ pathname: `ingredients/:id` }}>
+                        <Ingredient
+                          key={ingredient._id}
+                          ingredientInfo={ingredient}
+                        />
+                      </Link>
                     )
                 )}
               </div>
@@ -130,10 +134,12 @@ const ingredients = useSelector((state) => state.ingredientsReducer.ingredients)
                 {ingredients.map(
                   (ingredient) =>
                     ingredient.type === "sauce" && (
-                      <Ingredient
-                        key={ingredient._id}
-                        ingredientInfo={ingredient}
-                      />
+                      <Link to={{ pathname: `ingredients/:id` }}>
+                        <Ingredient
+                          key={ingredient._id}
+                          ingredientInfo={ingredient}
+                        />
+                      </Link>
                     )
                 )}
               </div>
@@ -151,10 +157,12 @@ const ingredients = useSelector((state) => state.ingredientsReducer.ingredients)
                 {ingredients.map(
                   (ingredient) =>
                     ingredient.type === "main" && (
-                      <Ingredient
-                        key={ingredient._id}
-                        ingredientInfo={ingredient}
-                      />
+                      <Link to={{ pathname: `ingredients/:id` }}>
+                        <Ingredient
+                          key={ingredient._id}
+                          ingredientInfo={ingredient}
+                        />
+                      </Link>
                     )
                 )}
               </div>

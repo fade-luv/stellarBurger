@@ -1,21 +1,18 @@
 import React, { useEffect, useState } from "react";
-import AppHeader from "../components/AppHeader/AppHeader";
-import { EmailInput } from "@ya.praktikum/react-developer-burger-ui-components";
 import { PasswordInput } from "@ya.praktikum/react-developer-burger-ui-components";
 import { Button } from "@ya.praktikum/react-developer-burger-ui-components";
 import { Input } from "@ya.praktikum/react-developer-burger-ui-components";
-import { Link } from "react-router-dom";
 import pages from "./pages.module.css";
 import { resetPasswordRequest } from "../utils/burger-api";
 import { getUserInfo } from "../utils/burger-api";
 import { Navigate } from "react-router-dom";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 
 export function ResetPasswordPage(props) {
   const [isLogined, setIsLogined] = useState(false);
-const resetPasswordEmailSend = useSelector(
-  (state) => state.userLogginedInfoReducer.isResetPasswordEmailSended
-);
+  const resetPasswordEmailSend = useSelector(
+    (state) => state.userLogginedInfoReducer.isResetPasswordEmailSended
+  );
 
   function onButtnonClickResetPassword() {
     const resetPassObj = {
@@ -37,15 +34,8 @@ const resetPasswordEmailSend = useSelector(
     return <Navigate to="/" replace />;
   }
 
-
-
-
-
-
-
   return (
     <>
-      <AppHeader />
       <form className={pages.container}>
         <h1 className={` ${pages.header} text text_type_main-medium mb-6`}>
           Восстановление пароля
