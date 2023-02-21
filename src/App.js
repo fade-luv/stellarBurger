@@ -26,10 +26,9 @@ function App(props) {
     getUserInfo().then((res) => setData(res));
   }, []);
 
-
+    
     const location = useLocation();
     const background = location.state && location.state.background;
-
 
   return (
     <>
@@ -45,6 +44,11 @@ function App(props) {
             element={<ProtectedRouteElement element={<ProfilePage />} />}
           />
           <Route path="/profilе/orders" element={<OrdersPage />} />
+          <Route
+            path="/ingredients/:id"
+            exact={true}
+            element={<IngredientDetails />}
+          />
         </Route>
       </Routes>
       {background && (
