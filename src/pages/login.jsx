@@ -14,8 +14,18 @@ export function LoginPage(params) {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [isLogined, setIsLogined] = useState(false);
-
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const isAuth = useSelector((state) => state.authReducer.isAuth);
+
+   function changeEmailInput(value) {
+     setEmail(value);
+   }
+
+   function changePasswordInput(value) {
+     setPassword(value);
+   }
+
 
   if (isAuth === true) {
     window.history.back();
@@ -46,14 +56,26 @@ export function LoginPage(params) {
     dispatch(loginActionCreator(loginUserData));
   }
 
+
+ 
   return (
     <>
       <form className={pages.container}>
         <h1 className={` ${pages.header} text text_type_main-medium mb-6`}>
           Вход
         </h1>
-        <EmailInput extraClass="mb-6" id="authEmail" />
-        <PasswordInput extraClass="mb-6" id="authPassword" />
+        <EmailInput
+          extraClass="mb-6"
+          id="authEmail"
+          value={email}
+          onChange={(e) => changeEmailInput(e.target.value)}
+        />
+        <PasswordInput
+          extraClass="mb-6"
+          id="authPassword"
+          value={password}
+          onChange={(e) => changePasswordInput(e.target.value)}
+        />
         <div className={pages.sumbmit_login}>
           <Button
             htmlType="button"
@@ -96,4 +118,3 @@ export function LoginPage(params) {
   );
 }
 
-//  <p className={`${header.nav__link_title} ml-2`}>Конструктор</p>;

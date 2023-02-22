@@ -44,7 +44,6 @@ export async function forgotPasswordRequest(email) {
 }
 
 export async function authorezationRequest(email, password) {
-  
   return await fetch(authorizationLink, {
     method: "POST",
     headers: {
@@ -55,11 +54,10 @@ export async function authorezationRequest(email, password) {
       email: email,
       password: password,
     }),
-  })
-    .then((res) => {
-      return res.json();
-    })
-  }
+  }).then((res) => {
+    return res.json();
+  });
+}
 export async function registrationRequest(newUserInfo) {
   let { registerEmailValue, registerNameValue, registerPasswordValue } =
     newUserInfo;
@@ -71,8 +69,8 @@ export async function registrationRequest(newUserInfo) {
     },
     body: JSON.stringify({
       email: registerEmailValue,
-      password: registerNameValue,
-      name: registerPasswordValue,
+      name: registerNameValue,
+      password: registerPasswordValue,
     }),
   }).then((res) => {
     if (res.ok) {
@@ -102,7 +100,6 @@ export async function resetPasswordRequest(obj) {
   });
 }
 
-
 export async function getUserInfo() {
   return await fetch(getUserDataLink, {
     method: "GET",
@@ -113,10 +110,8 @@ export async function getUserInfo() {
     if (res.ok) {
       return res.json();
     }
-  })
+  });
 }
-
-
 
 export async function updateUserData(name, email, password) {
   return await fetch(updateUserDataLink, {
@@ -136,11 +131,7 @@ export async function updateUserData(name, email, password) {
   });
 }
 
-
-
-
 export async function exiteRequest(refreshToken) {
-
   return await fetch(LogOutLink, {
     method: "POST",
     headers: {
@@ -156,8 +147,6 @@ export async function exiteRequest(refreshToken) {
     }
   });
 }
-
-
 
 export async function getIngredientsData(params) {
   return await fetch(`${ApiLink}/api/ingredients`).then((res) => {

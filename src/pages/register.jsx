@@ -14,6 +14,9 @@ import { useNavigate } from "react-router-dom";
 export function RegisterPage(params) {
   const dispatch = useDispatch();
   const [isLogined, setIsLogined] = useState(false);
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [name, setName] = useState("");
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -38,15 +41,43 @@ export function RegisterPage(params) {
     dispatch(registrationActionCreator(newUserData));
   }
 
+  function changeEmailInput(value) {
+    setEmail(value);
+  }
+
+  
+  function changeNameInput(value) {
+    setName(value);
+  }
+
+  function changePasswordInput(value) {
+    setPassword(value);
+  }
   return (
     <>
       <form className={pages.container}>
         <h1 className={` ${pages.header} text text_type_main-medium mb-6`}>
           Регистрация
         </h1>
-        <Input placeholder="Имя" extraClass="mb-6" id="registerName" />
-        <EmailInput extraClass="mb-6" id="registerEmail" />
-        <PasswordInput extraClass="mb-6" id="registerPassword" />
+        <Input
+          placeholder="Имя"
+          extraClass="mb-6"
+          id="registerName"
+          value={name}
+          onChange={(e) => changeNameInput(e.target.value)}
+        />
+        <EmailInput
+          extraClass="mb-6"
+          id="registerEmail"
+          value={email}
+          onChange={(e) => changeEmailInput(e.target.value)}
+        />
+        <PasswordInput
+          extraClass="mb-6"
+          id="registerPassword"
+          value={password}
+          onChange={(e) => changePasswordInput(e.target.value)}
+        />
         <div className={pages.sumbmit_register}>
           <Button
             htmlType="button"
