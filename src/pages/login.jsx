@@ -18,14 +18,13 @@ export function LoginPage(params) {
   const [password, setPassword] = useState("");
   const isAuth = useSelector((state) => state.authReducer.isAuth);
 
-   function changeEmailInput(value) {
-     setEmail(value);
-   }
+  function changeEmailInput(value) {
+    setEmail(value);
+  }
 
-   function changePasswordInput(value) {
-     setPassword(value);
-   }
-
+  function changePasswordInput(value) {
+    setPassword(value);
+  }
 
   if (isAuth === true) {
     window.history.back();
@@ -38,7 +37,9 @@ export function LoginPage(params) {
   useEffect(() => {
     const getInfoAuth = async () => {
       const response = await getUserInfo();
-      setIsLogined(response.success);
+      if (response) {
+        setIsLogined(response.success);
+      }
     };
 
     getInfoAuth();
@@ -56,8 +57,6 @@ export function LoginPage(params) {
     dispatch(loginActionCreator(loginUserData));
   }
 
-
- 
   return (
     <>
       <form className={pages.container}>
@@ -117,4 +116,3 @@ export function LoginPage(params) {
     </>
   );
 }
-

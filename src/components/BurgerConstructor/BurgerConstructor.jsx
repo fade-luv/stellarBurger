@@ -23,7 +23,6 @@ const BurgerConstructor = function (props) {
   const navigate = useNavigate();
 
   const [isOrderDetailsOpened, setIsOrderDetailsOpened] = React.useState(false);
-  let test = useSelector((state) => state);
 
   let order = useSelector((state) => state.orderReducer.order);
 

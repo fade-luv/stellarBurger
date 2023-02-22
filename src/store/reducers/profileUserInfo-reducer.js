@@ -3,7 +3,9 @@ const initialState = {
   userName: " ",
   userPassword: "*******",
   isLoggined: false,
-  isResetPasswordEmailSended: false
+  isResetPasswordEmailSended: false,
+  isLogginedRequest: false,
+  isLogginedRequestFailed: false,
 };
 
 export const userLogginedInfoReducer = (state = initialState, action) => {
@@ -12,9 +14,22 @@ export const userLogginedInfoReducer = (state = initialState, action) => {
     case "GET_LOGGINED_USER_INFO": {
       return {
         ...state,
-        userName: action.payload.user.name,
-        userEmail: action.payload.user.email,
+        isLogginedRequest: true,
+      };
+    }
+    case "GET_LOGGINED_SUCCESS": {
+      return {
+        ...state,
+        userName: action.payload.name,
+        userEmail: action.payload.email,
         isLoggined: true,
+      };
+    }
+    case "GET_LOGGINED_FAILED": {
+      return {
+        ...state,
+        isLogginedRequestFailed: true,
+        isLogginedRequest: false,
       };
     }
     case "SET_LOGGINED": {

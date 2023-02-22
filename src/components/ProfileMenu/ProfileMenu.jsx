@@ -25,7 +25,7 @@ function logOut(){
             className={({ isActive }) =>
               isActive ? styles.active : styles.unactive
             }
-            exact
+           
           >
             Профиль
           </NavLink>
@@ -36,7 +36,7 @@ function logOut(){
             className={({ isActive }) =>
               isActive ? styles.active : styles.unactive
             }
-            exact
+            
           >
             История заказов
           </NavLink>
@@ -47,7 +47,7 @@ function logOut(){
             className={({ isActive }) =>
               isActive ? styles.active : styles.unactive
             }
-            exact
+            
             onClick={logOut}
           >
             Выход

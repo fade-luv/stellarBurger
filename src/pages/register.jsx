@@ -22,7 +22,11 @@ export function RegisterPage(params) {
   useEffect(() => {
     const getInfoAuth = async () => {
       const response = await getUserInfo();
-      setIsLogined(response.success);
+      if(response) {
+          setIsLogined(response.success)
+      }
+      
+      
     };
     getInfoAuth();
   }, []);

@@ -141,11 +141,7 @@ export async function exiteRequest(refreshToken) {
     body: JSON.stringify({
       token: refreshToken,
     }),
-  }).then((res) => {
-    if (res.ok) {
-      console.log(res);
-    }
-  });
+  })
 }
 
 export async function getIngredientsData(params) {
