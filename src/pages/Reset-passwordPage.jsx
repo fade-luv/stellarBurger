@@ -5,21 +5,24 @@ import { Input } from "@ya.praktikum/react-developer-burger-ui-components";
 import pages from "./pages.module.css";
 import { resetPasswordRequest } from "../utils/burger-api";
 import { getUserInfo } from "../utils/burger-api";
-import { Navigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
+import { Navigate } from "react-router-dom";
 
 export function ResetPasswordPage(props) {
   const [isLogined, setIsLogined] = useState(false);
+
   const resetPasswordEmailSend = useSelector(
     (state) => state.userLogginedInfoReducer.isResetPasswordEmailSended
   );
-
+  const navigate = useNavigate();
   function onButtnonClickResetPassword() {
     const resetPassObj = {
       newPassword: document.getElementById("newPasswordInput").value,
       code: document.getElementById("checkCodeInput").value,
     };
     resetPasswordRequest(resetPassObj);
+    navigate("/login");
   }
   useEffect(() => {
     const getInfoAuth = async () => {

@@ -36,15 +36,15 @@ const AppHeader = function () {
           <a href="#">
             <Logo />
           </a>
-          <Link to="/profile">
-            <button type="button" className={header.profile_button}>
+          <Link to="/profile" className={header.profile_button}>
+            
               <p
                 className={`${header.propfileLink} text text_type_main-default `}
               >
                 <ProfileIcon type="secondary" />
-                <p className="ml-2">Личный кабинет</p>
+                Личный кабинет
               </p>
-            </button>
+   
           </Link>
         </div>
       </header>

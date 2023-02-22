@@ -19,7 +19,7 @@ function App(props) {
   const [data, setData] = useState(null);
   const dispatch = useDispatch();
   useEffect(() => {
-    getUserInfo().then((res) => dispatch(userLogginedInfoActionCreator(res)));
+    getUserInfo().then((res) =>dispatch(userLogginedInfoActionCreator(res)))
   }, []);
 
   useEffect(() => {

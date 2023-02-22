@@ -14,7 +14,7 @@ import {
 } from "react-router-dom";
 
 
-function BurgerIngredients(props) {
+function BurgerIngredients() {
   const dispatch = useDispatch();
   const [current, setCurrent] = React.useState("one");
   const [isLoaded, setIsLoaded] = useState(false);
@@ -116,13 +116,11 @@ const ingredients = useSelector((state) => state.ingredientsReducer.ingredients)
                   (ingredient) =>
                     ingredient.type === "bun" && (
                       <Link
+                        key={ingredient._id}
                         to={`ingredients/${ingredient._id}`}
                         state={{ background: location }}
                       >
-                        <Ingredient
-                          key={ingredient._id}
-                          ingredientInfo={ingredient}
-                        />
+                        <Ingredient ingredientInfo={ingredient} />
                       </Link>
                     )
                 )}
@@ -142,13 +140,11 @@ const ingredients = useSelector((state) => state.ingredientsReducer.ingredients)
                   (ingredient) =>
                     ingredient.type === "sauce" && (
                       <Link
+                        key={ingredient._id}
                         to={`ingredients/${ingredient._id}`}
                         state={{ background: location }}
                       >
-                        <Ingredient
-                          key={ingredient._id}
-                          ingredientInfo={ingredient}
-                        />
+                        <Ingredient ingredientInfo={ingredient} />
                       </Link>
                     )
                 )}
@@ -168,13 +164,11 @@ const ingredients = useSelector((state) => state.ingredientsReducer.ingredients)
                   (ingredient) =>
                     ingredient.type === "main" && (
                       <Link
+                        key={ingredient._id}
                         to={`ingredients/${ingredient._id}`}
                         state={{ background: location }}
                       >
-                        <Ingredient
-                          key={ingredient._id}
-                          ingredientInfo={ingredient}
-                        />
+                        <Ingredient ingredientInfo={ingredient} />
                       </Link>
                     )
                 )}
@@ -186,24 +180,5 @@ const ingredients = useSelector((state) => state.ingredientsReducer.ingredients)
     </React.Fragment>
   );
 }
-
-BurgerIngredients.propTypes = {
-  ingridients: PropTypes.arrayOf(
-    PropTypes.shape({
-      calories: PropTypes.number.isRequired,
-      carbohydrates: PropTypes.number.isRequired,
-      fat: PropTypes.number.isRequired,
-      image: PropTypes.string.isRequired,
-      image_large: PropTypes.string.isRequired,
-      image_mobile: PropTypes.string.isRequired,
-      name: PropTypes.string.isRequired,
-      price: PropTypes.number.isRequired,
-      proteins: PropTypes.number.isRequired,
-      type: PropTypes.string.isRequired,
-      __v: PropTypes.number.isRequired,
-      _id: PropTypes.string.isRequired,
-    }).isRequired
-  ),
-};
 
 export default BurgerIngredients;
