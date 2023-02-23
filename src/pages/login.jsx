@@ -8,7 +8,7 @@ import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { loginActionCreator } from "../store/actionCreators/login-actionCreator";
 import { getUserInfo } from "../utils/burger-api";
-import { Navigate } from "react-router-dom";
+import { Navigate, useLocation } from "react-router-dom";
 
 export function LoginPage(params) {
   const navigate = useNavigate();
@@ -17,6 +17,7 @@ export function LoginPage(params) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const isAuth = useSelector((state) => state.authReducer.isAuth);
+  const location = useLocation();
 
   function changeEmailInput(value) {
     setEmail(value);
@@ -27,7 +28,7 @@ export function LoginPage(params) {
   }
 
   if (isAuth === true) {
-    window.history.back();
+    navigate(`${location.state.from}`);
   }
 
   function goToForgotPassword(params) {
