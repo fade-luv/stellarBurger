@@ -5,6 +5,8 @@ const forgotPasswordLink =
 const passwordResetLink =
   "https://norma.nomoreparties.space/api/password-reset/reset";
 const registrationLink = "https://norma.nomoreparties.space/api/auth/register";
+const updateTokenLink = "https://norma.nomoreparties.space/api/auth/token";
+
 
 const authorizationLink = "https://norma.nomoreparties.space/api/auth/login";
 const LogOutLink = "https://norma.nomoreparties.space/api/auth/logout";
@@ -28,6 +30,31 @@ export async function getOrderNumber(IDs) {
   });
 }
 
+
+export async function updateTokenRequest(updateUserData, name, email) {
+  return await fetch(updateTokenLink, {
+    method: "POST",
+    headers: {
+      authorization: "5743d2b2-8d60-4e50-9a9c-7a3ab60b2c12",
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      token: window.localStorage.getItem("refreshToken"),
+    }),
+  })
+    .then((res) => {
+      return res.json();
+    })
+    .then((res) => {
+      localStorage.setItem("refreshToken", res.refreshToken);
+      localStorage.setItem("accessToken", res.accessToken);
+    }).then((res) => {
+      updateUserData(name,email)
+    });
+}
+
+
+
 export async function forgotPasswordRequest(email) {
   return await fetch(forgotPasswordLink, {
     method: "POST",
@@ -38,9 +65,7 @@ export async function forgotPasswordRequest(email) {
     body: JSON.stringify({
       email: email,
     }),
-  }).then((res) => {
-    return res.json();
-  });
+  })
 }
 
 export async function authorezationRequest(email, password) {
@@ -100,6 +125,9 @@ export async function resetPasswordRequest(obj) {
   });
 }
 
+
+
+
 export async function getUserInfo() {
   return await fetch(getUserDataLink, {
     method: "GET",
@@ -109,8 +137,10 @@ export async function getUserInfo() {
   }).then((res) => {
     if (res.ok) {
       return res.json();
+    }else if (res.status === 403) {
+      updateTokenRequest(getUserInfo);
     }
-  });
+  })
 }
 
 export async function updateUserData(name, email, password) {
@@ -126,7 +156,9 @@ export async function updateUserData(name, email, password) {
     }),
   }).then((res) => {
     if (res.ok) {
-      console.log(res);
+      return res.json();
+    } else if (res.status === 403) {
+      updateTokenRequest(updateUserData, name, email);
     }
   });
 }
@@ -152,3 +184,6 @@ export async function getIngredientsData(params) {
     throw new Error(`Somthing wrong: ${res.status}`);
   });
 }
+
+
+
