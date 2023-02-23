@@ -13,6 +13,8 @@ export function ForgotPasswordPage(params) {
   const [email, setEmail] = useState("");
   const [isLogined, setIsLogined] = useState(false);
   const dispatch = useDispatch();
+
+
   function onButtnonClickForgotPassword() {
     let emailInput = document.querySelector(".input__textfield");
     let emailInputValue = emailInput.value;

@@ -65,6 +65,8 @@ export async function forgotPasswordRequest(email) {
     body: JSON.stringify({
       email: email,
     }),
+  }).then((res) => {
+    return res.json();
   })
 }
 

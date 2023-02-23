@@ -63,7 +63,7 @@ console.log(action);
     case "EMAIL_RESET_SENDED_SUCCES": {
       return {
         ...state,
-        isResetPasswordEmailSended: action.sendResetPasswordEmail,
+        isResetPasswordEmailSended: action.sendResetPasswordEmail.success,
       };
     }
     case "LOGOUT_SUCCES": {

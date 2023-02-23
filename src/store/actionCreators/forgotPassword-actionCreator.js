@@ -5,9 +5,7 @@ function forgotPasswordActionCreator(action) {
 
   return function (dispatch) {
     forgotPasswordRequest(action).then((res) =>
-      dispatch({ type: "EMAIL_RESET_SENDED_SUCCES", sendResetPasswordEmail:res.success })
-     
-     
+      dispatch({ type: "EMAIL_RESET_SENDED_SUCCES", sendResetPasswordEmail:res })
     );
   };
 }
