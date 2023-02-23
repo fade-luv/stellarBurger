@@ -32,6 +32,10 @@ export function ForgotPasswordPage(params) {
   if (isResetPasswordEmailSended === true) {
     navigate("/reset-password");
   }
+
+  function goToLogin(){
+    navigate("/login");
+  } 
   useEffect(() => {
     const getInfoAuth = async () => {
       const response = await getUserInfo();
@@ -76,6 +80,7 @@ export function ForgotPasswordPage(params) {
             type="secondary"
             size="small"
             extraClass="pl-2 pr-2"
+            onClick={goToLogin}
           >
             Войти
           </Button>
