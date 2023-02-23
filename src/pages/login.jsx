@@ -49,7 +49,8 @@ export function LoginPage(params) {
     return <Navigate to="/" replace />;
   }
 
-  function sendAuthData() {
+  function onSubmit(e) {
+    e.preventDefault();
     const loginUserData = {
       authEmailValue: document.getElementById("authEmail").value,
       authPasswordValue: document.getElementById("authPassword").value,
@@ -59,7 +60,7 @@ export function LoginPage(params) {
 
   return (
     <>
-      <form className={pages.container}>
+      <form className={pages.container} onSubmit={onSubmit}>
         <h1 className={` ${pages.header} text text_type_main-medium mb-6`}>
           Вход
         </h1>
@@ -77,11 +78,10 @@ export function LoginPage(params) {
         />
         <div className={pages.sumbmit_login}>
           <Button
-            htmlType="button"
+            htmlType="submit"
             type="primary"
             size="large"
             extraClass="mb-20"
-            onClick={sendAuthData}
           >
             Войти
           </Button>

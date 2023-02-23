@@ -35,7 +35,10 @@ export function RegisterPage(params) {
     return <Navigate to="/" replace />;
   }
 
-  function sendRegistrationData() {
+
+
+  function onSubmit(e) {
+    e.preventDefault();
     const newUserData = {
       registerNameValue: document.getElementById("registerName").value,
       registerEmailValue: document.getElementById("registerEmail").value,
@@ -45,6 +48,8 @@ export function RegisterPage(params) {
     dispatch(registrationActionCreator(newUserData));
     setIsLogined(true)
   }
+
+
 
   function changeEmailInput(value) {
     setEmail(value);
@@ -60,7 +65,7 @@ export function RegisterPage(params) {
   }
   return (
     <>
-      <form className={pages.container}>
+      <form className={pages.container} onSubmit={onSubmit}>
         <h1 className={` ${pages.header} text text_type_main-medium mb-6`}>
           Регистрация
         </h1>
@@ -85,11 +90,11 @@ export function RegisterPage(params) {
         />
         <div className={pages.sumbmit_register}>
           <Button
-            htmlType="button"
+            htmlType="submit"
             type="primary"
             size="large"
             extraClass="mb-20"
-            onClick={sendRegistrationData}
+           
           >
             Зарегестрироваться
           </Button>

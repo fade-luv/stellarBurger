@@ -47,9 +47,11 @@ export function ProfilePage(params) {
     setChanged(true);
   };
 
-  function updateUser() {
+  function onSubmit(e) {
+    e.preventDefault();
     updateUserData(name, email, password);
   }
+
 
   function resetForm() {
     setName(userName);
@@ -62,7 +64,7 @@ export function ProfilePage(params) {
       <div className={pages.profile_wrapper}>
         <ProfileMenu />
         <div className={pages.link_content}>
-          <form>
+          <form onSubmit={onSubmit}>
             <Input
               onChange={handleUserNameChange}
               placeholder="Имя"
@@ -92,10 +94,9 @@ export function ProfilePage(params) {
             )}
             {isInputChanged && (
               <Button
-                htmlType="button"
+                htmlType="submit"
                 type="primary"
                 size="medium"
-                onClick={updateUser}
               >
                 Сохранить
               </Button>

@@ -14,12 +14,13 @@ export function ForgotPasswordPage(params) {
   const [isLogined, setIsLogined] = useState(false);
   const dispatch = useDispatch();
 
-
-  function onButtnonClickForgotPassword() {
+  function onSubmit(e) {
+    e.preventDefault();
     let emailInput = document.querySelector(".input__textfield");
     let emailInputValue = emailInput.value;
     dispatch(forgotPasswordActionCreator(emailInputValue));
   }
+
   const isResetPasswordEmailSended = useSelector(
     (state) => state.userLogginedInfoReducer.isResetPasswordEmailSended
   );
@@ -48,7 +49,7 @@ export function ForgotPasswordPage(params) {
 
   return (
     <>
-      <form className={pages.container}>
+      <form className={pages.container} onSubmit={onSubmit}>
         <h1 className={` ${pages.header} text text_type_main-medium mb-6`}>
           Восстановление пароля
         </h1>
@@ -60,11 +61,10 @@ export function ForgotPasswordPage(params) {
         />
         <div className={pages.sumbmit_forgot}>
           <Button
-            htmlType="button"
+            htmlType="submit"
             type="primary"
             size="large"
             extraClass="mb-20"
-            onClick={onButtnonClickForgotPassword}
           >
             Восстановить
           </Button>

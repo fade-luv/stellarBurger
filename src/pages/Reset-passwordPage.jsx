@@ -16,7 +16,9 @@ export function ResetPasswordPage(props) {
     (state) => state.userLogginedInfoReducer.isResetPasswordEmailSended
   );
   const navigate = useNavigate();
-  function onButtnonClickResetPassword() {
+
+  function onSubmit(e) {
+    e.preventDefault();
     const resetPassObj = {
       newPassword: document.getElementById("newPasswordInput").value,
       code: document.getElementById("checkCodeInput").value,
@@ -24,6 +26,7 @@ export function ResetPasswordPage(props) {
     resetPasswordRequest(resetPassObj);
     navigate("/login");
   }
+
   useEffect(() => {
     const getInfoAuth = async () => {
       const response = await getUserInfo();
@@ -41,7 +44,7 @@ export function ResetPasswordPage(props) {
 
   return (
     <>
-      <form className={pages.container}>
+      <form className={pages.container} onSubmit={onSubmit}>
         <h1 className={` ${pages.header} text text_type_main-medium mb-6`}>
           Восстановление пароля
         </h1>
@@ -57,11 +60,10 @@ export function ResetPasswordPage(props) {
         />
         <div className={pages.sumbmit_save}>
           <Button
-            htmlType="button"
+            htmlType="sumbit"
             type="primary"
             size="large"
             extraClass="mb-20"
-            onClick={onButtnonClickResetPassword}
           >
             Сохранить
           </Button>
