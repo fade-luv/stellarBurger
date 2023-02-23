@@ -8,6 +8,7 @@ import { ResetPasswordPage } from "./pages/Reset-passwordPage";
 import { useEffect, useState } from "react";
 import { ProfilePage } from "./pages/ProfilePage";
 import { OrdersPage } from "./pages/Orders";
+import { FeedPage } from "./pages/feedPage";
 import { ProtectedRouteElement } from "./components/ProtectedRouteElement/ProtectedRouteElement";
 import { userLogginedInfoActionCreator } from "./store/actionCreators/logginedUserInfo-actionCreator";
 import { useSelector, useDispatch } from "react-redux";
@@ -39,6 +40,7 @@ function App(props) {
           <Route path="/register" element={<RegisterPage />} />
           <Route path="forgot-password" element={<ForgotPasswordPage />} />
           <Route path="/reset-password" element={<ResetPasswordPage />} />
+          <Route path="/feed" element={<FeedPage />} />
           <Route
             path="/profile"
             element={<ProtectedRouteElement element={<ProfilePage />} />}
