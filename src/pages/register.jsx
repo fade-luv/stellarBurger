@@ -43,6 +43,7 @@ export function RegisterPage(params) {
     };
 
     dispatch(registrationActionCreator(newUserData));
+    setIsLogined(true)
   }
 
   function changeEmailInput(value) {
