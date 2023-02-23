@@ -22,21 +22,21 @@ function logOut(){
         <li className={styles.profile_nav_list_item}>
           <NavLink
             to="/profile"
+            end
             className={({ isActive }) =>
               isActive ? styles.active : styles.unactive
             }
-           
           >
             Профиль
           </NavLink>
         </li>
         <li className={styles.profile_nav_list_item}>
           <NavLink
-            to="/profilе/orders/"
+          
+            to="/profile/orders"
             className={({ isActive }) =>
               isActive ? styles.active : styles.unactive
             }
-            
           >
             История заказов
           </NavLink>
@@ -47,7 +47,6 @@ function logOut(){
             className={({ isActive }) =>
               isActive ? styles.active : styles.unactive
             }
-            
             onClick={logOut}
           >
             Выход
@@ -60,3 +59,5 @@ function logOut(){
     </div>
   );
 }
+
+

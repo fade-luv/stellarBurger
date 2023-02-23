@@ -34,7 +34,7 @@ function App(props) {
   return (
     <>
       <Routes location={background || location}>
-        <Route path="/" element={<AppHeader />}>
+        <Route  path="/" element={<AppHeader />}>
           <Route index element={<HomePage />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/register" element={<RegisterPage />} />
@@ -42,15 +42,12 @@ function App(props) {
           <Route path="/reset-password" element={<ResetPasswordPage />} />
           <Route path="/feed" element={<FeedPage />} />
           <Route
+            
             path="/profile"
             element={<ProtectedRouteElement element={<ProfilePage />} />}
           />
-          <Route path="/profilе/orders" element={<OrdersPage />} />
-          <Route
-            path="/ingredients/:id"
-            exact={true}
-            element={<IngredientDetails />}
-          />
+          <Route exact path="profile/orders" element={<OrdersPage />} />
+          <Route path="/ingredients/:id" element={<IngredientDetails />} />
         </Route>
       </Routes>
       {background && (

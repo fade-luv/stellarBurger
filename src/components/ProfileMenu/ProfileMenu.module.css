@@ -61,6 +61,8 @@
 
 
 
+
+
 .active {
   color: #F2F2F3;
 }
@@ -73,7 +75,7 @@
   font-size: 24px;
   line-height: 30px;
   color: #8585ad;
-}
+} 
 
 .profile_nav {
   width: 320px;
