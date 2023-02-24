@@ -27,14 +27,18 @@ function App(props) {
     getUserInfo().then((res) => setData(res));
   }, []);
 
-    
+ const ingredients = useSelector(
+   (store) => store.ingredientsReducer.ingredients
+ );
+
     const location = useLocation();
     const background = location.state && location.state.background;
+
 
   return (
     <>
       <Routes location={background || location}>
-        <Route  path="/" element={<AppHeader />}>
+        <Route path="/" element={<AppHeader />}>
           <Route index element={<HomePage />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/register" element={<RegisterPage />} />
@@ -42,19 +46,16 @@ function App(props) {
           <Route path="/reset-password" element={<ResetPasswordPage />} />
           <Route path="/feed" element={<FeedPage />} />
           <Route
-            
             path="/profile"
             element={<ProtectedRouteElement element={<ProfilePage />} />}
           />
           <Route exact path="profile/orders" element={<OrdersPage />} />
           <Route path="/ingredients/:id" element={<IngredientDetails />} />
         </Route>
-      </Routes>
-      {background && (
-        <Routes>
+        {!!background && (
           <Route path="/ingredients/:id" element={<IngredientDetails />} />
-        </Routes>
-      )}
+        )}
+      </Routes>
     </>
   );
 }

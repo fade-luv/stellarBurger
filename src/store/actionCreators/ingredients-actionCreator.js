@@ -1,6 +1,7 @@
 import {getIngredientsData} from "../../utils/burger-api";
 
-function getIngredientsActionCreator() {
+function getIngredientsActionCreator(action) {
+
       return function (dispatch) {
         dispatch({
           type: "GET_INGREDIENTS",
