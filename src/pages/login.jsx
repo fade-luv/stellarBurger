@@ -27,6 +27,7 @@ export function LoginPage(params) {
     setPassword(value);
   }
 
+  
   if (isAuth === true) {
     navigate(`${location.state.from}`);
   }

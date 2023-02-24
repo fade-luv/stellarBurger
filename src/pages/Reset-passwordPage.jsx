@@ -7,11 +7,11 @@ import { resetPasswordRequest } from "../utils/burger-api";
 import { getUserInfo } from "../utils/burger-api";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
-import { Navigate } from "react-router-dom";
+import { Navigate, useLocation } from "react-router-dom";
 
 export function ResetPasswordPage(props) {
   const [isLogined, setIsLogined] = useState(false);
-
+  const location = useLocation();
   const resetPasswordEmailSend = useSelector(
     (state) => state.userLogginedInfoReducer.isResetPasswordEmailSended
   );
@@ -24,7 +24,10 @@ export function ResetPasswordPage(props) {
       code: document.getElementById("checkCodeInput").value,
     };
     resetPasswordRequest(resetPassObj);
-    navigate("/login");
+    navigate("/login", {
+      state: { from: location.pathname },
+    });
+    
   }
 
   useEffect(() => {
