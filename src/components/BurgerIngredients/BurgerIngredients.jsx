@@ -143,8 +143,12 @@ const ingredients = useSelector((state) => state.ingredientsReducer.ingredients)
                         key={ingredient._id}
                         to={`ingredients/${ingredient._id}`}
                         state={{ background: location }}
+                        className="text text_type_main-large"
                       >
-                        <Ingredient ingredientInfo={ingredient} />
+                        <Ingredient
+                          ingredientInfo={ingredient}
+                          className="text text_type_main-large"
+                        />
                       </Link>
                     )
                 )}

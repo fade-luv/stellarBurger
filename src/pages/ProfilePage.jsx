@@ -21,7 +21,7 @@ export function ProfilePage(params) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isInputChanged, setChanged] = useState(false);
-
+const [activeButton, setActiveButton] = useState();
   useEffect(() => {
     getUserInfo().then((res) => dispatch(userLogginedInfoActionCreator(res)));
   }, []);
@@ -67,18 +67,27 @@ export function ProfilePage(params) {
           <form onSubmit={onSubmit}>
             <Input
               onChange={handleUserNameChange}
+              icon={activeButton === "name" ? "CloseIcon" : "EditIcon"}
+              onIconClick={() => setActiveButton("name")}
               placeholder="Имя"
               extraClass="mb-6"
+              errorText={"Ошибка"}
               value={name}
             />
             <EmailInput
+              icon={activeButton === "password" ? "CloseIcon" : "EditIcon"}
               onChange={handleUserEmailChange}
+              onIconClick={() => setActiveButton("email")}
               extraClass="mb-6"
+              errorText={"Ошибка"}
               value={email}
             />
             <PasswordInput
               extraClass="mb-6"
+              icon={activeButton === "password" ? "CloseIcon" : "EditIcon"}
+              onIconClick={() => setActiveButton("password")}
               value={password}
+              errorText={"Ошибка"}
               onChange={handleUserPasswordChange}
             />
             {isInputChanged && (
@@ -93,11 +102,7 @@ export function ProfilePage(params) {
               </Button>
             )}
             {isInputChanged && (
-              <Button
-                htmlType="submit"
-                type="primary"
-                size="medium"
-              >
+              <Button htmlType="submit" type="primary" size="medium">
                 Сохранить
               </Button>
             )}
