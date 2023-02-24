@@ -26,15 +26,17 @@ const info = useSelector(
 
   return (
     <>
-      <h1 className={`${styles.title}`}>Детали ингредента</h1>
-      <div className={styles.img_wrapper}>
+      <h1 className={findItem ? styles.title_page : styles.title}>
+        Детали ингредента
+      </h1>
+      <div className={findItem ? styles.img_wrapper_page : styles.img_wrapper}>
         <img
-          className={styles.img}
+          
           src={findItem ? findItem.image_large : info.image_large}
           alt=""
         />
       </div>
-      <h2 className={styles.subtitle}>
+      <h2 className={findItem ? styles.subtitle_page : styles.subtitle}>
         {findItem ? findItem.name : info.name}
       </h2>
       <ul className={styles.specifications}>
