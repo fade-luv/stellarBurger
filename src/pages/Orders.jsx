@@ -1,8 +1,8 @@
 import React from "react";
 import pages from "./pages.module.css";
 import { ProfileMenu } from "../components/ProfileMenu/ProfileMenu";
-import FeedItem from "../components/feedItem/FeedItem";
 import testIngredients from "../utils/testDataBase";
+import OrderItem  from "../components/orderItem/orderItem";
 
 export function OrdersPage(params) {
   return (
@@ -11,7 +11,7 @@ export function OrdersPage(params) {
         <ProfileMenu />
         <div className={pages.link_content} id={pages.link_content}>
           {testIngredients.map((ingredient) => (
-            <FeedItem ingredientInfo={ingredient} />
+            <OrderItem ingredientInfo={ingredient} />
           ))}
         </div>
       </div>

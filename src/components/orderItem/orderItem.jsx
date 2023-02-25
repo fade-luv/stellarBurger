@@ -3,12 +3,12 @@ import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components
 import pages from "../../pages/pages.module.css";
 import { Link } from "react-router-dom";
 
-const FeedItem = function (props) {
+const OrderItem = function (props) {
   let order = props.ingredientInfo;
   let orderIngredients = order.ingredients;
-  
+
   return (
-    <Link className={pages.link} to={`/feed/${order._id}`}>
+    <Link className={pages.link} to={`/profile/orders/${order._id}`}>
       <div className={pages.orderFeed_item}>
         <div className={`${pages.orderFeed_item_number_and_date} mb-6`}>
           <p className="text text_type_digits-default">{`# ${order.orderNumber}`}</p>
@@ -45,4 +45,4 @@ const FeedItem = function (props) {
   );
 };
 
-export default FeedItem;
+export default OrderItem;
