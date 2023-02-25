@@ -9,6 +9,8 @@ import { useEffect, useState } from "react";
 import { ProfilePage } from "./pages/ProfilePage";
 import { OrdersPage } from "./pages/Orders";
 import { FeedPage } from "./pages/feedPage";
+import { FeedDetails } from "./pages/feedDetails";
+import { OrderDetails } from "./pages/orderDetails";
 import { ProtectedRouteElement } from "./components/ProtectedRouteElement/ProtectedRouteElement";
 import { userLogginedInfoActionCreator } from "./store/actionCreators/logginedUserInfo-actionCreator";
 import { useSelector, useDispatch } from "react-redux";
@@ -45,11 +47,20 @@ function App(props) {
           <Route path="forgot-password" element={<ForgotPasswordPage />} />
           <Route path="/reset-password" element={<ResetPasswordPage />} />
           <Route path="/feed" element={<FeedPage />} />
+          <Route path="/feed/:id" element={<FeedDetails />} />
           <Route
             path="/profile"
             element={<ProtectedRouteElement element={<ProfilePage />} />}
           />
-          <Route exact path="profile/orders" element={<OrdersPage />} />
+          <Route
+            path="profile/orders"
+            element={<ProtectedRouteElement element={<OrdersPage />} />}
+          />
+          <Route
+            path="profile/orders/:id"
+            element={<ProtectedRouteElement element={<OrderDetails />} />}
+          />
+
           <Route path="/ingredients/:id" element={<IngredientDetails />} />
         </Route>
         {!!background && (

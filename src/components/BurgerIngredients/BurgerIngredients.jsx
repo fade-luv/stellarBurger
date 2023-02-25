@@ -96,7 +96,7 @@ const ingredients = useSelector((state) => state.ingredientsReducer.ingredients)
               </a>
             </div>
           </div>
-          <div className="scrollArea">
+       
             <div
               id={BurgerIngredientsStyle.wrapper}
               className={BurgerIngredientsStyle.wrapper}
@@ -179,7 +179,7 @@ const ingredients = useSelector((state) => state.ingredientsReducer.ingredients)
               </div>
             </div>
           </div>
-        </div>
+       
       )}
     </React.Fragment>
   );

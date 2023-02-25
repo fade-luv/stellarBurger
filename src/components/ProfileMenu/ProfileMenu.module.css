@@ -58,11 +58,6 @@
   align-items: center;
 }
 
-
-
-
-
-
 .active {
   color: #F2F2F3;
 }
@@ -79,6 +74,7 @@
 
 .profile_nav {
   width: 320px;
+  margin-top: 120px;
 }
 .link_content {
   margin-left: 60px;
