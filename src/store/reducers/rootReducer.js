@@ -5,6 +5,7 @@ import focusIngredientReducer from "./modal-reducer";
 import orderReducer from "./order-reducer";
 import registrationReducer from "./registration-reducer";
 import authReducer from "./login-reducer"
+import ordersReducer from "./orders-reducer";
 
 import userLogginedInfoReducer from "./profileUserInfo-reducer";
 const rootReducer = combineReducers({
@@ -15,6 +16,7 @@ const rootReducer = combineReducers({
   registrationReducer,
   authReducer,
   userLogginedInfoReducer,
+  ordersReducer,
 });
 
 export default rootReducer;

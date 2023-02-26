@@ -26,6 +26,7 @@ const Modal = ({
 
 
   return ReactDOM.createPortal(
+   
     <>
       <div className={styles.modal}>
         <div className={styles.CloseIcon}>

@@ -1,15 +1,26 @@
 import pages from "./pages.module.css";
 import  FeedItem  from "../components/feedItem/FeedItem";
 import testIngredients  from "../utils/testDataBase";
-export function FeedPage() {
+import { useSelector, useDispatch } from "react-redux";
+import { Link, useLocation } from "react-router-dom";
 
+export function FeedPage() {
+const orders = useSelector((state) => state.ordersReducer.orders);
+  const location = useLocation();
+  
   return (
     <div className={pages.feedWrapper}>
       <h1 className="text text_type_main-large mt-10 mb-2">Лента заказов</h1>
       <div className={pages.feedContainer}>
         <div className={pages.orderFeed} id={pages.orderFeed}>
-          {testIngredients.map((ingredient) => (
-            <FeedItem ingredientInfo={ingredient} />
+          {orders.map((order) => (
+            <Link
+              state={{ background: location }}
+              className={pages.link}
+              to={`/feed/${order._id}`}
+            >
+              <FeedItem order={order} />
+            </Link>
           ))}
         </div>
         <div className={pages.orderInfo}>

@@ -34,8 +34,9 @@ function App(props) {
  );
 
     const location = useLocation();
-    const background = location.state && location.state.background;
 
+    const background = location.state && location.state.background;
+    
 
   return (
     <>
@@ -60,12 +61,9 @@ function App(props) {
             path="profile/orders/:id"
             element={<ProtectedRouteElement element={<OrderDetails />} />}
           />
-
           <Route path="/ingredients/:id" element={<IngredientDetails />} />
         </Route>
-        {!!background && (
-          <Route path="/ingredients/:id" element={<IngredientDetails />} />
-        )}
+ 
       </Routes>
     </>
   );

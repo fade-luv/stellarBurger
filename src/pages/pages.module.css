@@ -138,6 +138,7 @@
     0px 0px 1px rgba(0, 0, 0, 0.04);
   border-radius: 40px;
   padding: 24px;
+  z-index: 0;
 }
 
 .orderFeed_item:not(:first-child) {
@@ -155,6 +156,7 @@
   justify-content: flex-start;
   padding: 0 0 0 20px;
   width: 456px;
+  z-index: 0;
 }
 .orderFeed_item_ingredientsItems_icon {
   position: absolute;
@@ -270,4 +272,20 @@
 
 .feed_details_orderStructure_list_item_title {
   width: 328px;
+}
+
+.feed_details_orderStructure_list {
+  max-height: 30vh;
+    overflow-x: hidden;
+    overflow-y: scroll;
+    scrollbar-width: 5px;
+}
+
+#feed_details_orderStructure_list::-webkit-scrollbar {
+  background: #2F2F37;
+  width: 8px;
+  
+}
+#feed_details_orderStructure_list::-webkit-scrollbar-thumb {
+  background: #8585AD;
 }
