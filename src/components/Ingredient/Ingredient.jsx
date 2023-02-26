@@ -10,10 +10,11 @@ import { escCloseModalActionCreator } from "../../store/actionCreators/modal-act
 import { overlayModalClickActionCreator } from "../../store/actionCreators/modal-actionCreator";
 import { useDrag } from "react-dnd";
 import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 const Ingredient = function (props) {
  const dispatch = useDispatch();
-
+const navigate = useNavigate();
   const { ingredientInfo } = props;
   const chosenIngredients = useSelector(
     (store) => store.burgerConstructorReducer.chosenIngredients
@@ -46,14 +47,17 @@ const addIngredients = [chosenBun, ...chosenIngredients];
 
   function closeModal(params) {
     dispatch(closeModalActionCreator(false));
+     navigate("/");
   }
 
   function escCloseModal(params) {
     dispatch(escCloseModalActionCreator(false));
+     navigate(-1);
   }
 
   function overlayCloseModal(params) {
     dispatch(overlayModalClickActionCreator(false));
+    navigate("/");
   }
 
   return (

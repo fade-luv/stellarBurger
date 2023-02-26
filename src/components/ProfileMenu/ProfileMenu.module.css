@@ -1,0 +1,97 @@
+.container {
+  max-width: 480px;
+  margin: 0 auto;
+  margin-top: 180px;
+  min-height: 430px;
+  vertical-align: middle;
+}
+.header {
+  text-align: center;
+  font-size: 24px;
+}
+
+.sumbmit_login {
+  width: 128px;
+  height: 64px;
+  margin: 0 auto;
+}
+.sumbmit_forgot {
+  width: 195px;
+  height: 64px;
+  margin: 0 auto;
+  margin-bottom: 80px;
+}
+
+.sumbmit_register {
+  width: 252px;
+  height: 64px;
+  margin: 0 auto;
+}
+.sumbmit_save {
+  width: 166px;
+  height: 64px;
+  margin: 0 auto;
+  margin-bottom: 80px;
+}
+.newUser {
+  text-align: center;
+}
+.forgotPassword {
+  text-align: center;
+}
+.profile_wrapper {
+  width: 1230px;
+  display: flex;
+  margin: 0 auto;
+  margin-top: 120px;
+}
+
+.profile_nav_list_item {
+  list-style-type: none;
+  height: 64px;
+  width: 320px;
+  font-family: "JetBrains Mono";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 24px;
+  display: flex;
+  align-items: center;
+}
+
+
+
+
+
+
+.active {
+  color: #F2F2F3;
+}
+
+.unactive {
+  vertical-align: middle;
+  font-family: "JetBrains Mono";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 24px;
+  line-height: 30px;
+  color: #8585ad;
+} 
+
+.profile_nav {
+  width: 320px;
+}
+.link_content {
+  margin-left: 60px;
+}
+
+
+.page_info {
+  color: #8585ad;
+  font-family: "JetBrains Mono";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 24px;
+  margin-top: 80px;
+}
+

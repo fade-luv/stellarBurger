@@ -15,7 +15,9 @@
   width: 178px;
   align-items: center;
   justify-content: center;
+  color: #8585ad;
 }
+
 .nav__link {
   display: flex;
 }
@@ -28,19 +30,15 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: #1C1C21;
-  color: white;
   border: none;
   width: 207px;
   margin-left: 288px;
+  color: #8585ad;
 }
 .profile-button:hover {
   cursor: pointer;
 }
 
-.nav__link_title{
-  color: #F2F2F3;
-}
 
 .nav__link_text_active {
   color: #8585AD;
@@ -55,4 +53,27 @@
 .propfileLink {
   cursor: pointer;
   display: flex;
+}
+
+.active {
+  display: flex;
+  height: 56px;
+  width: 178px;
+  align-items: center;
+  justify-content: center;
+  color: white;
+}
+
+.active1 {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  width: 207px;
+  margin-left: 288px;
+  color: white;
+}
+
+.test1 {
+  color: red;
 }

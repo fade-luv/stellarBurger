@@ -7,8 +7,14 @@ import PropTypes from "prop-types";
 import { useSelector, useDispatch } from "react-redux";
 import  {useInView}  from "react-intersection-observer";
 import getIngredientsActionCreator from "../../store/actionCreators/ingredients-actionCreator";
+import {
+  BrowserRouter as Router,
+  Link,
+  useLocation,
+} from "react-router-dom";
 
-function BurgerIngredients(props) {
+
+function BurgerIngredients() {
   const dispatch = useDispatch();
   const [current, setCurrent] = React.useState("one");
   const [isLoaded, setIsLoaded] = useState(false);
@@ -49,8 +55,8 @@ const ingredients = useSelector((state) => state.ingredientsReducer.ingredients)
     setCurrent(value);
   };
 
-  
- 
+  const location = useLocation();
+
 
   return (
     <React.Fragment>
@@ -109,10 +115,13 @@ const ingredients = useSelector((state) => state.ingredientsReducer.ingredients)
                 {ingredients.map(
                   (ingredient) =>
                     ingredient.type === "bun" && (
-                      <Ingredient
+                      <Link
                         key={ingredient._id}
-                        ingredientInfo={ingredient}
-                      />
+                        to={`ingredients/${ingredient._id}`}
+                        state={{ background: location }}
+                      >
+                        <Ingredient ingredientInfo={ingredient} />
+                      </Link>
                     )
                 )}
               </div>
@@ -130,10 +139,17 @@ const ingredients = useSelector((state) => state.ingredientsReducer.ingredients)
                 {ingredients.map(
                   (ingredient) =>
                     ingredient.type === "sauce" && (
-                      <Ingredient
+                      <Link
                         key={ingredient._id}
-                        ingredientInfo={ingredient}
-                      />
+                        to={`ingredients/${ingredient._id}`}
+                        state={{ background: location }}
+                        className="text text_type_main-large"
+                      >
+                        <Ingredient
+                          ingredientInfo={ingredient}
+                          className="text text_type_main-large"
+                        />
+                      </Link>
                     )
                 )}
               </div>
@@ -151,10 +167,13 @@ const ingredients = useSelector((state) => state.ingredientsReducer.ingredients)
                 {ingredients.map(
                   (ingredient) =>
                     ingredient.type === "main" && (
-                      <Ingredient
+                      <Link
                         key={ingredient._id}
-                        ingredientInfo={ingredient}
-                      />
+                        to={`ingredients/${ingredient._id}`}
+                        state={{ background: location }}
+                      >
+                        <Ingredient ingredientInfo={ingredient} />
+                      </Link>
                     )
                 )}
               </div>
@@ -165,24 +184,5 @@ const ingredients = useSelector((state) => state.ingredientsReducer.ingredients)
     </React.Fragment>
   );
 }
-
-BurgerIngredients.propTypes = {
-  ingridients: PropTypes.arrayOf(
-    PropTypes.shape({
-      calories: PropTypes.number.isRequired,
-      carbohydrates: PropTypes.number.isRequired,
-      fat: PropTypes.number.isRequired,
-      image: PropTypes.string.isRequired,
-      image_large: PropTypes.string.isRequired,
-      image_mobile: PropTypes.string.isRequired,
-      name: PropTypes.string.isRequired,
-      price: PropTypes.number.isRequired,
-      proteins: PropTypes.number.isRequired,
-      type: PropTypes.string.isRequired,
-      __v: PropTypes.number.isRequired,
-      _id: PropTypes.string.isRequired,
-    }).isRequired
-  ),
-};
 
 export default BurgerIngredients;

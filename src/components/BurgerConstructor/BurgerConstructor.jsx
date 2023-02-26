@@ -15,16 +15,16 @@ import addIngredientActionCreator from "../../store/actionCreators/addIngredient
 import addBunActionCreator from "../../store/actionCreators/addBun-actionCreator.js";
 import incrementActionCreator from "../../store/actionCreators/increment-actionCreator";
 import sortIngredientsActionCreator from "../../store/actionCreators/sortIngredients-actionCreator";
-
+import { useNavigate } from "react-router-dom";
 import { useDrop } from "react-dnd";
 
 const BurgerConstructor = function (props) {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const [isOrderDetailsOpened, setIsOrderDetailsOpened] = React.useState(false);
-  let test = useSelector((state) => state)
 
-  let order = useSelector((state) => state.orderReducer.order)
+  let order = useSelector((state) => state.orderReducer.order);
 
   let bun = useSelector(
     (state) => state.burgerConstructorReducer.constructorBun
@@ -41,7 +41,6 @@ const BurgerConstructor = function (props) {
   let totalPrice = useSelector(
     (state) => state.burgerConstructorReducer.burgerConstructorTotalPrice
   );
-
 
   function getIngredientsIDs(params) {
     let soucesAndFillingsID = SoucesAndFillings.map((el) => el._id);
@@ -64,6 +63,7 @@ const BurgerConstructor = function (props) {
   }
   const closeAllModals = () => {
     setIsOrderDetailsOpened(false);
+
   };
 
   const handleEscKeydown = (event) => {
@@ -90,7 +90,6 @@ const BurgerConstructor = function (props) {
   const priceIncrement = (item) => {
     if (item.type === "sauce" || item.type === "main") {
       dispatch(incrementActionCreator(item.price));
-
     } else {
       dispatch(incrementActionCreator(item.price * 2));
     }
@@ -103,7 +102,6 @@ const BurgerConstructor = function (props) {
       newSoucesAndFillings.splice(dragIndex, 1);
       newSoucesAndFillings.splice(hoverIndex, 0, dragSoucesAndFillingsItem);
       dispatch(sortIngredientsActionCreator(newSoucesAndFillings));
-
     }
   };
 
@@ -157,7 +155,12 @@ const BurgerConstructor = function (props) {
               </span>
             </span>
 
-            <Button type="primary" size="large" onClick={handleClick}>
+            <Button
+              type="primary"
+              size="large"
+              onClick={handleClick}
+              htmlType="button"
+            >
               Оформить заказ
             </Button>
           </div>
@@ -178,23 +181,5 @@ const BurgerConstructor = function (props) {
   );
 };
 
-BurgerConstructor.propTypes = {
-  ingridients: PropTypes.arrayOf(
-    PropTypes.shape({
-      calories: PropTypes.number.isRequired,
-      carbohydrates: PropTypes.number.isRequired,
-      fat: PropTypes.number.isRequired,
-      image: PropTypes.string.isRequired,
-      image_large: PropTypes.string.isRequired,
-      image_mobile: PropTypes.string.isRequired,
-      name: PropTypes.string.isRequired,
-      price: PropTypes.number.isRequired,
-      proteins: PropTypes.number.isRequired,
-      type: PropTypes.string.isRequired,
-      __v: PropTypes.number.isRequired,
-      _id: PropTypes.string.isRequired,
-    }).isRequired
-  ),
-};
 
 export default BurgerConstructor;

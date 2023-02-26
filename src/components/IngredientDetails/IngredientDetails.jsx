@@ -1,52 +1,72 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styles from "./IngredientDetails.module.css";
 import PropTypes from "prop-types";
+import { useParams } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import getIngredientsActionCreator from "../../store/actionCreators/ingredients-actionCreator";
 
 const IngredientDetails = function (props) {
-  const { info } = props;
+let {id} = useParams()
+
+  const [isLoaded, setIsLoaded] = useState(false);
+ const dispatch = useDispatch();
+
+useEffect(() => {
+  dispatch(getIngredientsActionCreator());
+}, []);
+
+const ingredients = useSelector(
+  (state) => state.ingredientsReducer.ingredients
+);
+const info = useSelector(
+  (store) => store.focusIngredientReducer.focusIngredient
+);
+
+ const findItem = ingredients.find((i) => i._id === id);
 
   return (
     <>
-      <h1 className={`${styles.title}`}>Детали ингредента</h1>
-      <div className={styles.img_wrapper}>
-        <img className={styles.img} src={info.image_large} alt="" />
+      <h1 className={findItem ? styles.title_page : styles.title}>
+        Детали ингредента
+      </h1>
+      <div className={findItem ? styles.img_wrapper_page : styles.img_wrapper}>
+        <img
+          
+          src={findItem ? findItem.image_large : info.image_large}
+          alt=""
+        />
       </div>
-      <h2 className={styles.subtitle}>{info.name}</h2>
+      <h2 className={findItem ? styles.subtitle_page : styles.subtitle}>
+        {findItem ? findItem.name : info.name}
+      </h2>
       <ul className={styles.specifications}>
         <li className={styles.specificationItem}>
           <p className={styles.specificationItemTitle}>Калории,ккал</p>
-          <p className={styles.specificationItemValue}>{info.calories}</p>
+          <p className={styles.specificationItemValue}>
+            {findItem ? findItem.calories : info.calories}
+          </p>
         </li>
         <li className={styles.specificationItem}>
           <p className={styles.specificationItemTitle}>Белки, г</p>
-          <p className={styles.specificationItemValue}>{info.carbohydrates}</p>
+          <p className={styles.specificationItemValue}>
+            {findItem ? findItem.carbohydrates : info.carbohydrates}
+          </p>
         </li>
         <li className={styles.specificationItem}>
           <p className={styles.specificationItemTitle}>Жиры, г</p>
-          <p className={styles.specificationItemValue}>{info.fat}</p>
+          <p className={styles.specificationItemValue}>
+            {findItem ? findItem.fat : info.fat}
+          </p>
         </li>
         <li className={styles.specificationItem}>
           <p className={styles.specificationItemTitle}>Углеводы, г</p>
-          <p className={styles.specificationItemValue}>{info.proteins}</p>
+          <p className={styles.specificationItemValue}>
+            {findItem ? findItem.proteins : info.proteins}
+          </p>
         </li>
       </ul>
     </>
   );
 };
-IngredientDetails.propTypes = {
-  info: PropTypes.shape({
-    calories: PropTypes.number.isRequired,
-    carbohydrates: PropTypes.number.isRequired,
-    fat: PropTypes.number.isRequired,
-    image: PropTypes.string.isRequired,
-    image_large: PropTypes.string.isRequired,
-    image_mobile: PropTypes.string.isRequired,
-    name: PropTypes.string.isRequired,
-    price: PropTypes.number.isRequired,
-    proteins: PropTypes.number.isRequired,
-    type: PropTypes.string.isRequired,
-    __v: PropTypes.number.isRequired,
-    _id: PropTypes.string.isRequired,
-  }).isRequired,
-};
+
 export default IngredientDetails;
