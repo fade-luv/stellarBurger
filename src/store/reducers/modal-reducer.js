@@ -6,7 +6,7 @@ const initialState = {
 };
 
 function focusIngredientReducer(state = initialState, action) {
-console.log(action);
+
   switch (action.type) {
     case "ACTIVE_MODAL_INGREDIENT":
       return { ...state, focusIngredient: action.value, state: action.state };

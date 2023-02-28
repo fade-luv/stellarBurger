@@ -6,7 +6,7 @@ import orderReducer from "./order-reducer";
 import registrationReducer from "./registration-reducer";
 import authReducer from "./login-reducer"
 import ordersReducer from "./orders-reducer";
-
+import wsReducer from "./webSocket-reducer";
 import userLogginedInfoReducer from "./profileUserInfo-reducer";
 const rootReducer = combineReducers({
   ingredientsReducer,
@@ -17,6 +17,7 @@ const rootReducer = combineReducers({
   authReducer,
   userLogginedInfoReducer,
   ordersReducer,
+  wsReducer,
 });
 
 export default rootReducer;

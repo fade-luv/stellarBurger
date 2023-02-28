@@ -13,6 +13,7 @@ import { FeedDetails } from "../../pages/feedDetails";
 
 const FeedItem = function (props) {
   const { order } = props;
+  console.log(order);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -45,13 +46,13 @@ const FeedItem = function (props) {
         <div className={pages.orderFeed_item} onClick={openModalOrder}>
           <div className={`${pages.orderFeed_item_number_and_date} mb-6`}>
             <p className="text text_type_digits-default">
-              {`# ${order.orderNumber}`}
+              {`# ${order.number}`}
             </p>
             <div className="text text_type_main-default text_color_inactive">
-              Сегодня, {order.orderDate} i-GMT+3
+              Сегодня, {order.createdAt} i-GMT+3
             </div>
           </div>
-          <h2 className={pages.orderFeed_item_title}>{order.orderTitle}</h2>
+          <h2 className={pages.orderFeed_item_title}>{order.name}</h2>
           <div
             className={`${pages.orderFeed_item_ingredientsItems_and_price} mt-6`}
           >
@@ -61,11 +62,11 @@ const FeedItem = function (props) {
                   <li
                     className={pages.orderFeed_item_ingredientsItems_icons_item}
                   >
-                    <img
+                    {/* <img
                       src={`${orderItem.image}`}
                       alt=""
                       className={pages.orderFeed_item_ingredientsItems_icon}
-                    />
+                    /> */}
                   </li>
                 );
               })}
