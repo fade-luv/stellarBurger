@@ -5,7 +5,7 @@ const initialState = {
 };
 
 export const wsReducer = (state = initialState, action) => {
-  console.log(action.type);
+
   switch (action.type) {
     case "WS_CONNECTION_SUCCES":
       return {
