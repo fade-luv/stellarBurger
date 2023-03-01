@@ -1,5 +1,8 @@
 import React, { useEffect } from "react";
-import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
+import {
+  CurrencyIcon,
+  FormattedDate,
+} from "@ya.praktikum/react-developer-burger-ui-components";
 import pages from "../../pages/pages.module.css";
 import { useParams } from "react-router-dom";
 import { feedOrderActionCreator } from "../../store/actionCreators/modal-actionCreator";
@@ -63,7 +66,7 @@ const FeedItem = function (props) {
                 {`# ${order.number}`}
               </p>
               <div className="text text_type_main-default text_color_inactive">
-                Сегодня, {order.createdAt} i-GMT+3
+                <FormattedDate date={new Date(order.createdAt)} />
               </div>
             </div>
             <h2 className={pages.orderFeed_item_title}>{order.name}</h2>

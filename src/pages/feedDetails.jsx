@@ -1,5 +1,8 @@
 import pages from "./pages.module.css";
-import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
+import {
+  CurrencyIcon,
+  FormattedDate,
+} from "@ya.praktikum/react-developer-burger-ui-components";
 import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -77,7 +80,7 @@ export function FeedDetails(props) {
       </ul>
       <div className={`${pages.feed_details_orderFooter}`}>
         <p className={`${pages.feed_details_orderDate} text_color_inactive`}>
-          Вчера, {findItem ? findItem.orderDate : ordersInfo.orderDate}i-GMT+3
+          <FormattedDate date={new Date(order.createdAt)} />
         </p>
         <p
           className={`${pages.feed_details_orderSumm} text_type_digits-default`}
