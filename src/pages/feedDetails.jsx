@@ -45,7 +45,7 @@ export function FeedDetails(props) {
       <p
         className={`${pages.feed_details_orderStatus} text text_type_main-small mb-15`}
       >
-        Выполнен
+        {order.status === "done" ? "Выполнен" : "Готовится"}
       </p>
       <p
         className={`${pages.feed_details_orderStructure} text text_type_main-medium mb-6`}
