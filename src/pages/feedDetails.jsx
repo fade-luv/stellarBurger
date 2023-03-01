@@ -5,28 +5,39 @@ import { useDispatch, useSelector } from "react-redux";
 
 export function FeedDetails(props) {
   const { id } = useParams();
-  const {orderInfo} = props;
   const orders = useSelector((state) => state.ordersReducer.orders);
-  const ordersInfo = useSelector((state) => state.focusIngredientReducer.focusOrder);
+
+  const ordersInfo = useSelector(
+    (state) => state.focusIngredientReducer.focusOrder
+  );
+  const { ingredients } = useSelector((store) => store.ingredientsReducer);
 
   const findItem = orders.find((i) => i._id === id);
+ 
+  
+
+ const findIngredient = ordersInfo.ingredients.map(
+   (id) => ingredients.filter((ingr) => ingr._id === id)[0]
+ );
+
+
+  const orderPrice = findIngredient
+    .filter((el) => el !== undefined)
+    .reduce((total, ingredient) => total + ingredient.price, 0);
 
   let order = findItem || ordersInfo;
-
-
-
 
   return (
     <div className={pages.feedDetailsWrapper}>
       <p
         className={`${pages.feed_details_orderNumber} text text_type_digits-default mb-10`}
       >
-        #{findItem ? findItem.orderNumber : ordersInfo.orderNumber}
+        #{findItem ? findItem.orderNumber : ordersInfo.number}
       </p>
       <p
         className={`${pages.feed_details_orderTitle} text text_type_main-medium mb-3`}
       >
-        {findItem ? findItem.orderTitle : ordersInfo.orderTitle}
+        {findItem ? findItem.orderTitle : ordersInfo.name}
       </p>
       <p
         className={`${pages.feed_details_orderStatus} text text_type_main-small mb-15`}
@@ -43,7 +54,7 @@ export function FeedDetails(props) {
         className={`${pages.feed_details_orderStructure_list}`}
         id={pages.feed_details_orderStructure_list}
       >
-        {order.ingredients.map((ingredient) => (
+        {findIngredient.map((ingredient) => (
           <li className={`${pages.feed_details_orderStructure_list_item}`}>
             <img
               className={`${pages.feed_details_orderStructure_list_item_img}`}
@@ -71,7 +82,7 @@ export function FeedDetails(props) {
         <p
           className={`${pages.feed_details_orderSumm} text_type_digits-default`}
         >
-          {findItem ? findItem.orderPrice : ordersInfo.orderPrice}
+          {findItem ? findItem.orderPrice : orderPrice}
           <CurrencyIcon type="primary" />
         </p>
       </div>

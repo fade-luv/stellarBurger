@@ -11,6 +11,7 @@ function focusIngredientReducer(state = initialState, action) {
     case "ACTIVE_MODAL_INGREDIENT":
       return { ...state, focusIngredient: action.value, state: action.state };
     case "ACTIVE_MODAL_FEED":
+      console.log(action);
       return {
         ...state,
         focusOrder: action.value,

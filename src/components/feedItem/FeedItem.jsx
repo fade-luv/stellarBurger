@@ -13,32 +13,27 @@ import { FeedDetails } from "../../pages/feedDetails";
 import getIngredientsActionCreator from "../../store/actionCreators/ingredients-actionCreator";
 
 const FeedItem = function (props) {
-    const dispatch = useDispatch();
-    const navigate = useNavigate();
-  
-    const { order } = props;
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
-    useEffect(() => {
-      dispatch(getIngredientsActionCreator());
-    }, []);
-    const {ingredients} = useSelector((store) => store.ingredientsReducer)
+  const { order } = props;
 
+  useEffect(() => {
+    dispatch(getIngredientsActionCreator());
+  }, []);
+  const { ingredients } = useSelector((store) => store.ingredientsReducer);
 
-const findIngredient = order.ingredients.map(
-  (id) => ingredients.filter((ingr) => ingr._id === id)[0]
-);
+  const findIngredient = order.ingredients.map(
+    (id) => ingredients.filter((ingr) => ingr._id === id)[0]
+  );
 
+  const orderPrice = findIngredient
+    .filter((el) => el !== undefined)
+    .reduce((total, ingredient) => total + ingredient.price, 0);
 
-const orderPrice = findIngredient
-  .filter((el) => el !== undefined)
-  .reduce((total, ingredient) => total + ingredient.price, 0);
-
-
- 
   function openModalOrder() {
     dispatch(feedOrderActionCreator(order, true));
   }
-
 
   function closeModal(params) {
     dispatch(closeModalActionCreator(false));
@@ -55,10 +50,9 @@ const orderPrice = findIngredient
     navigate(-1);
   }
 
-
- const modalState = useSelector(
-   (store) => store.focusIngredientReducer.stateModalFeedDetails
- );
+  const modalState = useSelector(
+    (store) => store.focusIngredientReducer.stateModalFeedDetails
+  );
   return (
     findIngredient && (
       <div>
@@ -80,7 +74,6 @@ const orderPrice = findIngredient
                 {findIngredient
                   .filter((el) => el !== undefined)
                   .map((orderItem) => {
-                    console.log(orderItem);
                     return (
                       <li
                         className={

@@ -36,51 +36,29 @@ export function FeedPage() {
             <div className={`${pages.orderStatus_container} mb-15`}>
               <div className={pages.order_done}>
                 <h3 className={`${pages.order_done_title} pb-6`}>Готовы:</h3>
-                <p
-                  className={`${pages.order_done_item} text text_type_digits-default`}
-                >
-                  034533
-                </p>
-                <p
-                  className={`${pages.order_done_item} text text_type_digits-default`}
-                >
-                  034533
-                </p>
-                <p
-                  className={`${pages.order_done_item} text text_type_digits-default`}
-                >
-                  034533
-                </p>
-                <p
-                  className={`${pages.order_done_item} text text_type_digits-default`}
-                >
-                  034533
-                </p>
-                <p
-                  className={`${pages.order_done_item} text text_type_digits-default`}
-                >
-                  034533
-                </p>
+                {orders.map((order, index) =>
+                  order.status == "done" && index < 10 ? (
+                    <p
+                      className={`${pages.order_done_item} text text_type_digits-default`}
+                    >
+                      {order.number}
+                    </p>
+                  ) : null
+                )}
               </div>
               <div className={pages.order_atWork}>
                 <h3 className={`${pages.order_atWork_title} pb-6`}>
                   В работе:
                 </h3>
-                <p
-                  className={`${pages.order_atWord_item} text text_type_digits-default`}
-                >
-                  034538
-                </p>
-                <p
-                  className={`${pages.order_atWord_item} text text_type_digits-default`}
-                >
-                  034538
-                </p>
-                <p
-                  className={`${pages.order_atWord_item} text text_type_digits-default`}
-                >
-                  034538
-                </p>
+                {orders.map((order, index) =>
+                  order.status !== "done" && index < 10 ? (
+                    <p
+                      className={`${pages.order_atWord_item} text text_type_digits-default`}
+                    >
+                      {order.number}
+                    </p>
+                  ) : null
+                )}
               </div>
             </div>
             <div
