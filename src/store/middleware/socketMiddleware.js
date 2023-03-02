@@ -1,39 +1,51 @@
-import type { Middleware, MiddlewareAPI } from "redux";
-
-export const socketMiddleWare = (wsUrl) => {
+export const socketMiddleWare = (wsUrl, wsActions, isAuth) => {
   return (store) => {
     let socket = null;
 
     return (next) => (action) => {
       const { dispatch, getState } = store;
       const { type, payload } = action;
+      const {
+        wsConnectionStart,
+        wsConnectionSuccess,
+        wsConnectionError,
+        wsConnectionClosed,
+        wsGetMessage,
+        wsSendMessage,
+      } = wsActions;
+      
 
-      if (type === "WS_CONNECTION_START") {
+      const accessToken = window.localStorage.getItem("accessToken");
+
+      if (type === wsConnectionStart && isAuth) {
+        socket = new WebSocket(
+          `${wsUrl}?token=${accessToken.split("Bearer ")[1]}`
+        );
+      } else if (type === wsConnectionStart && !isAuth) {
         socket = new WebSocket(wsUrl);
       }
       if (socket) {
         socket.onopen = (event) => {
-          dispatch({ type: "WS_CONNECTION_SUCCESS", payload: event });
+          dispatch({ type: wsConnectionSuccess, payload: event });
         };
 
         socket.onerror = (event) => {
-          dispatch({ type: "WS_CONNECTION_ERROR", payload: event });
+          dispatch({ type: wsConnectionError, payload: event });
         };
 
         socket.onmessage = (event) => {
           const { data } = event;
-          const parsedData = JSON.parse(data)
-          const {success, ...ParsedData} = parsedData
-          dispatch({ type: "WS_GET_MESSAGE", payload: ParsedData });
+          const parsedData = JSON.parse(data);
+          const { success, ...ParsedData } = parsedData;
+          dispatch({ type: wsGetMessage, payload: ParsedData });
         };
 
         socket.onclose = (event) => {
-          dispatch({ type: "WS_CONNECTION_CLOSED", payload: event });
+          dispatch({ type: wsConnectionClosed, payload: event });
         };
 
-        if (type === "WS_SEND_MESSAGE") {
+        if (type === wsSendMessage) {
           const message = payload;
-          // функция для отправки сообщения на сервер
           socket.send(JSON.stringify(message));
         }
       }
