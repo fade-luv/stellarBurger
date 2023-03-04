@@ -107,7 +107,7 @@ const FeedItem = function (props) {
               onEscKeydown={escCloseModal}
               onCloseButtonClick={closeModal}
             >
-              <FeedDetails />
+              <FeedDetails order={order}/>
             </Modal>
           )}
         </>

@@ -17,6 +17,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { getUserInfo } from "./utils/burger-api";
 import  AppHeader  from "./components/AppHeader/AppHeader";
 import  IngredientDetails  from "./components/IngredientDetails/IngredientDetails";
+import { WS_CONNECTION_START } from "./store/actionCreators/webSocket-actionCreator";
 
 function App(props) {
   const [data, setData] = useState(null);
@@ -28,6 +29,11 @@ function App(props) {
   useEffect(() => {
     getUserInfo().then((res) => setData(res));
   }, []);
+
+   useEffect(() => {
+     dispatch(WS_CONNECTION_START());
+   }, []);
+
 
  const ingredients = useSelector(
    (store) => store.ingredientsReducer.ingredients
