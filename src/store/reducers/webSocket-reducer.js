@@ -2,6 +2,7 @@ const initialState = {
   wsConnected: false,
   orders: {},
   error: undefined,
+  dataIsReady: false
 };
 
 export const wsReducer = (state = initialState, action) => {
@@ -35,6 +36,7 @@ export const wsReducer = (state = initialState, action) => {
         error: undefined,
         wsConnected: true,
         orders: action.payload,
+        dataIsReady: true,
       };
 
     default:

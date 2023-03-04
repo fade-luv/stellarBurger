@@ -9,7 +9,7 @@ import { useEffect, useState } from "react";
 import { ProfilePage } from "./pages/ProfilePage";
 import { OrdersPage } from "./pages/Orders";
 import { FeedPage } from "./pages/feedPage";
-import { FeedDetails } from "./pages/feedDetails";
+import  FeedDetails  from "./pages/feedDetails";
 import { OrderDetails } from "./pages/orderDetails";
 import { ProtectedRouteElement } from "./components/ProtectedRouteElement/ProtectedRouteElement";
 import { userLogginedInfoActionCreator } from "./store/actionCreators/logginedUserInfo-actionCreator";

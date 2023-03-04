@@ -1,3 +1,4 @@
+import React from "react";
 import pages from "./pages.module.css";
 import {
   CurrencyIcon,
@@ -5,30 +6,43 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
+import { useEffect } from "react";
+import { WS_CONNECTION_START } from "../store/actionCreators/webSocket-actionCreator";
 
-export function FeedDetails(props) {
+
+ function FeedDetails() {
+
+  const dispatch = useDispatch();
   const { id } = useParams();
   const orders = useSelector((state) => state.ordersReducer.orders);
-
   const ordersInfo = useSelector(
     (state) => state.focusIngredientReducer.focusOrder
   );
+
   const { ingredients } = useSelector((store) => store.ingredientsReducer);
 
   const findItem = orders.find((i) => i._id === id);
- 
-  
+    console.log(findItem);
+  function check(params) {
+    if (!!ordersInfo.ingredients) {
+      const findIngredient = ordersInfo.ingredients.map(
+        (id) => ingredients.filter((ingr) => ingr._id === id)[0]
+      );
+      return findIngredient;
+    }
+  }
 
- const findIngredient = ordersInfo.ingredients.map(
-   (id) => ingredients.filter((ingr) => ingr._id === id)[0]
- );
+  let clickOrder = check();
 
-
-  const orderPrice = findIngredient
+if (!!clickOrder) {
+  const orderPrice = clickOrder
     .filter((el) => el !== undefined)
     .reduce((total, ingredient) => total + ingredient.price, 0);
+}
 
-  let order = findItem || ordersInfo;
+  useEffect(() => {
+    dispatch(WS_CONNECTION_START());
+  }, []);
 
   return (
     <div className={pages.feedDetailsWrapper}>
@@ -45,7 +59,7 @@ export function FeedDetails(props) {
       <p
         className={`${pages.feed_details_orderStatus} text text_type_main-small mb-15`}
       >
-        {order.status === "done" ? "Выполнен" : "Готовится"}
+        {/* {.status === "done" ? "Выполнен" : "Готовится"} */}
       </p>
       <p
         className={`${pages.feed_details_orderStructure} text text_type_main-medium mb-6`}
@@ -57,7 +71,7 @@ export function FeedDetails(props) {
         className={`${pages.feed_details_orderStructure_list}`}
         id={pages.feed_details_orderStructure_list}
       >
-        {findIngredient.map((ingredient) => (
+        {clickOrder.map((ingredient) => (
           <li className={`${pages.feed_details_orderStructure_list_item}`}>
             <img
               className={`${pages.feed_details_orderStructure_list_item_img}`}
@@ -80,15 +94,16 @@ export function FeedDetails(props) {
       </ul>
       <div className={`${pages.feed_details_orderFooter}`}>
         <p className={`${pages.feed_details_orderDate} text_color_inactive`}>
-          <FormattedDate date={new Date(order.createdAt)} />
+          {/* <FormattedDate date={new Date(order.createdAt)} /> */}
         </p>
         <p
           className={`${pages.feed_details_orderSumm} text_type_digits-default`}
         >
-          {findItem ? findItem.orderPrice : orderPrice}
+          {/* {findItem ? findItem.orderPrice : orderPrice} */}
           <CurrencyIcon type="primary" />
         </p>
       </div>
     </div>
   );
 }
+export default React.memo(FeedDetails);

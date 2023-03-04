@@ -5,7 +5,7 @@ const initialState = {
 };
 
 export const wsAuthReducer = (state = initialState, action) => {
-console.log(action);
+
   switch (action.type) {
     case "WS_CONNECTION_AUTH_SUCCES":
       return {

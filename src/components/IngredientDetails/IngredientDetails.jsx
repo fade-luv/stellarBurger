@@ -7,7 +7,6 @@ import getIngredientsActionCreator from "../../store/actionCreators/ingredients-
 
 const IngredientDetails = function (props) {
 let {id} = useParams()
-
   const [isLoaded, setIsLoaded] = useState(false);
  const dispatch = useDispatch();
 

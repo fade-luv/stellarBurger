@@ -3,6 +3,7 @@ export const socketMiddleWare = (wsUrl, wsActions, isAuth) => {
     let socket = null;
 
     return (next) => (action) => {
+
       const { dispatch, getState } = store;
       const { type, payload } = action;
       const {

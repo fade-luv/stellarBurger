@@ -3,27 +3,38 @@ import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components
 import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
-
 export function OrderDetails(params) {
-  
-
   const { id } = useParams();
   const orders = useSelector((state) => state.ordersReducer.orders);
 
+  const ordersInfo = useSelector(
+    (state) => state.focusIngredientReducer.focusOrder
+  );
+  const { ingredients } = useSelector((store) => store.ingredientsReducer);
+
   const findItem = orders.find((i) => i._id === id);
 
+  const findIngredient = ordersInfo.ingredients.map(
+    (id) => ingredients.filter((ingr) => ingr._id === id)[0]
+  );
+
+  const orderPrice = findIngredient
+    .filter((el) => el !== undefined)
+    .reduce((total, ingredient) => total + ingredient.price, 0);
+
+  let order = findItem || ordersInfo;
 
   return (
-    <div className={pages.feedDetailsWrapper} >
+    <div className={pages.feedDetailsWrapper}>
       <p
         className={`${pages.feed_details_orderNumber} text text_type_digits-default mb-10`}
       >
-        #{`${findItem.orderNumber}`}
+        #{findItem ? findItem.orderNumber : ordersInfo.number}
       </p>
       <p
         className={`${pages.feed_details_orderTitle} text text_type_main-medium mb-3`}
       >
-        {`${findItem.orderTitle}`}
+        {findItem ? findItem.orderTitle : ordersInfo.name}
       </p>
       <p
         className={`${pages.feed_details_orderStatus} text text_type_main-small mb-15`}
@@ -39,7 +50,7 @@ export function OrderDetails(params) {
         className={`${pages.feed_details_orderStructure_list}`}
         id={pages.feed_details_orderStructure_list}
       >
-        {findItem.ingredients.map((ingredient) => (
+        {/* {findItem.ingredients.map((ingredient) => (
           <li className={`${pages.feed_details_orderStructure_list_item}`}>
             <img
               className={`${pages.feed_details_orderStructure_list_item_img}`}
@@ -58,11 +69,11 @@ export function OrderDetails(params) {
             </p>
             <CurrencyIcon type="primary" />
           </li>
-        ))}
+        ))} */}
       </ul>
       <div className={`${pages.feed_details_orderFooter}`}>
         <p className={`${pages.feed_details_orderDate} text_color_inactive`}>
-          Вчера, {findItem.orderDate} i-GMT+3
+          {/* Вчера, {findItem.orderDate} i-GMT+3 */}
         </p>
         <p
           className={`${pages.feed_details_orderSumm} text_type_digits-default`}

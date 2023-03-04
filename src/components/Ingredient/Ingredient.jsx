@@ -13,6 +13,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
 const Ingredient = function (props) {
+  
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { ingredientInfo } = props;

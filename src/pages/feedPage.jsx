@@ -29,7 +29,7 @@ export function FeedPage() {
                 className={pages.link}
                 to={`/feed/${order._id}`}
               >
-                <FeedItem order={order} />
+                <FeedItem key={order._id} order={order} />
               </Link>
             ))}
           </div>

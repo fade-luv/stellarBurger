@@ -12,7 +12,7 @@ import { overlayModalClickActionCreator } from "../../store/actionCreators/modal
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import Modal from "../Modal/Modal";
-import { FeedDetails } from "../../pages/feedDetails";
+import FeedDetails  from "../../pages/feedDetails";
 import getIngredientsActionCreator from "../../store/actionCreators/ingredients-actionCreator";
 
 const OrderItem = function (props) {
@@ -100,16 +100,7 @@ const OrderItem = function (props) {
           </div>
         </>
         <>
-          {modalState && (
-            <Modal
-              title="Детали заказа"
-              onOverlayClick={overlayCloseModal}
-              onEscKeydown={escCloseModal}
-              onCloseButtonClick={closeModal}
-            >
-              <FeedDetails orderInfo={order} />
-            </Modal>
-          )}
+          
         </>
       </div>
     )
