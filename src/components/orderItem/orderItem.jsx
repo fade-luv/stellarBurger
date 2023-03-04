@@ -100,7 +100,16 @@ const OrderItem = function (props) {
           </div>
         </>
         <>
-          
+          {modalState && (
+            <Modal
+              title="Детали заказа"
+              onOverlayClick={overlayCloseModal}
+              onEscKeydown={escCloseModal}
+              onCloseButtonClick={closeModal}
+            >
+              <FeedDetails order={order} />
+            </Modal>
+          )}
         </>
       </div>
     )
