@@ -125,11 +125,13 @@ const BurgerConstructor = function (props) {
             </li>
             <ul id="center" className={BurgerConstructorStyle.center}>
               {SoucesAndFillings.map((ingredient, index) => (
-                <BurgerConstructorItem
-                  ingredient={ingredient}
-                  index={index}
-                  moveCard={moveCard}
-                />
+                <div key={index} className={`${BurgerConstructorStyle.test} `}>
+                  <BurgerConstructorItem
+                    ingredient={ingredient}
+                    index={index}
+                    moveCard={moveCard}
+                  />
+                </div>
               ))}
             </ul>
             <li className={BurgerConstructorStyle.test}>
