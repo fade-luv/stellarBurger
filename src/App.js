@@ -18,6 +18,7 @@ import { getUserInfo } from "./utils/burger-api";
 import  AppHeader  from "./components/AppHeader/AppHeader";
 import  IngredientDetails  from "./components/IngredientDetails/IngredientDetails";
 import { WS_CONNECTION_START } from "./store/actionCreators/webSocket-actionCreator";
+import { WS_CONNECTION_AUTH_START } from "./store/actionCreators/webSocketAuth-actionCreator";
 
 function App(props) {
   const [data, setData] = useState(null);
@@ -32,6 +33,10 @@ function App(props) {
 
    useEffect(() => {
      dispatch(WS_CONNECTION_START());
+   }, []);
+
+   useEffect(() => {
+     dispatch(WS_CONNECTION_AUTH_START());
    }, []);
 
 

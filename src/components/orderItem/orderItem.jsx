@@ -12,7 +12,8 @@ import { overlayModalClickActionCreator } from "../../store/actionCreators/modal
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import Modal from "../Modal/Modal";
-import FeedDetails  from "../../pages/feedDetails";
+
+import OrderDetails from "../../pages/orderDetails";
 import getIngredientsActionCreator from "../../store/actionCreators/ingredients-actionCreator";
 
 const OrderItem = function (props) {
@@ -39,23 +40,30 @@ const OrderItem = function (props) {
   );
   function openModalOrder() {
     dispatch(feedOrderActionCreator(order, true));
+     localStorage.setItem("modalOpen", true);
+     localStorage.setItem("findIngredient", JSON.stringify(findIngredient));
+     localStorage.setItem("findIngredient", JSON.stringify(order));
+     localStorage.setItem("ingredients", JSON.stringify(ingredients));
   }
 
   function closeModal(params) {
     dispatch(closeModalActionCreator(false));
     navigate(-1);
+     localStorage.setItem("modalOpen", false);
   }
 
   function escCloseModal(params) {
     dispatch(escCloseModalActionCreator(false));
     navigate(-1);
+     localStorage.setItem("modalOpen", false);
   }
 
   function overlayCloseModal(params) {
     dispatch(overlayModalClickActionCreator(false));
     navigate(-1);
+     localStorage.setItem("modalOpen", false);
   }
-
+console.log(findIngredient);
   return (
     findIngredient && (
       <div>
@@ -100,14 +108,14 @@ const OrderItem = function (props) {
           </div>
         </>
         <>
-          {modalState && (
+          {localStorage.getItem("modalOpen") === "true" && (
             <Modal
               title="Детали заказа"
               onOverlayClick={overlayCloseModal}
               onEscKeydown={escCloseModal}
               onCloseButtonClick={closeModal}
             >
-              <FeedDetails order={order} />
+              <OrderDetails order={order} />
             </Modal>
           )}
         </>

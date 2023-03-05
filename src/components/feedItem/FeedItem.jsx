@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React,{ useEffect,useState } from "react";
 import {
   CurrencyIcon,
   FormattedDate,
@@ -18,44 +18,59 @@ import getIngredientsActionCreator from "../../store/actionCreators/ingredients-
 const FeedItem = function (props) {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-
+   const [isPopup, setPopup] = useState(false);
   const { order } = props;
+  
+
 
   useEffect(() => {
     dispatch(getIngredientsActionCreator());
+     const isIngredientPopupOpen = localStorage.getItem("modalOpen");
+
+    setPopup(isIngredientPopupOpen);
   }, []);
+
   const { ingredients } = useSelector((store) => store.ingredientsReducer);
 
   const findIngredient = order.ingredients.map(
     (id) => ingredients.filter((ingr) => ingr._id === id)[0]
   );
-
+   
   const orderPrice = findIngredient
     .filter((el) => el !== undefined)
     .reduce((total, ingredient) => total + ingredient.price, 0);
 
   function openModalOrder() {
     dispatch(feedOrderActionCreator(order, true));
+    localStorage.setItem("modalOpen", true);
+    localStorage.setItem("findIngredient", JSON.stringify(findIngredient));
+    localStorage.setItem("findIngredient", JSON.stringify(order));
+    localStorage.setItem("ingredients", JSON.stringify(ingredients));
   }
 
   function closeModal(params) {
     dispatch(closeModalActionCreator(false));
     navigate(-1);
+     localStorage.setItem("modalOpen", false);
+    setPopup(false);
   }
 
   function escCloseModal(params) {
     dispatch(escCloseModalActionCreator(false));
     navigate(-1);
+    localStorage.setItem("modalOpen", false);
   }
 
   function overlayCloseModal(params) {
     dispatch(overlayModalClickActionCreator(false));
+    localStorage.setItem("modalOpen", false);
     navigate(-1);
   }
 
   const modalState = useSelector(
     (store) => store.focusIngredientReducer.stateModalFeedDetails
   );
+
   return (
     findIngredient && (
       <div>
@@ -100,14 +115,14 @@ const FeedItem = function (props) {
           </div>
         </>
         <>
-          {modalState && (
+          {localStorage.getItem('modalOpen') === 'true' && (
             <Modal
               title="Детали заказа"
               onOverlayClick={overlayCloseModal}
               onEscKeydown={escCloseModal}
               onCloseButtonClick={closeModal}
             >
-              <FeedDetails order={order}/>
+              <FeedDetails order={order} />
             </Modal>
           )}
         </>

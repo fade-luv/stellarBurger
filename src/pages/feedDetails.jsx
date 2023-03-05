@@ -16,6 +16,13 @@ function FeedDetails() {
     (store) => store.focusIngredientReducer
   );
 
+
+  let localData = localStorage.getItem("findIngredient");
+  let localIngredients = localStorage.getItem("ingredients");
+  let localDataParse = JSON.parse(localData);
+  let localDataIngredientsParse = JSON.parse(localIngredients);
+
+  
   const { focusOrder } = useSelector((store) => store.focusIngredientReducer);
 
   let modalIngredients;
@@ -26,6 +33,18 @@ function FeedDetails() {
       (id) => ingredients.filter((item) => item._id === id)[0]
     );
   }
+
+  let windowReloadIngredients;
+
+
+    if (localDataParse && !!stateModalFeedDetails == false && ingredients) {
+    let ing = localDataParse.ingredients;
+    
+     windowReloadIngredients = ing.map(
+       (id) => localDataIngredientsParse.filter((item) => item._id === id)[0]
+     );
+    }
+
 
   const dispatch = useDispatch();
   const { id } = useParams();
@@ -43,7 +62,10 @@ function FeedDetails() {
   );
   let ingredientsArrayOnClick = [];
 
-  if (location.pathname == "/feed") {
+  if (
+    location.pathname === "/feed" &&
+    Object.keys(currentOrderOnClick).length > 1
+  ) {
     ingredientsArrayOnClick.push(
       currentOrderOnClick.ingredients.map(
         (id) => ingredients.filter((ingr) => ingr._id === id)[0]
@@ -51,7 +73,7 @@ function FeedDetails() {
     );
   }
   let findItem;
-  let findItemIds = [];
+  let findItemIds =[];
 
   if (ordersOnClickURL && id != undefined) {
     findItem = ordersOnClickURL.find((i) => i._id === id);
@@ -60,7 +82,11 @@ function FeedDetails() {
     );
   }
 
-  let ingredientsList = modalIngredients || findItemIds;
+
+
+
+  let ingredientsList =
+    modalIngredients || windowReloadIngredients   || findItemIds.length > 1
 
   const result = ingredientsList.reduce((acc, current) => {
     const existing = acc.find((ingredient) => ingredient._id === current._id);
@@ -76,25 +102,35 @@ function FeedDetails() {
     return acc + current.price;
   }, 0);
 
+
+  const orderNumber =
+    (findItem && findItem.number) ||
+    (localDataParse && localDataParse.number) ||
+    (currentOrderOnClick && currentOrderOnClick.number);
+
+  const orderName =
+    (findItem && findItem.orderTitle) ||
+    (localDataParse && localDataParse.name) ||
+    (currentOrderOnClick && currentOrderOnClick.name);
+
+
+
   return (
     ingredientsList && (
       <div className={pages.feedDetailsWrapper}>
         <p
           className={`${pages.feed_details_orderNumber} text text_type_digits-default mb-10`}
         >
-          #{findItem ? findItem.number : currentOrderOnClick.number}
- 
+          #{orderNumber}
         </p>
         <p
           className={`${pages.feed_details_orderTitle} text text_type_main-medium mb-3`}
         >
-          {findItem ? findItem.orderTitle : currentOrderOnClick.name}
+          {orderName}
         </p>
         <p
           className={`${pages.feed_details_orderStatus} text text_type_main-small mb-15`}
-        >
-          
-        </p>
+        ></p>
         <p
           className={`${pages.feed_details_orderStructure} text text_type_main-medium mb-6`}
         >
