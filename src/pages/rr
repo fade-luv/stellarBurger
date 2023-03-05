@@ -1,0 +1,10 @@
+const result = ingredientsList.reduce((acc, current) => {
+  const existing = acc.find((ingredient) => ingredient._id === current._id);
+  if (existing) {
+    existing.price += current.price;
+    existing.quantity += 1;
+  } else {
+    acc.push({ ...current, quantity: 1 });
+  }
+  return acc;
+}, []);

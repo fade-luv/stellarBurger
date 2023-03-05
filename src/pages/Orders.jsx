@@ -12,7 +12,7 @@ export function OrdersPage(params) {
  const { orders, total, totalToday } = useSelector(
    (state) => state.wsAuthReducer.orders
  );
-console.log(orders);
+
   const dispatch = useDispatch();
 
   useEffect(() => {

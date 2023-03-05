@@ -22,7 +22,9 @@ function FeedDetails() {
 
   if (stateModalFeedDetails) {
     let ing = focusOrder.ingredients;
-    modalIngredients = ingredients.filter((ingr) => ing.includes(ingr._id));
+    modalIngredients = ing.map(
+      (id) => ingredients.filter((item) => item._id === id)[0]
+    );
   }
 
   const dispatch = useDispatch();
@@ -49,18 +51,30 @@ function FeedDetails() {
     );
   }
   let findItem;
-  let findItemIds;
+  let findItemIds = [];
 
   if (ordersOnClickURL && id != undefined) {
     findItem = ordersOnClickURL.find((i) => i._id === id);
-    findItemIds = ingredients.filter((ingr) =>
-      findItem.ingredients.includes(ingr._id)
+    findItemIds = findItem.ingredients.map(
+      (id) => ingredients.filter((item) => item._id === id)[0]
     );
   }
 
   let ingredientsList = modalIngredients || findItemIds;
 
+  const result = ingredientsList.reduce((acc, current) => {
+    const existing = acc.find((ingredient) => ingredient._id === current._id);
+    if (existing) {
+      existing.quantity += 1;
+    } else {
+      acc.push({ ...current, quantity: 1 });
+    }
+    return acc;
+  }, []);
 
+  const totalCost = ingredientsList.reduce((acc, current) => {
+    return acc + current.price;
+  }, 0);
 
   return (
     ingredientsList && (
@@ -68,7 +82,8 @@ function FeedDetails() {
         <p
           className={`${pages.feed_details_orderNumber} text text_type_digits-default mb-10`}
         >
-          #{findItem ? findItem.orderNumber : currentOrderOnClick.number}
+          #{findItem ? findItem.number : currentOrderOnClick.number}
+ 
         </p>
         <p
           className={`${pages.feed_details_orderTitle} text text_type_main-medium mb-3`}
@@ -78,7 +93,7 @@ function FeedDetails() {
         <p
           className={`${pages.feed_details_orderStatus} text text_type_main-small mb-15`}
         >
-          {/* {.status === "done" ? "Выполнен" : "Готовится"} */}
+          
         </p>
         <p
           className={`${pages.feed_details_orderStructure} text text_type_main-medium mb-6`}
@@ -90,7 +105,7 @@ function FeedDetails() {
           className={`${pages.feed_details_orderStructure_list}`}
           id={pages.feed_details_orderStructure_list}
         >
-          {ingredientsList.map((ingredient) => (
+          {result.map((ingredient) => (
             <li className={`${pages.feed_details_orderStructure_list_item}`}>
               <img
                 className={`${pages.feed_details_orderStructure_list_item_img}`}
@@ -105,7 +120,7 @@ function FeedDetails() {
               <p
                 className={`${pages.feed_details_orderStructure_list_item_quantity} text text_type_main-default ml-20`}
               >
-                2 x {`${ingredient.price}`}
+                {`${ingredient.quantity}`} x {`${ingredient.price}`}
               </p>
               <CurrencyIcon type="primary" />
             </li>
@@ -113,12 +128,18 @@ function FeedDetails() {
         </ul>
         <div className={`${pages.feed_details_orderFooter}`}>
           <p className={`${pages.feed_details_orderDate} text_color_inactive`}>
-            {/* <FormattedDate date={new Date(order.createdAt)} /> */}
+            <FormattedDate
+              date={
+                new Date(
+                  findItem ? findItem.createdAt : currentOrderOnClick.createdAt
+                )
+              }
+            />
           </p>
           <p
             className={`${pages.feed_details_orderSumm} text_type_digits-default`}
           >
-            {/* {findItem ? findItem.orderPrice : orderPrice} */}
+            {findItem ? findItem.orderPrice : totalCost}
             <CurrencyIcon type="primary" />
           </p>
         </div>
