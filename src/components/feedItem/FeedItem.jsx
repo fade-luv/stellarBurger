@@ -91,9 +91,10 @@ const FeedItem = function (props) {
               <ul className={`${pages.orderFeed_item_ingredientsItems_icons} `}>
                 {findIngredient
                   .filter((el) => el !== undefined)
-                  .map((orderItem) => {
+                  .map((orderItem,index) => {
                     return (
                       <li
+                        key={index}
                         className={
                           pages.orderFeed_item_ingredientsItems_icons_item
                         }

@@ -141,8 +141,8 @@ function FeedDetails() {
           className={`${pages.feed_details_orderStructure_list}`}
           id={pages.feed_details_orderStructure_list}
         >
-          {result.map((ingredient) => (
-            <li className={`${pages.feed_details_orderStructure_list_item}`}>
+          {result.map((ingredient,index) => (
+            <li className={`${pages.feed_details_orderStructure_list_item}`} key={index}>
               <img
                 className={`${pages.feed_details_orderStructure_list_item_img}`}
                 src={`${ingredient.image}`}

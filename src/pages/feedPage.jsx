@@ -25,11 +25,12 @@ export function FeedPage() {
           <div className={pages.orderFeed} id={pages.orderFeed}>
             {orders.map((order) => (
               <Link
+                key={order._id}
                 state={{ background: location }}
                 className={pages.link}
                 to={`/feed/${order._id}`}
               >
-                <FeedItem key={order._id} order={order} />
+                <FeedItem  order={order} />
               </Link>
             ))}
           </div>
@@ -40,6 +41,7 @@ export function FeedPage() {
                 {orders.map((order, index) =>
                   order.status == "done" && index < 10 ? (
                     <p
+                      key={index}
                       className={`${pages.order_done_item} text text_type_digits-default`}
                     >
                       {order.number}

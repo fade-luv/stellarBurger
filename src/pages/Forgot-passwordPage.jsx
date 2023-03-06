@@ -28,11 +28,11 @@ export function ForgotPasswordPage(params) {
   function changeEmailInput(value) {
     setEmail(value);
   }
-
-  if (isResetPasswordEmailSended === true) {
-    navigate("/reset-password");
-  }
-
+ useEffect(() => {
+   if (isResetPasswordEmailSended === true) {
+     navigate("/reset-password");
+   }
+ }, [isResetPasswordEmailSended]);
   function goToLogin(){
     navigate("/login");
   } 

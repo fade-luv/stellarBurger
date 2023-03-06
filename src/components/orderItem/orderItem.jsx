@@ -63,7 +63,7 @@ const OrderItem = function (props) {
     navigate(-1);
      localStorage.setItem("modalOpen", false);
   }
-console.log(findIngredient);
+
   return (
     findIngredient && (
       <div>
@@ -84,9 +84,10 @@ console.log(findIngredient);
               <ul className={`${pages.orderFeed_item_ingredientsItems_icons} `}>
                 {findIngredient
                   .filter((el) => el !== undefined)
-                  .map((orderItem) => {
+                  .map((orderItem,index) => {
                     return (
                       <li
+                        key={index}
                         className={
                           pages.orderFeed_item_ingredientsItems_icons_item
                         }

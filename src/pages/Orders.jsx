@@ -26,8 +26,9 @@ export function OrdersPage(params) {
       <div className={pages.profile_wrapper}>
         <ProfileMenu />
         <div className={pages.link_content} id={pages.link_content}>
-          {orders.map((order) => (
+          {orders.map((order, index) => (
             <Link
+              key={index}
               state={{ background: location }}
               className={pages.link}
               to={`/profile/orders/${order._id}`}

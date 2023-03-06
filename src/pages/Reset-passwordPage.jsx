@@ -12,6 +12,9 @@ import { Navigate, useLocation } from "react-router-dom";
 export function ResetPasswordPage(props) {
   const [isLogined, setIsLogined] = useState(false);
   const location = useLocation();
+  const [password, setPassword] = useState("");
+  const [code, setCode] = useState("");
+
   const resetPasswordEmailSend = useSelector(
     (state) => state.userLogginedInfoReducer.isResetPasswordEmailSended
   );
@@ -45,6 +48,15 @@ export function ResetPasswordPage(props) {
     return <Navigate to="/" replace />;
   }
 
+  
+  function changePasswordInput(value) {
+    setPassword(value);
+  }
+
+    function changeCodeInput(value) {
+      setCode(value);
+    }
+
   return (
     <>
       <form className={pages.container} onSubmit={onSubmit}>
@@ -55,15 +67,19 @@ export function ResetPasswordPage(props) {
           extraClass="mb-6"
           placeholder="Введите новый пароль"
           id="newPasswordInput"
+          value={password}
+          onChange={(e) => changePasswordInput(e.target.value)}
         />
         <Input
           placeholder="Введите код из письма"
           extraClass="mb-6"
           id="checkCodeInput"
+          value={code}
+          onChange={(e) => changeCodeInput(e.target.value)}
         />
         <div className={pages.sumbmit_save}>
           <Button
-            htmlType="sumbit"
+            htmlType="submit"
             type="primary"
             size="large"
             extraClass="mb-20"
