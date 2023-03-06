@@ -24,7 +24,6 @@ const FeedItem = function (props) {
 
 
   useEffect(() => {
-    dispatch(getIngredientsActionCreator());
      const isIngredientPopupOpen = localStorage.getItem("modalOpen");
 
     setPopup(isIngredientPopupOpen);
@@ -52,7 +51,6 @@ const FeedItem = function (props) {
     dispatch(closeModalActionCreator(false));
     navigate(-1);
      localStorage.setItem("modalOpen", false);
-    setPopup(false);
   }
 
   function escCloseModal(params) {

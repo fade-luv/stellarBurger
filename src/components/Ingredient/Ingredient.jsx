@@ -44,20 +44,25 @@ const Ingredient = function (props) {
 
   function openModal(event) {
     dispatch(modalActionCreator(ingredientInfo, true));
+    localStorage.setItem("modalOpen", true);
+    localStorage.setItem("Ingredient", JSON.stringify(ingredientInfo));
   }
 
   function closeModal(params) {
     dispatch(closeModalActionCreator(false));
+    localStorage.setItem("modalOpen", false);
     navigate("/");
   }
 
   function escCloseModal(params) {
     dispatch(escCloseModalActionCreator(false));
+    localStorage.setItem("modalOpen", false);
     navigate(-1);
   }
 
   function overlayCloseModal(params) {
     dispatch(overlayModalClickActionCreator(false));
+    localStorage.setItem("modalOpen", false);
     navigate("/");
   }
 
@@ -94,7 +99,7 @@ const Ingredient = function (props) {
           </div>
         </>
         <>
-          {modalState && (
+          {localStorage.getItem("modalOpen") === "true" && (
             <Modal
               title="Детали заказа"
               onOverlayClick={overlayCloseModal}

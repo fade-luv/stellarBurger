@@ -41,9 +41,6 @@ const OrderItem = function (props) {
   function openModalOrder() {
     dispatch(feedOrderActionCreator(order, true));
      localStorage.setItem("modalOpen", true);
-     localStorage.setItem("findIngredient", JSON.stringify(findIngredient));
-     localStorage.setItem("findIngredient", JSON.stringify(order));
-     localStorage.setItem("ingredients", JSON.stringify(ingredients));
   }
 
   function closeModal(params) {
