@@ -15,12 +15,13 @@ import addIngredientActionCreator from "../../store/actionCreators/addIngredient
 import addBunActionCreator from "../../store/actionCreators/addBun-actionCreator.js";
 import incrementActionCreator from "../../store/actionCreators/increment-actionCreator";
 import sortIngredientsActionCreator from "../../store/actionCreators/sortIngredients-actionCreator";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { useDrop } from "react-dnd";
 
 const BurgerConstructor = function (props) {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const location = useLocation();
 
   const [isOrderDetailsOpened, setIsOrderDetailsOpened] = React.useState(false);
 
@@ -29,6 +30,8 @@ const BurgerConstructor = function (props) {
   let bun = useSelector(
     (state) => state.burgerConstructorReducer.constructorBun
   );
+
+  let isAuth = useSelector((state) => state.authReducer.isAuth);
 
   let SoucesAndFillings = useSelector(
     (state) => state.burgerConstructorReducer.chosenIngredients
@@ -50,7 +53,13 @@ const BurgerConstructor = function (props) {
   }
 
   function handleClick(params) {
-    openModal();
+    if (localStorage.getItem("accessToken")) {
+      openModal();
+    } else {
+      navigate("/login", {
+        state: { from: location.pathname },
+      });
+    }
     let soucesAndFillingsID = getIngredientsIDs();
     dispatch(getOrderActionCreator(soucesAndFillingsID));
   }
