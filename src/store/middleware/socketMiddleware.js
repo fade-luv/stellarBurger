@@ -17,12 +17,13 @@ export const socketMiddleWare = (wsUrl, wsActions, isAuth) => {
       
 
       const accessToken = window.localStorage.getItem("accessToken");
-
+      console.log(type, isAuth);
       if (type === wsConnectionStart && isAuth) {
         socket = new WebSocket(
           `${wsUrl}?token=${accessToken.split("Bearer ")[1]}`
         );
-      } else if (type === wsConnectionStart && !isAuth) {
+      } else 
+      if (type === wsConnectionStart && !isAuth) {
         socket = new WebSocket(wsUrl);
       }
       if (socket) {

@@ -35,9 +35,7 @@ function App(props) {
      dispatch(WS_CONNECTION_START());
    }, []);
 
-   useEffect(() => {
-     dispatch(WS_CONNECTION_AUTH_START());
-   }, []);
+
 
 
  const ingredients = useSelector(
