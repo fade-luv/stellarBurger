@@ -2,7 +2,10 @@ import React from "react";
 import styles from "./OrderDetails.module.css";
 import img from "../../images/graphics.svg";
 import PropTypes from "prop-types";
+
+
 const OrderDetails = (props) => {
+
   return (
     <>
       <p className={`${styles.id} text text_type_digits-large`}>{props.id}</p>
@@ -20,10 +23,11 @@ const OrderDetails = (props) => {
   );
 };
 
-
 OrderDetails.propTypes = {
   title: PropTypes.string.isRequired,
   id: PropTypes.number.isRequired,
 }.isRequired;
 
-export default OrderDetails;
+
+
+export default OrderDetails

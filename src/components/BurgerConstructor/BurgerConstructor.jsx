@@ -5,105 +5,151 @@ import {
   ConstructorElement,
   Button,
   CurrencyIcon,
-  DragIcon,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import Modal from "../Modal/Modal";
 import OrderDetails from "../OrderDetails/OrderDetails";
-import { IngredientsContext } from "../../services/ingredientsContext";
-import { getOrderNumber } from "../../utils/burger-api";
-const BurgerConstructor = function () {
+import BurgerConstructorItem from "./BurgerConstructorItem/BurgerConstructorItem";
+import { getOrderActionCreator } from "../../store/actionCreators/order-actionCreator";
+import { useDispatch, useSelector } from "react-redux";
+import addIngredientActionCreator from "../../store/actionCreators/addIngredient-actionCreator";
+import addBunActionCreator from "../../store/actionCreators/addBun-actionCreator.js";
+import incrementActionCreator from "../../store/actionCreators/increment-actionCreator";
+import sortIngredientsActionCreator from "../../store/actionCreators/sortIngredients-actionCreator";
+import { useNavigate, useLocation } from "react-router-dom";
+import { useDrop } from "react-dnd";
 
-  const ingredients = React.useContext(IngredientsContext);
-  const [orderId, setOrderId] = React.useState(0);
+const BurgerConstructor = function (props) {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const location = useLocation();
+
   const [isOrderDetailsOpened, setIsOrderDetailsOpened] = React.useState(false);
 
-  function sortBun(params) {
-    return ingredients.find((ingredient) => ingredient.type === "bun");
+  let order = useSelector((state) => state.orderReducer.order);
+
+  let bun = useSelector(
+    (state) => state.burgerConstructorReducer.constructorBun
+  );
+
+  let isAuth = useSelector((state) => state.authReducer.isAuth);
+
+  let SoucesAndFillings = useSelector(
+    (state) => state.burgerConstructorReducer.chosenIngredients
+  );
+
+  let BurgerElem = useSelector(
+    (state) => state.burgerConstructorReducer.burgerConstructorElements
+  );
+
+  let totalPrice = useSelector(
+    (state) => state.burgerConstructorReducer.burgerConstructorTotalPrice
+  );
+
+  function getIngredientsIDs(params) {
+    let soucesAndFillingsID = SoucesAndFillings.map((el) => el._id);
+    let bunID = bun._id;
+    soucesAndFillingsID.push(bunID);
+    return soucesAndFillingsID;
   }
 
-  function sortSoucesAndFillings(params) {
-    return ingredients
-      .filter((ingredient) => ingredient.type !== "bun")
-      .slice(3, 9);
+  function handleClick(params) {
+    if (localStorage.getItem("accessToken")) {
+      openModal();
+    } else {
+      navigate("/login", {
+        state: { from: location.pathname },
+      });
+    }
+    let soucesAndFillingsID = getIngredientsIDs();
+    dispatch(getOrderActionCreator(soucesAndFillingsID));
   }
 
-  function ingredientsPrice(params) {
-    const mainPrice = sortSoucesAndFillings().reduce(
-      (sum, el) => sum + el.price,
-      0
-    );
-    const price = mainPrice + sortBun().price * 2;
-    return price;
-  }
-
-  function orderDetaildHandler(params) {
-    const IDs = getIngerdientIDs();
-    openModal();
-    getOrderNumber(IDs)
-    .then((data) => setOrderId(data.order.number));
-  }
-
-  function getIngerdientIDs(params) {
-    return [...sortSoucesAndFillings().map((el) => el._id), sortBun()._id];
-  }
-
-
-  
   function openModal(params) {
     setIsOrderDetailsOpened({
       ...isOrderDetailsOpened,
-      state: true
+      state: true,
     });
   }
   const closeAllModals = () => {
     setIsOrderDetailsOpened(false);
+
   };
 
   const handleEscKeydown = (event) => {
     event.key === "Escape" && closeAllModals();
   };
 
+  const [, dropTarget] = useDrop({
+    accept: "ingredient",
+    drop(ingredient) {
+      onDropHandler(ingredient);
+      priceIncrement(ingredient);
+    },
+  });
+
+  const onDropHandler = (ingredient) => {
+    if (ingredient.type === "sauce" || ingredient.type === "main") {
+      dispatch(addIngredientActionCreator(ingredient));
+      dispatch(incrementActionCreator(ingredient.price));
+    } else {
+      dispatch(addBunActionCreator(ingredient));
+    }
+  };
+
+  const priceIncrement = (item) => {
+    if (item.type === "sauce" || item.type === "main") {
+      dispatch(incrementActionCreator(item.price));
+    } else {
+      dispatch(incrementActionCreator(item.price * 2));
+    }
+  };
+
+  const moveCard = (dragIndex, hoverIndex) => {
+    const dragSoucesAndFillingsItem = SoucesAndFillings[dragIndex];
+    if (dragSoucesAndFillingsItem) {
+      const newSoucesAndFillings = [...SoucesAndFillings];
+      newSoucesAndFillings.splice(dragIndex, 1);
+      newSoucesAndFillings.splice(hoverIndex, 0, dragSoucesAndFillingsItem);
+      dispatch(sortIngredientsActionCreator(newSoucesAndFillings));
+    }
+  };
+
   return (
     <>
-      {sortBun() && (
+      <div></div>
+      {BurgerElem && (
         <ul className={`${BurgerConstructorStyle.ul} pl-10`}>
           <div
+            ref={dropTarget}
             style={{ display: "flex", flexDirection: "column", gap: "10px" }}
           >
             <li className={BurgerConstructorStyle.test}>
               <ConstructorElement
                 type="top"
                 isLocked={true}
-                text={`${sortBun().name} (верх)`}
-                price={`${sortBun().price}`}
-                thumbnail={`${sortBun().image}`}
+                text={`${bun.name} (верх)`}
+                price={`${bun.price}`}
+                thumbnail={`${bun.image}`}
               />
             </li>
             <ul id="center" className={BurgerConstructorStyle.center}>
-              {sortSoucesAndFillings().map((ingredient) => (
-                <li
-                  key={ingredient._id}
-                  className={`${BurgerConstructorStyle.test} `}
-                >
-                  <div className={BurgerConstructorStyle.test2}>
-                    <DragIcon type="primary" />
-                  </div>
-                  <ConstructorElement
-                    text={ingredient.name}
-                    price={ingredient.price}
-                    className="pr-20"
-                    thumbnail={ingredient.image}
+              {SoucesAndFillings.map((ingredient, index) => (
+                <div key={index} className={`${BurgerConstructorStyle.test} `}>
+                  <BurgerConstructorItem
+                    ingredient={ingredient}
+                    index={index}
+                    moveCard={moveCard}
                   />
-                </li>
+                </div>
               ))}
             </ul>
             <li className={BurgerConstructorStyle.test}>
               <ConstructorElement
                 type="bottom"
                 isLocked={true}
-                text={`${sortBun().name} (низ)`}
-                price={`${sortBun().price}`}
-                thumbnail={`${sortBun().image}`}
+                text={`${bun.name} (низ)`}
+                price={`${bun.price}`}
+                thumbnail={`${bun.image}`}
               />
             </li>
           </div>
@@ -111,9 +157,7 @@ const BurgerConstructor = function () {
             className={`${BurgerConstructorStyle.constructor__result} mt-10`}
           >
             <span className={BurgerConstructorStyle.constructor_sum}>
-              <span className="text text_type_digits-medium">
-                {ingredientsPrice()}
-              </span>
+              <span className="text text_type_digits-medium">{totalPrice}</span>
               <span className={BurgerConstructorStyle.test3}>
                 <CurrencyIcon
                   type="primary"
@@ -122,7 +166,12 @@ const BurgerConstructor = function () {
               </span>
             </span>
 
-            <Button type="primary" size="large" onClick={orderDetaildHandler}>
+            <Button
+              type="primary"
+              size="large"
+              onClick={handleClick}
+              htmlType="button"
+            >
               Оформить заказ
             </Button>
           </div>
@@ -136,30 +185,12 @@ const BurgerConstructor = function () {
           onEscKeydown={handleEscKeydown}
           onCloseButtonClick={closeAllModals}
         >
-          <OrderDetails id={orderId} title={"идентификатор заказа"} />
+          <OrderDetails id={order} title={"идентификатор заказа"} />
         </Modal>
       )}
     </>
   );
 };
 
-BurgerConstructor.propTypes = {
-  ingridients: PropTypes.arrayOf(
-    PropTypes.shape({
-      calories: PropTypes.number.isRequired,
-      carbohydrates: PropTypes.number.isRequired,
-      fat: PropTypes.number.isRequired,
-      image: PropTypes.string.isRequired,
-      image_large: PropTypes.string.isRequired,
-      image_mobile: PropTypes.string.isRequired,
-      name: PropTypes.string.isRequired,
-      price: PropTypes.number.isRequired,
-      proteins: PropTypes.number.isRequired,
-      type: PropTypes.string.isRequired,
-      __v: PropTypes.number.isRequired,
-      _id: PropTypes.string.isRequired,
-    }).isRequired
-  ),
-};
 
 export default BurgerConstructor;

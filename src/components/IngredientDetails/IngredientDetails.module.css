@@ -11,9 +11,27 @@
   display: flex;
   align-items: center;
 }
+
+.title_page {
+  padding-top: 120px;
+  max-width: 640px;
+  margin: 0 auto;
+  text-align: center;
+  font-size: 36px;
+  font-family: "JetBrains Mono";
+  font-style: normal;
+  font-weight: 700;
+}
 .subtitle {
   margin-top: 16px;
-  width: 520px;
+
+  margin: 0 auto;
+  margin-bottom: 32px;
+}
+
+.subtitle_page {
+  margin-top: 16px;
+  text-align: center;
   margin: 0 auto;
   margin-bottom: 32px;
 }
@@ -21,9 +39,18 @@
   width: 520px;
   margin: 0 auto;
 }
+
+.img_wrapper_page {
+  width: 480px;
+  margin: 0 auto;
+}
 .img {
   width: 480px;
   margin: 0 auto;
+}
+
+.img_page {
+  width: 640px;
 }
 
 .specifications {
