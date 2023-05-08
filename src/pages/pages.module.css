@@ -43,9 +43,10 @@
   width: 1230px;
   display: flex;
   margin: 0 auto;
+}
+.profileMenu {
   margin-top: 120px;
 }
-
 .profile_nav_list_item {
   list-style-type: none;
   height: 64px;
@@ -58,11 +59,8 @@
   align-items: center;
 }
 
-
-
-
 .active {
-  color: #F2F2F3;
+  color: #f2f2f3;
 }
 
 .unactive {
@@ -81,8 +79,10 @@
 .link_content {
   margin-left: 60px;
 }
-
-
+.link {
+  text-decoration: none;
+  color: inherit;
+}
 .page_info {
   color: #8585ad;
   font-family: "JetBrains Mono";
@@ -93,3 +93,199 @@
   margin-top: 80px;
 }
 
+.feedWrapper {
+  width: 1230px;
+  margin: 0 auto;
+}
+
+.orderFeed {
+  max-height: 80vh;
+  overflow-x: hidden;
+  overflow-y: scroll;
+  scrollbar-width: 5px;
+}
+#orderFeed::-webkit-scrollbar {
+  background: #2f2f37;
+  width: 8px;
+}
+#orderFeed::-webkit-scrollbar-thumb {
+  background: #8585ad;
+}
+
+.link_content {
+  max-height: 80vh;
+  overflow-x: hidden;
+  overflow-y: scroll;
+  scrollbar-width: 5px;
+  margin-top: 40px;
+}
+
+.userForm {
+  margin-top: 120px;
+}
+
+#link_content::-webkit-scrollbar {
+  background: #2f2f37;
+  width: 8px;
+}
+#link_content::-webkit-scrollbar-thumb {
+  background: #8585ad;
+}
+.orderFeed_item {
+  width: 584px;
+  background: #1c1c21;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.04), 0px 0px 2px rgba(0, 0, 0, 0.06),
+    0px 0px 1px rgba(0, 0, 0, 0.04);
+  border-radius: 40px;
+  padding: 24px;
+  z-index: 0;
+}
+
+.orderFeed_item:not(:first-child) {
+  margin-top: 20px;
+}
+
+.orderFeed_item_number_and_date {
+  display: flex;
+  justify-content: space-between;
+}
+.orderFeed_item_ingredientsItems_icons {
+  display: flex;
+  list-style-type: none;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 0 0 0 20px;
+  width: 456px;
+  z-index: 0;
+}
+.orderFeed_item_ingredientsItems_icon {
+  position: absolute;
+  left: 50%;
+  -webkit-transform: translate(-50%);
+  transform: translate(-50%);
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.orderFeed_item_ingredientsItems_icons_item {
+  position: relative;
+  width: 64px;
+  height: 64px;
+  margin-left: -20px;
+  background-color: #131316;
+  border-radius: 50%;
+  border: 3px solid #801ab2;
+  overflow: hidden;
+  z-index: 4;
+}
+.orderFeed_item_ingredientsItems_and_price {
+  display: flex;
+}
+
+.orderFeed_item_ingredientsItems_price {
+  display: flex;
+  align-items: center;
+}
+
+.feedContainer {
+  display: flex;
+  justify-content: space-between;
+}
+
+.orderStatus_container {
+  display: flex;
+}
+.order_done_title {
+  width: 280px;
+  font-size: 24px;
+}
+
+.order_atWork_title {
+  width: 280px;
+  font-size: 24px;
+}
+
+.order_done_item {
+  color: #00cccc;
+}
+.order_done_today_value {
+  text-shadow: 0px 0px 16px rgba(51, 51, 255, 0.25),
+    0px 0px 8px rgba(51, 51, 255, 0.25), 0px 4px 32px rgba(51, 51, 255, 0.5);
+}
+
+.order_done_all_value {
+  text-shadow: 0px 0px 16px rgba(51, 51, 255, 0.25),
+    0px 0px 8px rgba(51, 51, 255, 0.25), 0px 4px 32px rgba(51, 51, 255, 0.5);
+}
+
+.feedDetailsWrapper {
+  width: 640px;
+  margin: 0 auto;
+  margin-top: 122px;
+}
+.feed_details_orderNumber {
+  text-align: center;
+}
+
+.feed_details_orderStatus {
+  color: #00cccc;
+}
+
+.feed_details_orderTitle {
+  margin-top: 40px;
+  margin-bottom: 12px;
+}
+
+.feed_details_orderStatus {
+  margin-bottom: 60px;
+}
+.feed_details_orderStructure_list {
+  list-style: none;
+}
+
+.feed_details_orderStructure_list_item_img {
+  width: 79px;
+  height: 68px;
+  background-color: #131316;
+  border-radius: 50%;
+  border: 3px solid #801ab2;
+}
+
+.feed_details_orderStructure_list_item {
+  display: flex;
+  align-items: center;
+}
+
+.feed_details_orderFooter {
+  margin-top: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.feed_details_orderSumm {
+  display: flex;
+
+}
+
+.feed_details_orderStructure_list_item_title {
+  width: 328px;
+}
+
+.feed_details_orderStructure_list {
+  max-height: 30vh;
+    overflow-x: hidden;
+    overflow-y: scroll;
+    scrollbar-width: 5px;
+}
+
+#feed_details_orderStructure_list::-webkit-scrollbar {
+  background: #2F2F37;
+  width: 8px;
+  
+}
+#feed_details_orderStructure_list::-webkit-scrollbar-thumb {
+  background: #8585AD;
+}

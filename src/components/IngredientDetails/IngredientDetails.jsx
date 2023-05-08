@@ -8,6 +8,10 @@ import getIngredientsActionCreator from "../../store/actionCreators/ingredients-
 const IngredientDetails = function (props) {
 let {id} = useParams()
 
+  let localData = localStorage.getItem("Ingredient");
+  let localDataParse = JSON.parse(localData);
+
+ 
   const [isLoaded, setIsLoaded] = useState(false);
  const dispatch = useDispatch();
 
@@ -23,6 +27,7 @@ const info = useSelector(
 );
 
  const findItem = ingredients.find((i) => i._id === id);
+let result = findItem || localDataParse || info;
 
   return (
     <>
@@ -30,38 +35,30 @@ const info = useSelector(
         Детали ингредента
       </h1>
       <div className={findItem ? styles.img_wrapper_page : styles.img_wrapper}>
-        <img
-          
-          src={findItem ? findItem.image_large : info.image_large}
-          alt=""
-        />
+        <img src={result.image_large} alt="" />
       </div>
       <h2 className={findItem ? styles.subtitle_page : styles.subtitle}>
-        {findItem ? findItem.name : info.name}
+        {result.name}
       </h2>
       <ul className={styles.specifications}>
         <li className={styles.specificationItem}>
           <p className={styles.specificationItemTitle}>Калории,ккал</p>
-          <p className={styles.specificationItemValue}>
-            {findItem ? findItem.calories : info.calories}
-          </p>
+          <p className={styles.specificationItemValue}>{result.calories}</p>
         </li>
         <li className={styles.specificationItem}>
           <p className={styles.specificationItemTitle}>Белки, г</p>
           <p className={styles.specificationItemValue}>
-            {findItem ? findItem.carbohydrates : info.carbohydrates}
+            {result.carbohydrates}
           </p>
         </li>
         <li className={styles.specificationItem}>
           <p className={styles.specificationItemTitle}>Жиры, г</p>
-          <p className={styles.specificationItemValue}>
-            {findItem ? findItem.fat : info.fat}
-          </p>
+          <p className={styles.specificationItemValue}>{result.fat}</p>
         </li>
         <li className={styles.specificationItem}>
           <p className={styles.specificationItemTitle}>Углеводы, г</p>
           <p className={styles.specificationItemValue}>
-            {findItem ? findItem.proteins : info.proteins}
+            {result.proteins}
           </p>
         </li>
       </ul>

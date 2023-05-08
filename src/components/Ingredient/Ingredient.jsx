@@ -13,8 +13,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
 const Ingredient = function (props) {
- const dispatch = useDispatch();
-const navigate = useNavigate();
+  
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
   const { ingredientInfo } = props;
   const chosenIngredients = useSelector(
     (store) => store.burgerConstructorReducer.chosenIngredients
@@ -24,15 +25,15 @@ const navigate = useNavigate();
     (store) => store.burgerConstructorReducer.constructorBun
   );
 
-  
-
-const addIngredients = [chosenBun, ...chosenIngredients];
+  const addIngredients = [chosenBun, ...chosenIngredients];
 
   const counter = addIngredients.filter(
     (item) => item._id === ingredientInfo._id
   )?.length;
   const modalState = useSelector((store) => store.focusIngredientReducer.state);
-  const modalInfo = useSelector((store) => store.focusIngredientReducer.focusIngredient)
+  const modalInfo = useSelector(
+    (store) => store.focusIngredientReducer.focusIngredient
+  );
   const [{ isDrag }, dragRef] = useDrag({
     type: "ingredient",
     item: ingredientInfo,
@@ -43,20 +44,25 @@ const addIngredients = [chosenBun, ...chosenIngredients];
 
   function openModal(event) {
     dispatch(modalActionCreator(ingredientInfo, true));
+    localStorage.setItem("modalOpen", true);
+    localStorage.setItem("Ingredient", JSON.stringify(ingredientInfo));
   }
 
   function closeModal(params) {
     dispatch(closeModalActionCreator(false));
-     navigate("/");
+    localStorage.setItem("modalOpen", false);
+    navigate("/");
   }
 
   function escCloseModal(params) {
     dispatch(escCloseModalActionCreator(false));
-     navigate(-1);
+    localStorage.setItem("modalOpen", false);
+    navigate(-1);
   }
 
   function overlayCloseModal(params) {
     dispatch(overlayModalClickActionCreator(false));
+    localStorage.setItem("modalOpen", false);
     navigate("/");
   }
 
@@ -93,7 +99,7 @@ const addIngredients = [chosenBun, ...chosenIngredients];
           </div>
         </>
         <>
-          {modalState && (
+          {localStorage.getItem("modalOpen") === "true" && (
             <Modal
               title="Детали заказа"
               onOverlayClick={overlayCloseModal}
@@ -125,9 +131,5 @@ Ingredient.propTypes = {
     _id: PropTypes.string.isRequired,
   }).isRequired,
 };
-
-
-
-
 
 export default Ingredient;

@@ -16,6 +16,7 @@ export function closeModalActionCreator(state) {
 }
 
 export function escCloseModalActionCreator(state) {
+
   return {
     type: "ESC_CLOSE_MODAL",
     state:state
@@ -24,8 +25,17 @@ export function escCloseModalActionCreator(state) {
 
 export function overlayModalClickActionCreator(state) {
   return {
-    type: "OVERLAY_MODAL_CLICK",
-    state: state
-  }
+    type: "CLOSE_MODAL",
+    state: state,
+  };
   
+}
+
+export function feedOrderActionCreator(modalIngredient, state) {
+
+  return {
+    type: "ACTIVE_MODAL_FEED",
+    value: modalIngredient,
+    state: true,
+  };
 }

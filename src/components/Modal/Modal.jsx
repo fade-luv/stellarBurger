@@ -26,6 +26,7 @@ const Modal = ({
 
 
   return ReactDOM.createPortal(
+   
     <>
       <div className={styles.modal}>
         <div className={styles.CloseIcon}>
@@ -52,4 +53,4 @@ Modal.propTypes = {
 
 
 
-export default Modal;
+export default React.memo(Modal);

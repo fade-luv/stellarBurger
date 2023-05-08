@@ -63,8 +63,8 @@ const [activeButton, setActiveButton] = useState();
     <>
       <div className={pages.profile_wrapper}>
         <ProfileMenu />
-        <div className={pages.link_content}>
-          <form onSubmit={onSubmit}>
+ 
+          <form className={pages.userForm} onSubmit={onSubmit}>
             <Input
               onChange={handleUserNameChange}
               icon={activeButton === "name" ? "CloseIcon" : "EditIcon"}
@@ -107,7 +107,7 @@ const [activeButton, setActiveButton] = useState();
               </Button>
             )}
           </form>
-        </div>
+ 
       </div>
     </>
   );

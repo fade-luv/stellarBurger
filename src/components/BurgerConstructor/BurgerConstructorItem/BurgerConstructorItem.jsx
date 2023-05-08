@@ -65,7 +65,7 @@ const BurgerConstructorItem = function (props) {
   drag(drop(ref));
 
   return (
-    <li
+    <div
       key={props.uuid}
       className={`${BurgerConstructorStyle.test} `}
       ref={ref}
@@ -82,7 +82,7 @@ const BurgerConstructorItem = function (props) {
         thumbnail={ingredient.image}
         handleClose={() => handleDelete(ingredient)}
       />
-    </li>
+    </div>
   );
 };
 
